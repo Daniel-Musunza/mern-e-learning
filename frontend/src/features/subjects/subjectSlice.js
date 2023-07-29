@@ -1,21 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import goalService from './goalService'
+import subjectService from './subjectService'
 
 const initialState = {
-  goals: [],
+  subjects: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: '',
 }
 
-// Create new goal
-export const createGoal = createAsyncThunk(
-  'goals/create',
-  async (goalData, thunkAPI) => {
+// Create new subject
+export const createsubject = createAsyncThunk(
+  'subjects/create',
+  async (subjectData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await goalService.createGoal(goalData, token)
+      return await subjectService.createsubject(subjectData, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -28,13 +28,13 @@ export const createGoal = createAsyncThunk(
   }
 )
 
-// Get user goals
-export const getGoals = createAsyncThunk(
-  'goals/getAll',
+// Get user subjects
+export const getsubjects = createAsyncThunk(
+  'subjects/getAll',
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await goalService.getGoals(token)
+      return await subjectService.getsubjects(token)
     } catch (error) {
       const message =
         (error.response &&
@@ -46,14 +46,14 @@ export const getGoals = createAsyncThunk(
     }
   }
 )
-// Update user Goal
-export const updateGoal = createAsyncThunk(
-  'goals/update',
-  async (goalData, thunkAPI) => {
+// Update user subject
+export const updatesubject = createAsyncThunk(
+  'subjects/update',
+  async (subjectData, thunkAPI) => {
     try {
-      const { id } = goalData; // Extract the id from goalData
+      const { id } = subjectData; // Extract the id from subjectData
       const token = thunkAPI.getState().auth.user.token;
-      return await goalService.updateGoal(goalData, id, token);
+      return await subjectService.updatesubject(subjectData, id, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -66,13 +66,13 @@ export const updateGoal = createAsyncThunk(
   }
 );
 
-// Delete user goal
-export const deleteGoal = createAsyncThunk(
-  'goals/delete',
+// Delete user subject
+export const deletesubject = createAsyncThunk(
+  'subjects/delete',
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await goalService.deleteGoal(id, token)
+      return await subjectService.deletesubject(id, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -84,13 +84,13 @@ export const deleteGoal = createAsyncThunk(
     }
   }
 )
-//Toggle Complete User Goal
-export const toggleCompleteGoal = createAsyncThunk(
-  'goals/toggleComplete',
-  async (goalId, thunkAPI) => {
+//Toggle Complete User subject
+export const toggleCompletesubject = createAsyncThunk(
+  'subjects/toggleComplete',
+  async (subjectId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await goalService.toggleCompleteGoal(goalId, token);
+      return await subjectService.toggleCompletesubject(subjectId, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -102,13 +102,13 @@ export const toggleCompleteGoal = createAsyncThunk(
     }
   }
 );
-//toggle Edit User Goal
-export const toggleEditGoal = createAsyncThunk(
-  'goals/toggleEdit',
-  async (goalId, thunkAPI) => {
+//toggle Edit User subject
+export const toggleEditsubject = createAsyncThunk(
+  'subjects/toggleEdit',
+  async (subjectId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await goalService.toggleEditGoal(goalId, token);
+      return await subjectService.toggleEditsubject(subjectId, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -122,98 +122,98 @@ export const toggleEditGoal = createAsyncThunk(
 );
 
 
-export const goalSlice = createSlice({
-  name: 'goal',
+export const subjectSlice = createSlice({
+  name: 'subject',
   initialState,
   reducers: {
     reset: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createGoal.pending, (state) => {
+      .addCase(createsubject.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(createGoal.fulfilled, (state, action) => {
+      .addCase(createsubject.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.goals.push(action.payload)
+        state.subjects.push(action.payload)
       })
-      .addCase(createGoal.rejected, (state, action) => {
+      .addCase(createsubject.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
       })
-      .addCase(getGoals.pending, (state) => {
+      .addCase(getsubjects.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(getGoals.fulfilled, (state, action) => {
+      .addCase(getsubjects.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.goals = action.payload
+        state.subjects = action.payload
       })
-      .addCase(getGoals.rejected, (state, action) => {
+      .addCase(getsubjects.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
       })
-      .addCase(updateGoal.pending, (state) => {
+      .addCase(updatesubject.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(updateGoal.fulfilled, (state, action) => {
+      .addCase(updatesubject.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.goals = state.goals.filter(
-          (goal) => goal._id !== action.payload.id
+        state.subjects = state.subjects.filter(
+          (subject) => subject._id !== action.payload.id
         )
       })
-      .addCase(updateGoal.rejected, (state, action) => {
+      .addCase(updatesubject.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
       })
-      .addCase(deleteGoal.pending, (state) => {
+      .addCase(deletesubject.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(deleteGoal.fulfilled, (state, action) => {
+      .addCase(deletesubject.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.goals = state.goals.filter(
-          (goal) => goal._id !== action.payload.id
+        state.subjects = state.subjects.filter(
+          (subject) => subject._id !== action.payload.id
         )
       })
-      .addCase(deleteGoal.rejected, (state, action) => {
+      .addCase(deletesubject.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
       })
-      .addCase(toggleCompleteGoal.pending, (state) => {
+      .addCase(toggleCompletesubject.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(toggleCompleteGoal.fulfilled, (state, action) => {
+      .addCase(toggleCompletesubject.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        const updatedGoals = state.goals.map((goal) =>
-          goal._id === action.payload._id ? action.payload : goal
+        const updatedsubjects = state.subjects.map((subject) =>
+          subject._id === action.payload._id ? action.payload : subject
         );
-        state.goals = updatedGoals;
+        state.subjects = updatedsubjects;
       })
-      .addCase(toggleCompleteGoal.rejected, (state, action) => {
+      .addCase(toggleCompletesubject.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
       })
-      .addCase(toggleEditGoal.pending, (state) => {
+      .addCase(toggleEditsubject.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(toggleEditGoal.fulfilled, (state, action) => {
+      .addCase(toggleEditsubject.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        const updatedGoals = state.goals.map((goal) =>
-          goal._id === action.payload._id ? action.payload : goal
+        const updatedsubjects = state.subjects.map((subject) =>
+          subject._id === action.payload._id ? action.payload : subject
         );
-        state.goals = updatedGoals;
+        state.subjects = updatedsubjects;
       })
-      .addCase(toggleEditGoal.rejected, (state, action) => {
+      .addCase(toggleEditsubject.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -221,5 +221,5 @@ export const goalSlice = createSlice({
   },
 })
 
-export const { reset } = goalSlice.actions
-export default goalSlice.reducer
+export const { reset } = subjectSlice.actions
+export default subjectSlice.reducer

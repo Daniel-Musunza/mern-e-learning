@@ -1,6 +1,6 @@
-# Goalsetter MERN app
+# subjectsetter MERN app
 
-This is the goalsetter app
+This is the subjectsetter app
 
 ## Usage
 

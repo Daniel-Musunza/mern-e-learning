@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
-import { getGoals} from '../features/goals/goalSlice';
+import { getsubjects} from '../features/subjects/subjectSlice';
 
 function Header() {
   const [showTutorials, setShowTutorials] = useState(false);
@@ -15,7 +15,7 @@ function Header() {
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
 
-  const { goals, isError, message } = useSelector((state) => state.goals);
+  const { subjects, isError, message } = useSelector((state) => state.subjects);
 
   useEffect(() => {
     if (isError) {
@@ -26,7 +26,7 @@ function Header() {
       navigate('/login');
     }
 
-    dispatch(getGoals());
+    dispatch(getsubjects());
 
     return () => {
       dispatch(reset());

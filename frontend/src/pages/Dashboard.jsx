@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
-import { getGoals} from '../features/goals/goalSlice';
+import { getsubjects} from '../features/subjects/subjectSlice';
+
 
 const Dashboard = () => {
   const [showTutorials, setShowTutorials] = useState(false);
@@ -15,7 +16,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { goals, isError, message } = useSelector((state) => state.goals);
+  const { subjects, isError, message } = useSelector((state) => state.subjects);
 
   useEffect(() => {
     if (isError) {
@@ -26,7 +27,7 @@ const Dashboard = () => {
       navigate('/login');
     }
 
-    dispatch(getGoals());
+    dispatch(getsubjects());
 
     return () => {
       dispatch(reset());
@@ -1284,14 +1285,14 @@ const Dashboard = () => {
               title="Menu"
             ></a>
             <div className="units">
-            {goals.length > 0 ? (
+            {subjects.length > 0 ? (
                 <div>
-                  {goals.map((goal) => (
-                    <a className="w3-bar-item w3-button ga-nav" href="css/default.html" title="CSS Tutorial" key={goal._id}>{goal.text}</a>
+                  {subjects.map((subject) => (
+                    <a className="w3-bar-item w3-button ga-nav" href="css/default.html" title="CSS Tutorial" key={subject._id}>{subject.text}</a>
                   ))}
                 </div>
               ) : (
-                <h3>NO Units Available</h3>
+                <a className="w3-bar-item w3-button ga-nav" href="" title="CSS Tutorial">NO Units Available</a>
               )}
             </div>
             <a
