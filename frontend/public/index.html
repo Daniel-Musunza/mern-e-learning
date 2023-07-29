@@ -1,20 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <script src="https://kit.fontawesome.com/332a0bbd7c.js" crossorigin="anonymous"></script>
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Task Manager</title>
-  </head>
-  <body>
+<head>
+  <title>E-learning System</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="Keywords"content="HTML">
+  <meta name="Description" content="">
+  <meta property="og:image" content="">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="436">
+  <meta property="og:image:height" content="228">
+  <meta property="og:description" content="">
+  
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="preload" href="lib/fonts/fontawesome8deb.woff2?14663396" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="lib/fonts/source-code-pro-v14-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="lib/fonts/roboto-mono-v13-latin-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="lib/fonts/source-sans-pro-v14-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="lib/fonts/source-sans-pro-v14-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="lib/fonts/SourceSansPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="lib/fonts/freckle-face-v9-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="lib/w3schools32.css">
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Google Tag Manager -->
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          '../www.googletagmanager.com/gtm5445.html?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-KTCFC3S');
+
+    var subjectFolder = location.pathname;
+    subjectFolder = subjectFolder.replace("index.html", "");
+    if (subjectFolder.startsWith("python/index.html") == true) {
+      if (subjectFolder.includes("numpy/index.html") == true) {
+        subjectFolder = "numpy/index.html"
+      } else if (subjectFolder.includes("pandas/index.html") == true) {
+        subjectFolder = "pandas/index.html"
+      } else if (subjectFolder.includes("scipy/index.html") == true) {
+        subjectFolder = "scipy/index.html"
+      }
+    }
+    subjectFolder = subjectFolder.substr(0, subjectFolder.indexOf("index.html"));
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <script src="lib/uic3447.js?v=1.0.5"></script>
+  <script data-cfasync="false" type="text/javascript">
+    var k42 = false;
+
+    k42 = true;
+
+  </script>
+  <script data-cfasync="false" type="text/javascript">
+    window.snigelPubConf = {
+      "adengine": {
+
+        "activeAdUnits": ["main_leaderboard", "sidebar_top", "bottom_left", "bottom_right"]
+
+      }
+    }
+    uic_r_a()
+  </script>
+  <script type='text/javascript'>
+    var stickyadstatus = "";
+    function fix_stickyad() {
+      document.getElementById("stickypos").style.position = "sticky";
+      var elem = document.getElementById("stickyadcontainer");
+      if (!elem) { return false; }
+      if (document.getElementById("skyscraper")) {
+        var skyWidth = Number(w3_getStyleValue(document.getElementById("skyscraper"), "width").replace("px", ""));
+      }
+      else {
+        var skyWidth = Number(w3_getStyleValue(document.getElementById("right"), "width").replace("px", ""));
+      }
+      elem.style.width = skyWidth + "px";
+      if (window.innerWidth <= 992) {
+        elem.style.position = "";
+        elem.style.top = stickypos + "px";
+        return false;
+      }
+      var stickypos = document.getElementById("stickypos").offsetTop;
+      var docTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      var adHeight = Number(w3_getStyleValue(elem, "height").replace("px", ""));
+      if (stickyadstatus == "") {
+        if ((stickypos - docTop) < 100) {
+          elem.style.position = "fixed";
+          elem.style.top = "100px";
+          stickyadstatus = "sticky";
+          document.getElementById("stickypos").style.position = "sticky";
+
+        }
+      } else {
+        if ((docTop + 100) - stickypos < 0) {
+          elem.style.position = "";
+          elem.style.top = stickypos + "px";
+          stickyadstatus = "";
+          document.getElementById("stickypos").style.position = "static";
+        }
+      }
+      if (stickyadstatus == "sticky") {
+        if ((docTop + adHeight + 100) > document.getElementById("footer").offsetTop) {
+          elem.style.position = "absolute";
+          elem.style.top = (document.getElementById("footer").offsetTop - adHeight) + "px";
+          document.getElementById("stickypos").style.position = "static";
+        } else {
+          elem.style.position = "fixed";
+          elem.style.top = "100px";
+          stickyadstatus = "sticky";
+          document.getElementById("stickypos").style.position = "sticky";
+        }
+      }
+    }
+    function w3_getStyleValue(elmnt, style) {
+      if (window.getComputedStyle) {
+        return window.getComputedStyle(elmnt, null).getPropertyValue(style);
+      } else {
+        return elmnt.currentStyle[style];
+      }
+    }
+  </script>
+  <script async data-cfasync="false" src="../cdn.snigelweb.com/adengine/w3schools.com/loader.js" type="text/javascript"></script>
+  <script src="lib/common-deps0ff5.js?v=1.0.2"></script>
+  <script src="lib/user-session41be.js?v=1.0.29"></script>
+  <script src="lib/my-learningbbaa.js?v=1.0.21"></script>
+
+
+</head>
+  <body style="font-family: 'Source Sans Pro', sans-serif;">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
  

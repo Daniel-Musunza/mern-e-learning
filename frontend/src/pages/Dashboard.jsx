@@ -1,18 +1,21 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import GoalForm from '../components/GoalForm';
-import GoalItem from '../components/GoalItem';
-import { EditTodoForm } from '../components/EditTodoForm';
-import Spinner from '../components/Spinner';
-import { getGoals, reset} from '../features/goals/goalSlice';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout, reset } from '../features/auth/authSlice'
+import { getGoals} from '../features/goals/goalSlice';
 
-function Dashboard() {
+const Dashboard = () => {
+  const [showTutorials, setShowTutorials] = useState(false);
+  const [showExams, setShowExams] = useState(false);
+  const [showExercises, setShowExercises] = useState(false);
+  const [ showServices, setShowServices] = useState(false);
+  const [ showMenu, setShowMenu] = useState(false);
+
+  // Move the declaration of 'navigate' here before using it in the useEffect
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const { user } = useSelector((state) => state.auth);
-  const { goals, isLoading, isError, message} = useSelector((state) => state.goals);
+  const { goals, isError, message } = useSelector((state) => state.goals);
 
   useEffect(() => {
     if (isError) {
@@ -30,34 +33,1350 @@ function Dashboard() {
     };
   }, [user, navigate, isError, message, dispatch]);
 
-  if (isLoading) {
-    return <Spinner />;
+  const onLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate('/')
   }
 
-  return (
-    <div className="TodoWrapper">
-      <section className='heading'>
-        <h1>Welcome {user && user.name}</h1>
-        <h2>Task Manager</h2>
-      </section>
+  const toggleMenu = () => {
+    setShowMenu((prevShowMenu) => !prevShowMenu);
+  };
+  const closeMenu = () => {
+    setShowMenu(false);
+  };
+  const toggleTutorials = () => {
+    setShowTutorials((prevShowTutorials) => !prevShowTutorials);
+  };
+  const closeTutorials = () => {
+    setShowTutorials(false);
+  };
+  const toggleExams = () => {
+    setShowExams((prevShowExams) => !prevShowExams);
+  };
+  const closeExams = () => {
+    setShowExams(false);
+  };
+  const toggleExercises = () => {
+    setShowExercises((prevShowExercises) => !prevShowExercises);
+  };
+  const closeExercises = () => {
+    setShowExercises(false);
+  };
+  const toggleServices = () => {
+    setShowServices((prevShowServices) => !prevShowServices);
+  };
 
-      <GoalForm />
-      
-      {goals.length > 0 ? (
-        <div>
-          {goals.map((goal) => (
-            goal.isEditing ? (
-              <EditTodoForm goal={goal} key={goal._id} />
-            ) : (
-              <GoalItem key={goal._id} goal={goal} />
-            )
-          ))}
+  const closeServices = () => {
+    setShowServices(false);
+  };
+
+  return (
+    <div>
+      <div id="pagetop" className="w3-bar notranslate w3-white">
+        <a href="index.html" className="w3-bar-item w3-button w3-hover-none w3-left ga-top ga-top-w3home" title="Home" style={{ width: "75px" }}>
+          <img src="favicon.ico" alt="" width="50px" />
+        </a>
+
+        <a
+          className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-tut-and-ref"
+          id="navbtn_tutorials"
+          title="Tutorials and References"
+          onClick={toggleTutorials}
+        >
+         Tutorial Notes<i className='fa fa-caret-down' style={{ fontSize: '15px', display: showTutorials ? 'none' : 'inline' }}></i>
+          <i className='fa fa-caret-up' style={{ display: showTutorials ? 'inline' : 'none', fontSize: '15px' }}></i>
+        </a>
+
+        <a onClick={toggleExercises} className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-exc-and-quz" id="navbtn_Exercises" title="Exercises and CATS">
+         Questions<i className='fa fa-caret-down' style={{ fontSize: '15px', display: showExercises ? 'none' : 'inline' }}></i>
+          <i className='fa fa-caret-up' style={{ display: showExercises ? 'inline' : 'none', fontSize: '15px' }}></i>
+        </a>
+
+        {/* <a onClick={toggleExams} className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-cert-and-course ws-hide-750" href="javascript:void(0)" id="navbtn_certified" title="Main Exam">
+          Main Exam <i className='fa fa-caret-down' style={{ fontSize: '15px', display: showExams ? 'none' : 'inline' }}></i>
+          <i className='fa fa-caret-up' style={{ display: showExams ? 'inline' : 'none', fontSize: '15px' }}></i>
+        </a> */}
+
+        <a onClick={toggleServices} className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-services" href="javascript:void(0)" id="navbtn_services" title="Our Services">
+          Services <i className='fa fa-caret-down' style={{ fontSize: '15px', display: showServices ? 'none' : 'inline' }}></i>
+          <i className='fa fa-caret-up' style={{ display: showServices ? 'inline' : 'none', fontSize: '15px' }}></i>
+        </a>
+        <a className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-services"
+              style={{width: 'auto!important', marginRight:'40px', textAlign: 'center'}} href=""
+              title="Attend a class"><svg
+                style={{position:'relative',right:'2px', top:'2px', marginRight:'3px'}} xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="#0077b6" class="bi bi-gift" viewBox="0 0 16 16">
+                <path
+                  d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5V7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zM1 4v2h6V4H1zm8 0v2h6V4H9zm5 3H9v8h4.5a.5.5 0 0 0 .5-.5V7zm-7 8V7H2v7.5a.5.5 0 0 0 .5.5H7z" />
+              </svg> Live Classes</a>
+        <div className='menu-bar'>
+          <a onClick={toggleMenu} className="w3-bar-item w3-button bar-item-hover w3-padding-16 ga-top ga-top-menu"
+            href="javascript:void(0)" title="Menu" style={{
+              width: '93px',
+              display: 'block',
+              textDecoration: 'none',
+              color: 'inherit',
+            }}>
+            Menu
+            <i className="fa fa-caret-down" style={{
+              fontSize: '15px',
+              display: showMenu ? 'none' : 'inline',
+            }}></i>
+            <i className="fa fa-caret-up" style={{
+              display: showMenu ? 'inline' : 'none',
+              fontSize: '15px',
+            }}></i>
+          </a>
         </div>
-      ) : (
-        <h3>You have not set any goals</h3>
+        {user ? (
+          
+          
+           <div onClick={onLogout} id="loginactioncontainer" class="w3-right"
+              style={{paddingTop:'8px',paddingBottom:'8px',marginLeft:'1px',width: '55px'}}>
+              <div id="mypagediv"></div>
+              <a id="w3loginbtn" title="Log out of the system"
+                class="w3-bar-item w3-btn bar-item-hover w3-right ws-light-green ga-top ga-top-login"
+                href=""
+                target="_self">Logout</a>
+            </div>
+         
+        ) : (
+            <div id="loginactioncontainer" class="w3-right"
+              style={{paddingTop:'8px',paddingBottom:'8px',marginLeft:'1px',width: '55px', textDecoration: 'none'}}>
+              <div id="mypagediv"></div>
+              <a id="w3loginbtn" title="Login to your account"
+                class="w3-bar-item w3-btn bar-item-hover w3-right ws-light-green ga-top ga-top-login"
+                href=""
+                target="_self">
+                  <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Log in
+                  </Link> 
+              </a>
+            </div>
+        )}
+            <div class="w3-right w3-white" style={{paddingTop:'5px'}}>
+            {user ? (  
+            <div id="loginactioncontainer" class="w3-right"
+              style={{paddingTop:'3px',paddingBottom:'8px', paddingLeft:'1px', marginRight:'30px',width: '25px'}}>
+              
+              <a id="w3loginbtn" title="Your Username" style={{paddingLeft:'3px'}}
+                class="w3-bar-item w3-btn bar-item-hover w3-right ws-light-green ga-top ga-top-login"
+                href=""
+                target="_self">{user && user.name}</a>
+            </div>
+            ) : (
+              <a id="signupbtn_topnav" class="w3-bar-item w3-button w3-right ws-green ws-hover-green ga-top ga-top-signup"
+              style={{width: '93px', borderRadius: '25px', marginRight: '25px', marginTop: '3px', position: 'relative', zIndex:'5', textDecoration: 'none'}}
+              href="" title="Sign Up to Improve Your Learning Experience">
+                <Link to='/register' style={{ textDecoration: 'none', color: 'inherit' }}>
+                  Sign Up
+                </Link>
+              </a>
+            )}
+            </div>
+      </div>
+      {showMenu && (
+      <div id="myAccordion" className="w3-hide-large" style={{cursor: 'default', zIndex: 99, position: 'fixed', bottom: 0, top: '56px', overflowY: 'scroll' }}>
+      <div  onClick={closeMenu} className="w3-button w3-large w3-right ga-top w3-border w3-round ga-top-close-accordion" style={{ marginBottom: '13px', marginRight: '13px', marginTop: '13px', width: '100px' }}>
+        Close
+        <svg xmlns="http://www.w3.org/2000/svg" width="37" height="33" fill="#111" className="bi bi-x" viewBox="0 0 16 16" style={{ position: 'absolute', top: '20px', paddingLeft: '2px' }}>
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+        </svg>
+      </div>
+      <div className="w3-container">
+        <a onClick={toggleTutorials} className="w3-button w3-block ga-top ga-top-menu-tut-and-ref" style={{ fontSize: '22px' }} href="javascript:void(0);">
+          Tutorial Notes<i className='fa fa-caret-down w3-right'></i>
+        </a>
+        {showTutorials && (<div id="sectionxs_tutorials" className="w3-show" style={{ backgroundColor: '#282A35', color: 'white' }}>
+          <div className="w3-content" style={{ maxWidth: '1100px', fontSize: '18px', paddingLeft: '3%' }}>
+            <span
+                className="w3-button w3-xxxlarge w3-display-topright closeaccbtn w3-hide-small"
+                onClick={closeTutorials}
+              >
+              &times;
+            </span>
+            <br />
+            <div className="w3-row-padding w3-bar-block">
+              <div className="w3-container" style={{ paddingLeft: '13px', position: 'relative', marginBottom: '25px' }}>
+                <h2 style={{ color: '#FFF4A3' }}>
+                  <b>Subjects/Units</b>
+                </h2>
+              </div>
+              <div className="w3-col l4 m6">
+                <h3 className="w3-margin-top">HTML and CSS</h3>
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html" href="html/default.html" title="HTML Tutorial">
+                  <span className="learn-span">Learn</span> HTML
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html" href="html/default.html" title="HTML Tutorial">Tutorial</a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ref-html" href="tags/default.html" title="HTML Reference">Reference</a>
+                <br />
+                {/* More anchor tags for HTML and CSS */}
+                {/* ... */}
+              </div>
+              <div className="w3-col l4 m6">
+                <h3 className="w3-margin-top">JavaScript</h3>
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-js" href="js/default.html" title="JavaScript Tutorial">
+                  <span className="learn-span">Learn</span> JavaScript
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-js" href="js/default.html" title="JavaScript Tutorial">
+                  Tutorial
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ref-js" href="jsref/default.html" title="JavaScript Reference">
+                  Reference
+                </a>
+                <br />
+                {/* More anchor tags for JavaScript and other subjects */}
+                {/* ... */}
+              </div>
+            </div>
+          </div>
+        </div>)}
+        <a onClick={toggleExercises} className="w3-button w3-block ga-top ga-top-menu-exc-and-quz" style={{ fontSize: '22px' }} href="javascript:void(0);">
+          Questions<i className='fa fa-caret-down w3-right'></i>
+        </a>
+        {showExercises && (<div id="sectionxs_Exercises" className="w3-show" style={{ backgroundColor: '#282A35', color: 'white' }}>
+          <div className="w3-content" style={{ maxWidth: 1100, fontSize: 18, paddingLeft: '3%' }}>
+              <span
+                className="w3-button w3-xxxlarge w3-display-topright closeaccbtn w3-hide-small"
+                onClick={closeExercises}
+              >
+              &times;
+            </span>
+            <br />
+            <div className="w3-row-padding w3-bar-block">
+              <div className="w3-container" style={{ paddingLeft: 13, position: 'relative', marginBottom: 25 }}>
+                <h2 style={{ color: '#FFF4A3' }}>
+                  <b>Questions</b>
+                </h2>
+              </div>
+
+              <div className="w3-col l4 m6">
+                <h3 className="w3-margin-top">HTML and CSS</h3>
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html" href="html/html_Exercises.html" title="HTML Exercises">
+                  HTML
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" href="html/html_Exercises.html" title="HTML Exercises">
+                  Exercise
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-html" href="html/html_CAT.html" title="HTML CATS">
+                  CAT
+                </a>
+                <br />
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-css" href="css/css_Exercises.html" title="CSS Exercises">
+                  CSS
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-css" href="css/css_Exercises.html" title="CSS Exercises">
+                  Exercise
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-css" href="css/css_CAT.html" title="CSS CATS">
+                  CAT
+                </a>
+                <br />
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-bs" href="bootstrap/bootstrap_Exercises.html" title="Bootstrap Exercises">
+                  Bootstrap
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-bs" href="bootstrap/bootstrap_Exercises.html" title="Bootstrap Exercises">
+                  Exercise
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-bs" href="bootstrap/bootstrap_CAT.html" title="Bootstrap CATS">
+                  CAT
+                </a>
+                <br />
+                <div className="w3-hide-small">
+                  <h3 style={{ marginTop: 35 }}>Data Analytics</h3>
+                  <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-numpy" href="python/numpy/numpy_Exercises.html" title="NumPy Exercises">
+                    NumPy
+                  </a>
+                  <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-numpy" href="python/numpy/numpy_Exercises.html" title="NumPy Exercises">
+                    Exercise
+                  </a>
+                  <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-numpy" href="python/numpy/numpy_CAT.html" title="NumPy CATS">
+                    CAT
+                  </a>
+                  <br />
+                  <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-pandas" href="python/pandas/pandas_Exercises.html" title="Pandas Exercises">
+                    Pandas
+                  </a>
+                  <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-pandas" href="python/pandas/pandas_Exercises.html" title="Pandas Exercises">
+                    Exercise
+                  </a>
+                  <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-pandas" href="python/pandas/pandas_CAT.html" title="Pandas CATS">
+                    CAT
+                  </a>
+                  <br />
+                  <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-scipy" href="python/scipy/scipy_Exercises.html" title="SciPy Exercises">
+                    SciPy
+                  </a>
+                  <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-scipy" href="python/scipy/scipy_Exercises.html" title="SciPy Exercises">
+                    Exercise
+                  </a>
+                  <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-scipy" href="python/scipy/scipy_CAT.html" title="SciPy CATS">
+                    CAT
+                  </a>
+                  <br />
+                  <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-excel" href="excel/excel_Exercises.html" title="Excel Exercises">
+                    Excel
+                  </a>
+                  <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-excel" href="excel/excel_Exercises.html" title="Excel Exercises">
+                    Exercise
+                  </a>
+                  <div style={{ marginTop: 35 }}>
+                    <a
+                      className="w3-bar-item w3-button ga-top-drop w3-center w3-round ga-top-drop-Exercises"
+                      href="Exercises/index.html"
+                      title="W3Schools Exercises"
+                      style={{
+                        display: 'block',
+                        backgroundColor: '#21232c',
+                        border: '1px solid grey',
+                        width: 195,
+                        marginBottom: 16,
+                      }}
+                    >
+                      What is an Exercise?
+                    </a>
+                    <a
+                      className="w3-bar-item w3-button ga-top-drop w3-center w3-round ga-top-drop-CATtest"
+                      href="CATtest/default.html"
+                      title="W3Schools CATS"
+                      style={{ display: 'block', backgroundColor: '#21232c', border: '1px solid grey', width: 195 }}
+                    >
+                      What is a CAT?
+                    </a>
+                  </div>
+                  <br />
+                </div>
+              </div>
+
+              <div className="w3-col l4 m6">
+                <h3 className="w3-margin-top">JavaScript</h3>
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-js" href="js/js_Exercises.html" title="JavaScript Exercises">
+                  JavaScript
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-js" href="js/js_Exercises.html" title="JavaScript Exercises">
+                  Exercise
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-js" href="js/js_CAT.html" title="JavaScript CATS">
+                  CAT
+                </a>
+                <br />
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-react" href="react/react_Exercises.html" title="React Exercises">
+                  React
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-react" href="react/react_Exercises.html" title="React Exercises">
+                  Exercise
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-react" href="react/react_CAT.html" title="React CATS">
+                  CAT
+                </a>
+                <br />
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-jquery" href="jquery/jquery_Exercises.html" title="jQuery Exercises">
+                  jQuery
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-jquery" href="jquery/jquery_Exercises.html" title="jQuery Exercises">
+                  Exercise
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-jquery" href="jquery/jquery_CAT.html" title="jQuery CATS">
+                  CAT
+                </a>
+                <br />
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-vue" href="vue/vue_Exercises.html" title="Vue Exercises">
+                  Vue
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-vue" href="vue/vue_Exercises.html" title="Vue Exercises">
+                  Exercise
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-vue" href="vue/vue_CAT.html" title="Vue CATS">
+                  CAT
+                </a>
+                <br />
+              </div>
+            </div>
+            <br />
+          </div>
+        </div>)}
+        <a onClick={toggleServices} className="w3-button w3-block ga-top ga-top-menu-services" style={{ fontSize: '22px' }} href="javascript:void(0);">
+          Services <i className='fa fa-caret-down w3-right'></i>
+        </a>
+        {showServices && ( <div id="sectionxs_services" className="w3-show" style={{ backgroundColor: '#282A35', color: 'white' }}>
+          <div className="w3-content" style={{ maxWidth: 1100, fontSize: 18, paddingLeft: '3%' }}>
+            <span
+                className="w3-button w3-xxxlarge w3-display-topright closeaccbtn w3-hide-small"
+                onClick={closeServices}
+              >
+              &times;
+            </span>
+            <br />
+            <div className="w3-row-padding serviceboxes">
+              <div
+                className="w3-container"
+                style={{ paddingLeft: 13, position: 'relative', marginBottom: 25 }}
+              >
+                <h2 style={{ color: '#FFF4A3' }}>
+                  <b>All Our Services</b>
+                </h2>
+                <p style={{ fontSize: 17 }}>
+                  W3Schools offers a wide range of services and products for beginners and professionals,
+                  <br className="w3-hide-medium w3-hide-small" /> helping millions of people everyday to
+                  learn and master new skills.
+                </p>
+              </div>
+
+              <div className="w3-col m4 s12">
+                <a
+                  href="tutorials/index.html"
+                  className="serviceslink ga-top-drop ga-top-drop-services-tut"
+                  title="Tutorials"
+                >
+                  <div className="w3-padding services w3-round">
+                    <h4>Free Tutorials</h4>
+                    <p>Enjoy our free tutorials like millions of other internet users since 1999</p>
+                  </div>
+                </a>
+              </div>
+
+              <div className="w3-col m4 s12">
+                <a
+                  href="references/index.html"
+                  className="serviceslink ga-top-drop ga-top-drop-services-ref"
+                  title="References"
+                >
+                  <div className="w3-padding services w3-round">
+                    <h4>References</h4>
+                    <p>Explore our selection of references covering all popular coding languages</p>
+                  </div>
+                </a>
+              </div>
+
+              <div className="w3-col m4 s12">
+                <a
+                  href="spaces/index.html"
+                  className="serviceslink ga-top-drop ga-top-drop-services-spaces"
+                  title="Create a Website"
+                >
+                  <div className="w3-padding services w3-round">
+                    <h4>Create a Website</h4>
+                    <p>
+                      Create your own website with <strong>W3Schools Spaces</strong> - no setup required
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div className="w3-row-padding serviceboxes" style={{ marginTop: 30 }}>
+              <div className="w3-col m4 s12">
+                <a
+                  href="Exercises/index.html"
+                  className="serviceslink ga-top-drop ga-top-drop-services-ex"
+                  title="Test yourself with Exercises"
+                >
+                  <div className="w3-padding services w3-round">
+                    <h4>Exercises</h4>
+                    <p>Test your skills with different Exercises</p>
+                  </div>
+                </a>
+              </div>
+
+              <div className="w3-col m4 s12">
+                <a
+                  href="CATtest/default.html"
+                  className="serviceslink ga-top-drop ga-top-drop-services-qz"
+                  title="Test yourself with CATS"
+                >
+                  <div className="w3-padding services w3-round">
+                    <h4>CATS</h4>
+                    <p>Test yourself with multiple choice questions</p>
+                  </div>
+                </a>
+              </div>
+
+              <div className="w3-col m4 s12">
+                <a
+                  href="https://campus.w3schools.com/collections/certifications"
+                  className="serviceslink ga-top-drop ga-top-drop-services-cert"
+                  target="_blank"
+                  title="Main Exam"
+                >
+                  <div className="w3-padding services w3-round" style={{ position: 'relative' }}>
+                    <h4>Main Exam</h4>
+                    <p>Document your knowledge.</p>
+                    <svg
+                      style={{ position: 'absolute', top: 15, right: 25 }}
+                      width="15"
+                      height="36"
+                      viewBox="0 0 12 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M6.65723 6.24707C6.76704 5.91764 7.233 5.91765 7.34281 6.24707L7.98828 8.1835C8.276 9.04666 8.95332 9.72399 9.81648 10.0117L11.7529 10.6572C12.0824 10.767 12.0824 11.233 11.7529 11.3428L9.81649 11.9883C8.95332 12.276 8.27599 12.9533 7.98828 13.8165L7.34281 15.7529C7.233 16.0823 6.76704 16.0823 6.65723 15.7529L6.01173 13.8165C5.72401 12.9533 5.04669 12.276 4.18353 11.9883L2.24707 11.3428C1.91764 11.233 1.91764 10.767 2.24707 10.6572L4.18353 10.0117C5.04669 9.72399 5.72401 9.04667 6.01173 8.18352L6.65723 6.24707Z"
+                        fill="#9763f6"
+                      ></path>
+                      <path
+                        d="M2.79434 1.14824C2.86023 0.950586 3.1398 0.950587 3.20569 1.14824L3.59297 2.3101C3.7656 2.828 4.172 3.2344 4.6899 3.40703L5.85177 3.79432C6.04942 3.86021 6.04942 4.13978 5.85177 4.20567L4.6899 4.59296C4.172 4.76559 3.7656 5.17199 3.59297 5.68989L3.20569 6.85176C3.13981 7.04941 2.86023 7.04942 2.79434 6.85176L2.40704 5.68988C2.23441 5.17198 1.82801 4.76559 1.31012 4.59296L0.148241 4.20567C-0.0494137 4.13978 -0.0494138 3.86021 0.148241 3.79432L1.31012 3.40703C1.82802 3.2344 2.23441 2.82801 2.40704 2.31011L2.79434 1.14824Z"
+                        fill="#9763f6"
+                      ></path>
+                      <path
+                        d="M9.8629 0.0988265C9.90682 -0.032943 10.0932 -0.0329419 10.1371 0.098828L10.3953 0.873401C10.5104 1.21867 10.7813 1.4896 11.1266 1.60469L11.9012 1.86288C12.0329 1.9068 12.0329 2.09319 11.9012 2.13711L11.1266 2.39531C10.7813 2.51039 10.5104 2.78133 10.3953 3.12659L10.1371 3.90117C10.0932 4.03294 9.90682 4.03294 9.8629 3.90117L9.6047 3.12659C9.48961 2.78132 9.21868 2.5104 8.87342 2.39531L8.09883 2.13711C7.96706 2.09319 7.96706 1.9068 8.09883 1.86288L8.87342 1.60469C9.21868 1.4896 9.48961 1.21867 9.6047 0.873408L9.8629 0.0988265Z"
+                        fill="#9763f6"
+                      ></path>
+                    </svg>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <br />
+          </div>
+        </div>)}
+        <br />
+        <a className="w3-button w3-block ga-top ga-top-menu-spaces" style={{ fontSize: '22px' }} href="" title="Get Your Own Website With W3schools Spaces">
+          Live classes
+        </a>
+        <br />
+        <a className="w3-button w3-block ga-top ga-top-menu-videos" style={{ fontSize: '22px' }} href="videos/index.html" title="Video Tutorials">
+          Videos
+          <svg style={{ position: 'absolute', right: '35px' }} width="12" height="32" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.65723 6.24707C6.76704 5.91764 7.233 5.91765 7.34281 6.24707L7.98828 8.1835C8.276 9.04666 8.95332 9.72399 9.81648 10.0117L11.7529 10.6572C12.0824 10.767 12.0824 11.233 11.7529 11.3428L9.81649 11.9883C8.95332 12.276 8.27599 12.9533 7.98828 13.8165L7.34281 15.7529C7.233 16.0823 6.76704 16.0823 6.65723 15.7529L6.01173 13.8165C5.72401 12.9533 5.04669 12.276 4.18353 11.9883L2.24707 11.3428C1.91764 11.233 1.91764 10.767 2.24707 10.6572L4.18353 10.0117C5.04669 9.72399 5.72401 9.04667 6.01173 8.18352L6.65723 6.24707Z" fill="#9763f6"></path>
+            <path d="M2.79434 1.14824C2.86023 0.950586 3.1398 0.950587 3.20569 1.14824L3.59297 2.3101C3.7656 2.828 4.172 3.2344 4.6899 3.40703L5.85177 3.79432C6.04942 3.86021 6.04942 4.13978 5.85177 4.20567L4.6899 4.59296C4.172 4.76559 3.7656 5.17199 3.59297 5.68989L3.20569 6.85176C3.13981 7.04941 2.86023 7.04942 2.79434 6.85176L2.40704 5.68988C2.23441 5.17198 1.82801 4.76559 1.31012 4.59296L0.148241 4.20567C-0.0494137 4.13978 -0.0494138 3.86021 0.148241 3.79432L1.31012 3.40703C1.82802 3.2344 2.23441 2.82801 2.40704 2.31011L2.79434 1.14824Z" fill="#9763f6"></path>
+            <path d="M9.8629 0.0988265C9.90682 -0.032943 10.0932 -0.0329419 10.1371 0.098828L10.3953 0.873401C10.5104 1.21867 10.7813 1.4896 11.1266 1.60469L11.9012 1.86288C12.0329 1.9068 12.0329 2.09319 11.9012 2.13711L11.1266 2.39531C10.7813 2.51039 10.5104 2.78133 10.3953 3.12659L10.1371 3.90117C10.0932 4.03294 9.90682 4.03294 9.8629 3.90117L9.6047 3.12659C9.48961 2.78132 9.21868 2.5104 8.87342 2.39531L8.09883 2.13711C7.96706 2.09319 7.96706 1.9068 8.09883 1.86288L8.87342 1.60469C9.21868 1.4896 9.48961 1.21867 9.6047 0.873408L9.8629 0.0988265Z" fill="#9763f6"></path>
+          </svg>
+        </a>
+      </div>
+      <div className="w3-container" style={{ marginTop: '36px' }}>
+        <a className="w3-bar-item w3-button ga-fp w3-hover-white w3-round w3-large" target="_blank" href="" title="W3Schools on Facebook">
+          <i className="fa fa-facebook-square"></i>
+        </a>
+        <a className="w3-bar-item w3-button ga-fp w3-hover-white w3-round w3-large" target="_blank" href="" title="W3Schools on Instagram">
+          <i className="fa fa-instagram"></i>
+        </a>
+        <a className="w3-bar-item w3-button ga-fp w3-hover-white w3-round w3-large" target="_blank" href="" title="W3Schools on LinkedIn">
+          <i className="fa fa-linkedin-square"></i>
+        </a>
+        <a className="w3-bar-item w3-button ga-fp w3-hover-white w3-round w3-large" target="_blank" href="" title="Join the W3schools community on Discord">
+          <i className="fa fa-discord"></i>
+        </a>
+      </div>
+      </div>
       )}
+      {showTutorials && (
+        <nav
+          id="nav_tutorials"
+          className="w3-hide-small navex"
+          style={{
+            position: 'fixed',
+            bottom: 0,
+            top: '56px',
+            overflowY: 'scroll',
+            backgroundColor: '#282A35',
+            color: 'white',
+            paddingBottom: '60px',
+          }}
+        >
+        <div className="w3-content" style={{ maxWidth: '1100px', fontSize: '18px', paddingLeft: '3%' }}>
+          <span
+              className="w3-button w3-xxxlarge w3-display-topright closeaccbtn w3-hide-small"
+              onClick={closeTutorials}
+            >
+            &times;
+          </span>
+          <br />
+          <div className="w3-row-padding w3-bar-block">
+            <div className="w3-container" style={{ paddingLeft: '13px', position: 'relative', marginBottom: '25px' }}>
+              <h2 style={{ color: '#FFF4A3' }}>
+                <b>Subjects/Units</b>
+              </h2>
+            </div>
+            <div className="w3-col l4 m6">
+              <h3 className="w3-margin-top">HTML and CSS</h3>
+              <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html" href="html/default.html" title="HTML Tutorial">
+                <span className="learn-span">Learn</span> HTML
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html" href="html/default.html" title="HTML Tutorial">Tutorial</a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ref-html" href="tags/default.html" title="HTML Reference">Reference</a>
+              <br />
+              {/* More anchor tags for HTML and CSS */}
+              {/* ... */}
+            </div>
+            <div className="w3-col l4 m6">
+              <h3 className="w3-margin-top">JavaScript</h3>
+              <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-js" href="js/default.html" title="JavaScript Tutorial">
+                <span className="learn-span">Learn</span> JavaScript
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-js" href="js/default.html" title="JavaScript Tutorial">
+                Tutorial
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ref-js" href="jsref/default.html" title="JavaScript Reference">
+                Reference
+              </a>
+              <br />
+              {/* More anchor tags for JavaScript and other subjects */}
+              {/* ... */}
+            </div>
+          </div>
+        </div>
+        <br />
+        </nav>
+      )}
+
+      {showExercises&& (
+      <nav
+        id="nav_Exercises"
+        className="w3-hide-small navex"
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          top: 56,
+          overflowY: 'scroll',
+          backgroundColor: '#282A35',
+          color: 'white',
+          paddingBottom: 60,
+        }}
+      >
+        <div className="w3-content" style={{ maxWidth: 1100, fontSize: 18, paddingLeft: '3%' }}>
+            <span
+              className="w3-button w3-xxxlarge w3-display-topright closeaccbtn w3-hide-small"
+              onClick={closeExercises}
+            >
+            &times;
+          </span>
+          <br />
+          <div className="w3-row-padding w3-bar-block">
+            <div className="w3-container" style={{ paddingLeft: 13, position: 'relative', marginBottom: 25 }}>
+              <h2 style={{ color: '#FFF4A3' }}>
+                <b>Exercises and CATS</b>
+              </h2>
+            </div>
+
+            <div className="w3-col l4 m6">
+              <h3 className="w3-margin-top">HTML and CSS</h3>
+              <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html" href="html/html_Exercises.html" title="HTML Exercises">
+                HTML
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" href="html/html_Exercises.html" title="HTML Exercises">
+                Exercise
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-html" href="html/html_CAT.html" title="HTML CATS">
+                CAT
+              </a>
+              <br />
+              <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-css" href="css/css_Exercises.html" title="CSS Exercises">
+                CSS
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-css" href="css/css_Exercises.html" title="CSS Exercises">
+                Exercise
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-css" href="css/css_CAT.html" title="CSS CATS">
+                CAT
+              </a>
+              <br />
+              <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-bs" href="bootstrap/bootstrap_Exercises.html" title="Bootstrap Exercises">
+                Bootstrap
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-bs" href="bootstrap/bootstrap_Exercises.html" title="Bootstrap Exercises">
+                Exercise
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-bs" href="bootstrap/bootstrap_CAT.html" title="Bootstrap CATS">
+                CAT
+              </a>
+              <br />
+              <div className="w3-hide-small">
+                <h3 style={{ marginTop: 35 }}>Data Analytics</h3>
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-numpy" href="python/numpy/numpy_Exercises.html" title="NumPy Exercises">
+                  NumPy
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-numpy" href="python/numpy/numpy_Exercises.html" title="NumPy Exercises">
+                  Exercise
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-numpy" href="python/numpy/numpy_CAT.html" title="NumPy CATS">
+                  CAT
+                </a>
+                <br />
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-pandas" href="python/pandas/pandas_Exercises.html" title="Pandas Exercises">
+                  Pandas
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-pandas" href="python/pandas/pandas_Exercises.html" title="Pandas Exercises">
+                  Exercise
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-pandas" href="python/pandas/pandas_CAT.html" title="Pandas CATS">
+                  CAT
+                </a>
+                <br />
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-scipy" href="python/scipy/scipy_Exercises.html" title="SciPy Exercises">
+                  SciPy
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-scipy" href="python/scipy/scipy_Exercises.html" title="SciPy Exercises">
+                  Exercise
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-scipy" href="python/scipy/scipy_CAT.html" title="SciPy CATS">
+                  CAT
+                </a>
+                <br />
+                <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-excel" href="excel/excel_Exercises.html" title="Excel Exercises">
+                  Excel
+                </a>
+                <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-excel" href="excel/excel_Exercises.html" title="Excel Exercises">
+                  Exercise
+                </a>
+                <div style={{ marginTop: 35 }}>
+                  <a
+                    className="w3-bar-item w3-button ga-top-drop w3-center w3-round ga-top-drop-Exercises"
+                    href="Exercises/index.html"
+                    title="W3Schools Exercises"
+                    style={{
+                      display: 'block',
+                      backgroundColor: '#21232c',
+                      border: '1px solid grey',
+                      width: 195,
+                      marginBottom: 16,
+                    }}
+                  >
+                    What is an Exercise?
+                  </a>
+                  <a
+                    className="w3-bar-item w3-button ga-top-drop w3-center w3-round ga-top-drop-CATtest"
+                    href="CATtest/default.html"
+                    title="W3Schools CATS"
+                    style={{ display: 'block', backgroundColor: '#21232c', border: '1px solid grey', width: 195 }}
+                  >
+                    What is a CAT?
+                  </a>
+                </div>
+                <br />
+              </div>
+            </div>
+
+            <div className="w3-col l4 m6">
+              <h3 className="w3-margin-top">JavaScript</h3>
+              <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-js" href="js/js_Exercises.html" title="JavaScript Exercises">
+                JavaScript
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-js" href="js/js_Exercises.html" title="JavaScript Exercises">
+                Exercise
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-js" href="js/js_CAT.html" title="JavaScript CATS">
+                CAT
+              </a>
+              <br />
+              <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-react" href="react/react_Exercises.html" title="React Exercises">
+                React
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-react" href="react/react_Exercises.html" title="React Exercises">
+                Exercise
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-react" href="react/react_CAT.html" title="React CATS">
+                CAT
+              </a>
+              <br />
+              <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-jquery" href="jquery/jquery_Exercises.html" title="jQuery Exercises">
+                jQuery
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-jquery" href="jquery/jquery_Exercises.html" title="jQuery Exercises">
+                Exercise
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-jquery" href="jquery/jquery_CAT.html" title="jQuery CATS">
+                CAT
+              </a>
+              <br />
+              <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-vue" href="vue/vue_Exercises.html" title="Vue Exercises">
+                Vue
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-vue" href="vue/vue_Exercises.html" title="Vue Exercises">
+                Exercise
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-vue" href="vue/vue_CAT.html" title="Vue CATS">
+                CAT
+              </a>
+              <br />
+            </div>
+          </div>
+          <br />
+        </div>
+      </nav>
+       )}
+
+      {/* {showExams && (
+      <nav
+        id="nav_certified"
+        className="w3-hide-small navex"
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          top: 56,
+          overflowY: 'scroll',
+          backgroundColor: '#282A35',
+          color: 'white',
+          paddingBottom: 60,
+        }}
+      >
+        <div className="w3-content" style={{ maxWidth: 1100, fontSize: 18, paddingLeft: '3%' }}>
+           <span
+              className="w3-button w3-xxxlarge w3-display-topright closeaccbtn w3-hide-small"
+              onClick={closeExams}
+            >
+            &times;
+          </span>
+          <br />
+          <div className="w3-row-padding w3-bar-block">
+            <div className="w3-container" style={{ paddingLeft: 13, position: 'relative', marginBottom: 25 }}>
+              <h2 style={{ color: '#FFF4A3' }}>
+                <b>Main Exam</b>
+              </h2>
+            </div>
+
+            <div className="w3-col l4 m6">
+              <h3 className="w3-margin-top">HTML and CSS</h3>
+              <a
+                className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-cert-html"
+                href="https://campus.w3schools.com/collections/certifications/products/html-certificate"
+                title="HTML Certification Exam"
+                target="_blank"
+              >
+                HTML
+              </a>
+              <a
+                className="ws-btn acclink-text ga-top-drop ga-top-drop-cert-html"
+                href="https://campus.w3schools.com/collections/certifications/products/html-certificate"
+                title="HTML Certification Exam"
+                target="_blank"
+              >
+                Certificate
+              </a>
+              <a
+                className="ws-btn acclink-text ga-top-drop ga-top-drop-course-html"
+                href="https://campus.w3schools.com/collections/course-catalog/products/html-course"
+                title="Paid HTML Course"
+                target="_blank"
+              >
+                Course
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-bootcamp-html" href="bootcamp/bootcamp_htmlcss.html" title="HTML and CSS Bootcamp">
+                Bootcamp
+              </a>
+              <br />
+              <a
+                className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-cert-css"
+                href="https://campus.w3schools.com/collections/certifications/products/css-certificate"
+                title="CSS Certification Exam"
+                target="_blank"
+              >
+                CSS
+              </a>
+              <a
+                className="ws-btn acclink-text ga-top-drop ga-top-drop-cert-css"
+                href="https://campus.w3schools.com/collections/certifications/products/css-certificate"
+                title="CSS Certification Exam"
+                target="_blank"
+              >
+                Certificate
+              </a>
+              <a
+                className="ws-btn acclink-text ga-top-drop ga-top-drop-course-css"
+                href="https://campus.w3schools.com/collections/course-catalog/products/css-course"
+                title="Paid CSS Course"
+                target="_blank"
+              >
+                Course
+              </a>
+              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-bootcamp-css" href="bootcamp/bootcamp_htmlcss.html" title="HTML and CSS Bootcamp">
+                Bootcamp
+              </a>
+              <br />
+              <a
+                className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-cert-bs3"
+                href="https://campus.w3schools.com/collections/certifications/products/bootstrap-3-certificate"
+                title="Bootstrap Certification Exam"
+                target="_blank"
+              >
+                Bootstrap
+              </a>
+              <a
+                className="ws-btn acclink-text ga-top-drop ga-top-drop-cert-bs3"
+                href="https://campus.w3schools.com/collections/certifications/products/bootstrap-3-certificate"
+                title="Bootstrap Certification Exam"
+                target="_blank"
+              >
+                Certificate
+              </a>
+              <a
+                className="ws-btn acclink-text ga-top-drop ga-top-drop-course-bs"
+                href="https://campus.w3schools.com/collections/single-courses/products/bootstrap-course"
+                title="Paid Bootstrap Course"
+                target="_blank"
+              >
+                Course
+              </a>
+              <br />
+              <div className="w3-hide-small">
+                <h3 style={{ marginTop: 35 }}>Data Analytics</h3>
+                <a
+                  className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-course-data-analytics"
+                  href="https://campus.w3schools.com/products/data-analytics-program"
+                  title="Paid Data Analytics Course"
+                  target="_blank"
+                >
+                  Data Analytics
+                </a>
+                <a
+                  className="ws-btn acclink-text ga-top-drop ga-top-drop-course-data-analytics"
+                  href="https://campus.w3schools.com/products/data-analytics-program"
+                  title="Paid Data Analytics Course"
+                  target="_blank"
+                >
+                  Course
+                </a>
+                <br />
+                <a
+                  className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-course-numpy"
+                  href="https://campus.w3schools.com/products/numpy-course"
+                  title="Paid NumPy Course"
+                  target="_blank"
+                >
+                  NumPy
+                </a>
+                <a
+                  className="ws-btn acclink-text ga-top-drop ga-top-drop-course-numpy"
+                  href="https://campus.w3schools.com/products/numpy-course"
+                  title="Paid NumPy Course"
+                  target="_blank"
+                >
+                  Course
+                </a>
+                <br />
+                <a
+                  className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-course-scipy"
+                  href="https://campus.w3schools.com/products/pandas-course"
+                  title="Paid SciPy Course"
+                  target="_blank"
+                >
+                  Pandas
+                </a>
+                <a
+                  className="ws-btn acclink-text ga-top-drop ga-top-drop-course-scipy"
+                  href="https://campus.w3schools.com/products/pandas-course"
+                  title="Paid SciPy Course"
+                  target="_blank"
+                >
+                  Course
+                </a>
+                <br />
+                <a
+                  className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-cert-excel"
+                  href="https://campus.w3schools.com/products/excel-certificate"
+                  title="Excel Certification Exam"
+                  target="_blank"
+                >
+                  Excel
+                </a>
+                <a
+                  className="ws-btn acclink-text ga-top-drop ga-top-drop-cert-excel"
+                  href="https://campus.w3schools.com/products/excel-certificate"
+                  title="Excel Certification Exam"
+                  target="_blank"
+                >
+                  Certificate
+                </a>
+                <br />
+                <a
+                  className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-course-some"
+                  href="https://campus.w3schools.com/collections/course-best-sellers/products/social-media-marketing-course"
+                  title="Paid Social Media Course"
+                  target="_blank"
+                >
+                  Social Media
+                </a>
+                <a
+                  className="ws-btn acclink-text ga-top-drop ga-top-drop-course-some"
+                  href="https://campus.w3schools.com/collections/course-best-sellers/products/social-media-marketing-course"
+                  title="Paid Social Media Course"
+                  target="_blank"
+                >
+                  Course
+                </a>
+                <br />
+                <div className="w3-hide-large">
+                  <h3 className="w3-hide-large w3-hide-small" style={{ marginTop: 30 }}>
+                    Programs
+                  </h3>
+                  <a
+                    className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-course-fullaccess"
+                    href="https://campus.w3schools.com/collections/course-catalog/products/w3schools-full-access-course"
+                    title="Paid Full Access Course"
+                    target="_blank"
+                  >
+                    Full Access{' '}
+                    <span className="ribbon-topnav ws-green" style={{ fontSize: 13, fontWeight: 'normal' }}>
+                      Best Value!
+                    </span>
+                  </a>
+                  <br />
+                  <a
+                    className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-cert-front-end"
+                    href="https://campus.w3schools.com/collections/certifications/products/front-end-certificate"
+                    title="Front End Certification Exam"
+                    target="_blank"
+                  >
+                    Front End
+                  </a>
+                  <a
+                    className="ws-btn acclink-text ga-top-drop ga-top-drop-cert-front-end"
+                    href="https://campus.w3schools.com/collections/certifications/products/front-end-certificate"
+                    title="Front End Certification Exam"
+                    target="_blank"
+                  >
+                    Certificate
+                  </a>
+                  <a
+                    className="ws-btn acclink-text ga-top-drop ga-top-drop-course-front-end"
+                    href="https://campus.w3schools.com/collections/course-catalog/products/front-end-course"
+                    title="Paid Front End Development Course"
+                    target="_blank"
+                  >
+                    Course
+                  </a>
+                  <a
+                    className="ws-btn acclink-text ga-top-drop ga-top-drop-bootcamp-front-end"
+                    href="bootcamp/bootcamp_frontend.html"
+                    title="Front End Bootcamp"
+                  >
+                    Bootcamp
+                  </a>
+                  <br />
+                  <a
+                    className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-cert-web-dev"
+                    href="https://campus.w3schools.com/collections/certifications/products/modern-web-development-certification"
+                    title="Web Development Certification"
+                    target="_blank"
+                  >
+                    Web Dev.
+                  </a>
+                  <a
+                    className="ws-btn acclink-text ga-top-drop ga-top-drop-cert-web-dev"
+                    href="https://campus.w3schools.com/collections/certifications/products/modern-web-development-certification"
+                    title="Web Development Certification"
+                    target="_blank"
+                  >
+                    Certificate
+                  </a>
+                  <a
+                    className="ws-btn acclink-text ga-top-drop ga-top-drop-course-web-dev"
+                    href="https://campus.w3schools.com/collections/course-best-sellers/products/learn-modern-web-development"
+                    title="Paid Web Development Course"
+                    target="_blank"
+                  >
+                    Course
+                  </a>
+                  <br />
+                  <a
+                    className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-cert-web-app"
+                    href="https://campus.w3schools.com/collections/certifications/products/web-application-development-certificates"
+                    title="Web Application Development Certification"
+                    target="_blank"
+                  >
+                    Web App
+                  </a>
+                  <a
+                    className="ws-btn acclink-text ga-top-drop ga-top-drop-cert-web-app"
+                    href="https://campus.w3schools.com/collections/certifications/products/web-application-development-certificates"
+                    title="Web Application Development Certification"
+                    target="_blank"
+                  >
+                    Certificate
+                  </a>
+                  <a
+                    className="ws-btn acclink-text ga-top-drop ga-top-drop-course-web-app"
+                    href="https://campus.w3schools.com/collections/course-best-sellers/products/web-application-development-course"
+                    title="Paid Web Application Course"
+                    target="_blank"
+                  >
+                    Course
+                  </a>
+                  <br />
+                  <a
+                    className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-cert-web-design"
+                    href="https://campus.w3schools.com/collections/certifications/products/web-design-certification"
+                    title="Web Design Certification Exam"
+                    target="_blank"
+                  >
+                    Web Design
+                  </a>
+                  <a
+                    className="ws-btn acclink-text ga-top-drop ga-top-drop-cert-web-design"
+                    href="https://campus.w3schools.com/collections/certifications/products/web-design-certification"
+                    title="Web Design Certification Exam"
+                    target="_blank"
+                  >
+                    Certificate
+                  </a>
+                  <a
+                    className="ws-btn acclink-text ga-top-drop ga-top-drop-course-web-design"
+                    href="https://campus.w3schools.com/collections/course-best-sellers/products/learn-web-design"
+                    title="Paid Web Design Course"
+                    target="_blank"
+                  >
+                    Course
+                  </a>
+                  <br />
+                </div>
+              </div>
+            </div>
+            <br />
+          </div>
+        </div>
+      </nav>
+      )} */}
+
+      {showServices && (
+      <nav
+        id="nav_services"
+        className="w3-hide-small navex"
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          top: 56,
+          overflowY: 'scroll',
+          backgroundColor: '#282A35',
+          color: 'white',
+          paddingBottom: 60,
+        }}
+      >
+        <div className="w3-content" style={{ maxWidth: 1100, fontSize: 18, paddingLeft: '3%' }}>
+           <span
+              className="w3-button w3-xxxlarge w3-display-topright closeaccbtn w3-hide-small"
+              onClick={closeServices}
+            >
+            &times;
+          </span>
+          <br />
+          <div className="w3-row-padding serviceboxes">
+            <div
+              className="w3-container"
+              style={{ paddingLeft: 13, position: 'relative', marginBottom: 25 }}
+            >
+              <h2 style={{ color: '#FFF4A3' }}>
+                <b>All Our Services</b>
+              </h2>
+              <p style={{ fontSize: 17 }}>
+                W3Schools offers a wide range of services and products for beginners and professionals,
+                <br className="w3-hide-medium w3-hide-small" /> helping millions of people everyday to
+                learn and master new skills.
+              </p>
+            </div>
+
+            <div className="w3-col m4 s12">
+              <a
+                href="tutorials/index.html"
+                className="serviceslink ga-top-drop ga-top-drop-services-tut"
+                title="Tutorials"
+              >
+                <div className="w3-padding services w3-round">
+                  <h4>Free Tutorials</h4>
+                  <p>Enjoy our free tutorials like millions of other internet users since 1999</p>
+                </div>
+              </a>
+            </div>
+
+            <div className="w3-col m4 s12">
+              <a
+                href="references/index.html"
+                className="serviceslink ga-top-drop ga-top-drop-services-ref"
+                title="References"
+              >
+                <div className="w3-padding services w3-round">
+                  <h4>References</h4>
+                  <p>Explore our selection of references covering all popular coding languages</p>
+                </div>
+              </a>
+            </div>
+
+            <div className="w3-col m4 s12">
+              <a
+                href="spaces/index.html"
+                className="serviceslink ga-top-drop ga-top-drop-services-spaces"
+                title="Create a Website"
+              >
+                <div className="w3-padding services w3-round">
+                  <h4>Create a Website</h4>
+                  <p>
+                    Create your own website with <strong>W3Schools Spaces</strong> - no setup required
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div className="w3-row-padding serviceboxes" style={{ marginTop: 30 }}>
+            <div className="w3-col m4 s12">
+              <a
+                href="Exercises/index.html"
+                className="serviceslink ga-top-drop ga-top-drop-services-ex"
+                title="Test yourself with Exercises"
+              >
+                <div className="w3-padding services w3-round">
+                  <h4>Exercises</h4>
+                  <p>Test your skills with different Exercises</p>
+                </div>
+              </a>
+            </div>
+
+            <div className="w3-col m4 s12">
+              <a
+                href="CATtest/default.html"
+                className="serviceslink ga-top-drop ga-top-drop-services-qz"
+                title="Test yourself with CATS"
+              >
+                <div className="w3-padding services w3-round">
+                  <h4>CATS</h4>
+                  <p>Test yourself with multiple choice questions</p>
+                </div>
+              </a>
+            </div>
+
+            <div className="w3-col m4 s12">
+              <a
+                href="https://campus.w3schools.com/collections/certifications"
+                className="serviceslink ga-top-drop ga-top-drop-services-cert"
+                target="_blank"
+                title="Main Exam"
+              >
+                <div className="w3-padding services w3-round" style={{ position: 'relative' }}>
+                  <h4>Main Exam</h4>
+                  <p>Document your knowledge.</p>
+                  <svg
+                    style={{ position: 'absolute', top: 15, right: 25 }}
+                    width="15"
+                    height="36"
+                    viewBox="0 0 12 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6.65723 6.24707C6.76704 5.91764 7.233 5.91765 7.34281 6.24707L7.98828 8.1835C8.276 9.04666 8.95332 9.72399 9.81648 10.0117L11.7529 10.6572C12.0824 10.767 12.0824 11.233 11.7529 11.3428L9.81649 11.9883C8.95332 12.276 8.27599 12.9533 7.98828 13.8165L7.34281 15.7529C7.233 16.0823 6.76704 16.0823 6.65723 15.7529L6.01173 13.8165C5.72401 12.9533 5.04669 12.276 4.18353 11.9883L2.24707 11.3428C1.91764 11.233 1.91764 10.767 2.24707 10.6572L4.18353 10.0117C5.04669 9.72399 5.72401 9.04667 6.01173 8.18352L6.65723 6.24707Z"
+                      fill="#9763f6"
+                    ></path>
+                    <path
+                      d="M2.79434 1.14824C2.86023 0.950586 3.1398 0.950587 3.20569 1.14824L3.59297 2.3101C3.7656 2.828 4.172 3.2344 4.6899 3.40703L5.85177 3.79432C6.04942 3.86021 6.04942 4.13978 5.85177 4.20567L4.6899 4.59296C4.172 4.76559 3.7656 5.17199 3.59297 5.68989L3.20569 6.85176C3.13981 7.04941 2.86023 7.04942 2.79434 6.85176L2.40704 5.68988C2.23441 5.17198 1.82801 4.76559 1.31012 4.59296L0.148241 4.20567C-0.0494137 4.13978 -0.0494138 3.86021 0.148241 3.79432L1.31012 3.40703C1.82802 3.2344 2.23441 2.82801 2.40704 2.31011L2.79434 1.14824Z"
+                      fill="#9763f6"
+                    ></path>
+                    <path
+                      d="M9.8629 0.0988265C9.90682 -0.032943 10.0932 -0.0329419 10.1371 0.098828L10.3953 0.873401C10.5104 1.21867 10.7813 1.4896 11.1266 1.60469L11.9012 1.86288C12.0329 1.9068 12.0329 2.09319 11.9012 2.13711L11.1266 2.39531C10.7813 2.51039 10.5104 2.78133 10.3953 3.12659L10.1371 3.90117C10.0932 4.03294 9.90682 4.03294 9.8629 3.90117L9.6047 3.12659C9.48961 2.78132 9.21868 2.5104 8.87342 2.39531L8.09883 2.13711C7.96706 2.09319 7.96706 1.9068 8.09883 1.86288L8.87342 1.60469C9.21868 1.4896 9.48961 1.21867 9.6047 0.873408L9.8629 0.0988265Z"
+                      fill="#9763f6"
+                    ></path>
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </div>
+          <br />
+        </div>
+      </nav>
+      )}
+      
+      <div className="topnav notranslate" id="topnav" style={{ position: 'fixed', top: 56 }}>
+        <div style={{ overflow: 'auto' }}>
+          <div className="w3-bar w3-left topnavbar" style={{ width: '100%', overflow: 'hidden', height: 32 }}>
+            <a
+              href="javascript:void(0);"
+              className="topnav-icons fa fa-menu w3-hide-large w3-hide-medium w3-hide-small w3-left w3-bar-item w3-button ga-nav"
+              style={{ lineHeight: 1.1, paddingTop: '8px!important', paddingBottom: '7px!important' }}
+             // You should implement open_menu() function
+              title="Menu"
+            ></a>
+            <div className="units">
+            {goals.length > 0 ? (
+                <div>
+                  {goals.map((goal) => (
+                    <a className="w3-bar-item w3-button ga-nav" href="css/default.html" title="CSS Tutorial" key={goal._id}>{goal.text}</a>
+                  ))}
+                </div>
+              ) : (
+                <h3>NO Units Available</h3>
+              )}
+            </div>
+            <a
+              href="javascript:void(0);"
+              className="topnav-icons fa w3-right w3-bar-item w3-button ga-nav"
+              style={{ lineHeight: '1.1', paddingTop: '7px!important', paddingBottom: '7px!important' }}
+               // You should implement gSearch() function
+              title="Search W3Schools"
+            >
+              &#xe802;
+            </a>
+            <a
+              href="javascript:void(0);"
+              className="topnav-icons fa w3-right w3-bar-item w3-button ga-nav"
+              style={{ lineHeight: '1.1', paddingTop: '7px!important', paddingBottom: '7px!important' }}
+            // You should implement gTra() function
+              title="Translate W3Schools"
+            >
+              &#xe801;
+            </a>
+            <a
+              href="javascript:void(0);"
+              className="topnav-icons fa w3-right w3-bar-item w3-button ga-nav"
+              style={{ lineHeight: '1.1', paddingTop: '7px!important', paddingBottom: '7px!important' }}
+             
+            >
+              &#xe80b;
+            </a>
+          </div>
+
+          <div
+            style={{
+              display: 'none',
+              position: 'absolute',
+              zIndex: 4,
+              right: 52,
+              height: 30,
+              top: -4,
+              backgroundColor: '#282A35',
+              letterSpacing: 'normal',
+            }}
+            id="googleSearch"
+          >
+            <div className="gcse-search"></div>
+          </div>
+          <div
+            style={{
+              display: 'none',
+              position: 'absolute',
+              zIndex: 3,
+              right: 111,
+              paddingTop: 3,
+              height: 32,
+              top: -3,
+              backgroundColor: '#282A35',
+              textAlign: 'right',
+            }}
+            id="google_translate_element"
+          ></div>
+
+          <div id="darkmodemenu" className="ws-black">
+            <input
+              id="radio_darkpage"
+              type="checkbox"
+              name="radio_theme_mode"
+             // You should implement click_darkpage() function
+            />
+            <label htmlFor="radio_darkpage"> Dark mode</label>
+            <br />
+            <input
+              id="radio_darkcode"
+              type="checkbox"
+              name="radio_theme_mode"
+             // You should implement click_darkcode() function
+            />
+            <label htmlFor="radio_darkcode"> Dark code</label>
+          </div>
+        </div>
+      </div>
+      <div id="footer" className="footer w3-container w3-white">
+       
+
+      </div>
     </div>
   );
-}
+};
 
 export default Dashboard;

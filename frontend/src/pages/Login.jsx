@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { FaSignInAlt } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { login, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -56,14 +56,20 @@ function Login() {
   }
 
   return (
-    <>
-      <section className='heading'>
+    <div className='container'>
+      <section className='heading' style={{color: '#ffff'}} >
+       
         <h1>
           <FaSignInAlt /> Login
         </h1>
-        <p>Login and start setting goals</p>
       </section>
 
+      <section className='heading' >
+       
+       <h1>
+         <FaSignInAlt /> Login
+       </h1>
+     </section>
       <section className='form'>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
@@ -94,9 +100,14 @@ function Login() {
               Submit
             </button>
           </div>
+          <p>you have no account </p> 
+          <Link to='/register' style={{ textDecoration: 'none', color: 'inherit' }}>
+              Sign Up
+            </Link>
         </form>
       </section>
-    </>
+    </div>
+   
   )
 }
 

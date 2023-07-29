@@ -64,13 +64,16 @@ function Register() {
 
   return (
     <>
+      <section className='heading' style={{color: '#ffff'}}>
+        <h1>
+          <FaUser /> Register
+        </h1>
+      </section>
       <section className='heading'>
         <h1>
           <FaUser /> Register
         </h1>
-        <p>Please create an account</p>
       </section>
-
       <section className='form'>
         <form onSubmit={onSubmit}>
           <div className='form-group'>

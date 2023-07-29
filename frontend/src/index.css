@@ -1,137 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+.container{
+  margin-left: 100px;
+  margin-right: 100px;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 li{
   list-style: none;
 }
-
-body {
-  background: #8758ff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.App {
-  text-align: center;
-}
-
-h1, h2 {
-  color: #fff;
-  margin-bottom: 0.5rem;
-  font-size: 1.75rem;
-  text-align: center;
-}
-
-.TodoWrapper {
-  background: #1A1A40;
-  margin-top: 5rem;
-  padding: 2rem;
-  border-radius: 5px;
-}
-
-.TodoForm {
-  width: 100%;
-}
-
-.todo-input {
-  outline: none;
-  background: none;
-  height: 45px;
-  border-radius: 10px;
-  border: 1px solid #8758ff;;
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  width: 300px;
-  color: #fff;
-}
-
-.todo-input::placeholder {
-  color: #ffffff4d;
-  
-}
-
-.time-input {
-  outline: none;
-  background: none;
-  border: 1px solid #8758ff;;
-  padding: 0.55rem;
-  cursor: pointer;
-  color: #fff;
-  height: 45px;
-  border-radius: 10px;
-  
-}
-.todo-btn {
-  background: #8758ff;
-  color: #fff;
-  border: 1px solid #8758ff;;
-  padding: 0.55rem;
-  cursor: pointer;
-  height: 45px;
-  border-radius: 10px;
-}
-
-.Todo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #8758ff;
-  color: #fff;
-  padding: 0.75rem 1rem;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-  cursor: pointer;
-}
-
-.fa-trash {
-  margin-left: 0.75rem;
-}
-
-.completed {
-  color: #1A1A40;
-  text-decoration: line-through;
-}
-.checkbox-and-text {
-  display: flex;
-  flex-direction: row;
-  }
-  .text{
-    margin-left: 10px;
-  }
-
-.checkbox {
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-  background-color:aliceblue;
-	transition: 0.4s;
-}
-
-.completed .checkbox {
-	background-color:#1A1A40;
-}
-.delete-todo:hover {
-  color: rgb(255, 24, 24);
-  }
-  .edit-todo:hover {
-    color:#1A1A40;
-    }
-
-    h3{
-      text-align: center;
-      color: #fff;
-    }
- 
-span {
-  padding-right: 5px;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -169,33 +43,16 @@ span {
   font-weight: 700;
   margin-bottom: 50px;
   padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .heading p {
   color: #828282;
 }
 
-.goals {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
 
-.goal {
-  background-color: #f4f4f4;
-  margin: 10px 0;
-  padding: 20px 0 10px;
-  position: relative;
-}
-
-.goal .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  cursor: pointer;
-  border: none;
-  background: none;
-}
 
 .form,
 .content {
@@ -293,12 +150,23 @@ span {
   .form {
     width: 90%;
   }
-
+  .container{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
   .heading h1 {
     font-size: 2rem;
   }
 
   .heading p {
     font-size: 1.5rem;
+  }
+}
+
+
+/* CSS for larger screens (over 768px) */
+@media (min-width: 769px) {
+  .menu-bar {
+    display: none; /* Hide the link for larger screens */
   }
 }
