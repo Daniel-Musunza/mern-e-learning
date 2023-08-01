@@ -90,7 +90,7 @@ function Header() {
     </a>
 
     <a onClick={toggleExercises} className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-exc-and-quz" id="navbtn_Exercises" title="Exercises and CATS">
-     Questions<i className='fa fa-caret-down' style={{ fontSize: '15px', display: showExercises ? 'none' : 'inline' }}></i>
+     Exercises and CATS<i className='fa fa-caret-down' style={{ fontSize: '15px', display: showExercises ? 'none' : 'inline' }}></i>
       <i className='fa fa-caret-up' style={{ display: showExercises ? 'inline' : 'none', fontSize: '15px' }}></i>
     </a>
 
@@ -232,7 +232,7 @@ function Header() {
         </div>
       </div>)}
       <a onClick={toggleExercises} className="w3-button w3-block ga-top ga-top-menu-exc-and-quz" style={{ fontSize: '22px' }} href="javascript:void(0);">
-        Questions<i className='fa fa-caret-down w3-right'></i>
+        Exercises and CATS<i className='fa fa-caret-down w3-right'></i>
       </a>
       {showExercises && (<div id="sectionxs_Exercises" className="w3-show" style={{ backgroundColor: '#282A35', color: 'white' }}>
         <div className="w3-content" style={{ maxWidth: 1100, fontSize: 18, paddingLeft: '3%' }}>
@@ -246,7 +246,7 @@ function Header() {
           <div className="w3-row-padding w3-bar-block">
             <div className="w3-container" style={{ paddingLeft: 13, position: 'relative', marginBottom: 25 }}>
               <h2 style={{ color: '#FFF4A3' }}>
-                <b>Questions</b>
+                <b>Exercises and CATS</b>
               </h2>
             </div>
 
@@ -805,7 +805,7 @@ function Header() {
               >
                 <div className="w3-padding services w3-round">
                   <h4>CATS</h4>
-                  <p>Test yourself with multiple choice questions</p>
+                  <p>Test yourself with multiple choice Exercises and CATS</p>
                 </div>
               </a>
             </div>
