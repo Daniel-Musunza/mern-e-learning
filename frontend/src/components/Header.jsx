@@ -199,7 +199,7 @@ function Header() {
           <div className="w3-row-padding w3-bar-block">
             <div className="w3-container" style={{ paddingLeft: '13px', position: 'relative', marginBottom: '25px' }}>
               <h2 style={{ color: '#FFF4A3' }}>
-                <b>Subjects/Units</b>
+                <b>Tutorial Notes</b>
               </h2>
             </div>
             <div className="w3-col l4 m6">
