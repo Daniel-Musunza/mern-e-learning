@@ -589,32 +589,23 @@ const Dashboard = () => {
                 <b>Tutorial Notes</b>
               </h2>
             </div>
-            <div className="w3-col l4 m6">
-              <h3 className="w3-margin-top">HTML and CSS</h3>
-              <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html" href="html/default.html" title="HTML Tutorial">
-                <span className="learn-span">Learn</span> HTML
-              </a>
-              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html" href="html/default.html" title="HTML Tutorial">Tutorial</a>
-              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ref-html" href="tags/default.html" title="HTML Reference">Reference</a>
-              <br />
-              {/* More anchor tags for HTML and CSS */}
-              {/* ... */}
-            </div>
-            <div className="w3-col l4 m6">
-              <h3 className="w3-margin-top">JavaScript</h3>
-              <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-js" href="js/default.html" title="JavaScript Tutorial">
-                <span className="learn-span">Learn</span> JavaScript
-              </a>
-              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-js" href="js/default.html" title="JavaScript Tutorial">
-                Tutorial
-              </a>
-              <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ref-js" href="jsref/default.html" title="JavaScript Reference">
-                Reference
-              </a>
-              <br />
-              {/* More anchor tags for JavaScript and other subjects */}
-              {/* ... */}
-            </div>
+             {subjects.length > 0 ? (
+                <div>
+                  {subjects.map((subject) => (
+                    <div className="w3-col l4 m6">
+                        <h3 className="w3-margin-top">{subject.text}</h3>
+                        <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html" href="">
+                          <span className="learn-span">Learn</span> 
+                        </a>
+                        <a className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html" href="" title="HTML Tutorial">Tutorial</a>
+                        <br />
+                        {/* More anchor tags for HTML and CSS */}
+                        {/* ... */}
+                      </div>    ))}
+                </div>
+              ) : (
+                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO Units Available</div>
+              )}
           </div>
         </div>
         <br />
