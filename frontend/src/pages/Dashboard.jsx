@@ -233,7 +233,7 @@ const Dashboard = () => {
                     </div>   ))}
                 </div>
               ) : (
-                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO Units Available</div>
+                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO s Available</div>
               )}
             </div>
           </div>
@@ -295,7 +295,7 @@ const Dashboard = () => {
                   </div>))}
                 </div>
               ) : (
-                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO Units Available</div>
+                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO s Available</div>
               )}
 
             </div>
@@ -432,7 +432,7 @@ const Dashboard = () => {
         <a className="w3-bar-item w3-button ga-fp w3-hover-white w3-round w3-large" target="_blank" href="" title="W3Schools on LinkedIn">
           <i className="fa fa-linkedin-square"></i>
         </a>
-        <a className="w3-bar-item w3-button ga-fp w3-hover-white w3-round w3-large" target="_blank" href="" title="Join the W3schools community on Discord">
+        <a className="w3-bar-item w3-button ga-fp w3-hover-white w3-round w3-large" target="_blank" href="" title="Join the W3schools commy on Discord">
           <i className="fa fa-discord"></i>
         </a>
       </div>
@@ -481,7 +481,7 @@ const Dashboard = () => {
                       </div>    ))}
                 </div>
               ) : (
-                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO Units Available</div>
+                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO s Available</div>
               )}
           </div>
         </div>
@@ -554,7 +554,7 @@ const Dashboard = () => {
                   </div> ))}
                 </div>
               ) : (
-                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO Units Available</div>
+                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO s Available</div>
               )}
              
           </div>
@@ -690,7 +690,7 @@ const Dashboard = () => {
              // You should implement open_menu() function
               title="Menu"
             ></a>
-            <div className="units">
+            <div className="s">
             {subjects.length > 0 ? (
                 <div>
                   {subjects.map((subject) => (
@@ -698,7 +698,7 @@ const Dashboard = () => {
                   ))}
                 </div>
               ) : (
-                <a className="w3-bar-item w3-button ga-nav" href="" title="CSS Tutorial">NO Units Available</a>
+                <a className="w3-bar-item w3-button ga-nav" href="" title="CSS Tutorial">NO s Available</a>
               )}
             </div>
             <a

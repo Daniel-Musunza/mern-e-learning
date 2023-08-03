@@ -6,6 +6,6 @@ const {
 
 const { protect } = require('../middleware/authMiddleware');
 
-router.route('/').get(protect, getsubjects).post(protect, setsubject);
+router.route('/').get(protect, getsubjects)
 
 module.exports = router;
