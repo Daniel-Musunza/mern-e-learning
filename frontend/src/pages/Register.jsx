@@ -29,7 +29,7 @@ function Register() {
   const { courses } = useSelector((state) => state.courses);
 
   const [userType, setUserType] = useState('student');
-  const [courseName, setCourseName] = useState('');
+  const [courseName, setCourseName] = useState({ id: '', name: '' });
   const [selectedUnits, setSelectedUnits] = useState([]);
 
   useEffect(() => {
@@ -51,7 +51,8 @@ function Register() {
     if (name === 'userType') {
       setUserType(value);
     } else if (name === 'courseName') {
-      setCourseName(value); // Update the courseName state separately
+      const { id, value } = e.target;
+      setCourseName({ id, name: value });
     } else {
       setFormData((prevState) => ({
         ...prevState,
@@ -166,7 +167,7 @@ const onSubmit = (e) => {
             {/* Add options for different course names */}
             <option value=''>Select Course</option>
             {courses.map((course) => (
-              <option key={course._id} value={course.course_name}>
+              <option key={course._id} value={course._id}>
                 {course.course_name}
               </option>
             ))}
@@ -182,14 +183,14 @@ const onSubmit = (e) => {
             {allsubjects.map((subject) => (
               <>
               <div class="checkbox">
-                <input id={subject.text} class="checkbox__input" type="checkbox"
-                  name={subject.text}
-                  checked={selectedUnits.includes(subject.text)}
-                  onChange={(e) => handleUnitChange(e, subject.text)}
+                <input id={subject.subject} class="checkbox__input" type="checkbox"
+                  name={subject.subject}
+                  checked={selectedUnits.includes(subject.subject)}
+                  onChange={(e) => handleUnitChange(e, subject.subject)}
                 />
-                <label for={subject.text} class="checkbox__label">
+                <label for={subject.subject} class="checkbox__label">
                   <span class="checkbox__custom"></span>
-                 {subject.text}
+                 {subject.subject}
                 </label>
               </div>
               <hr/>

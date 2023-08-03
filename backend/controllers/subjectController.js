@@ -5,13 +5,15 @@ const subject = require('../models/subjectModel')
 
 // @desc    Get subjects
 // @route   GET /api/subjects
-// @access  Private
-
 const getsubjects = asyncHandler(async (req, res) => {
-  const subjects = await subject.find({ user: req.user.id })
+  const userCourseId = req.user.course_id;
 
-  res.status(200).json(subjects)
-})
+  // Fetch subjects based on the provided userCourseId and subjectCourseId
+  const subjects = await subject.find({ course_id: userCourseId });
+
+  res.status(200).json(subjects);
+});
+
 
 const getallsubjects = asyncHandler(async (req, res) => {
   const subjects = await subject.find()

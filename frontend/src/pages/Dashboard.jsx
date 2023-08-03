@@ -222,7 +222,7 @@ const Dashboard = () => {
                 <div>
                   {subjects.map((subject) => (
                     <div className="w3-col l4 m6">
-                      <h3 className="w3-margin-top">{subject.text}</h3>
+                      <h3 className="w3-margin-top">{subject.subject}</h3>
                       <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html">
                         <span className="learn-span">Learn</span> 
                       </a>
@@ -261,7 +261,7 @@ const Dashboard = () => {
                 <div>
                   {subjects.map((subject) => (
                   <div className="w3-col l4 m6">
-                    <h3 className="w3-margin-top">{subject.text}</h3>
+                    <h3 className="w3-margin-top">{subject.subject}</h3>
                     <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html">
                       chapter1
                     </a>
@@ -471,7 +471,7 @@ const Dashboard = () => {
                 <div>
                   {subjects.map((subject) => (
                     <div className="w3-col l4 m6">
-                        <h3 className="w3-margin-top">{subject.text}</h3>
+                        <h3 className="w3-margin-top">{subject.subject}</h3>
                         <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html" href="">
                           <span className="learn-span">Learn</span> 
                         </a>
@@ -522,7 +522,7 @@ const Dashboard = () => {
                 <div>
                   {subjects.map((subject) => (
                   <div className="w3-col l4 m6">
-                    <h3 className="w3-margin-top">{subject.text}</h3>
+                    <h3 className="w3-margin-top">{subject.subject}</h3>
                     <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html" href="" >
                       chapter1
                     </a>
@@ -695,7 +695,7 @@ const Dashboard = () => {
             {subjects.length > 0 ? (
                 <div>
                   {subjects.map((subject) => (
-                    <a className="w3-bar-item w3-button ga-nav" href="css/default.html" title="CSS Tutorial" key={subject._id}>{subject.text}</a>
+                    <a className="w3-bar-item w3-button ga-nav" href="css/default.html" title="CSS Tutorial" key={subject._id}>{subject.subject}</a>
                   ))}
                 </div>
               ) : (

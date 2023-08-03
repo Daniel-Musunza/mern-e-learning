@@ -100,10 +100,7 @@ function Login() {
               Submit
             </button>
           </div>
-          <p>you have no account </p> 
-          <Link to='/register' style={{ textDecoration: 'none', color: 'inherit' }}>
-              Sign Up
-            </Link>
+          
         </form>
       </section>
     </div>

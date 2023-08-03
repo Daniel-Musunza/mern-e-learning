@@ -7,13 +7,9 @@ const subjectSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
-    text: {
+    subject: {
       type: String,
       required: [true, 'Please add a unit'],
-    },
-    time: {
-      type: String,
-      required: [false],
     },
   },
   {
