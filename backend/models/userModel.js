@@ -6,6 +6,15 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, 'Please add a name'],
     },
+    course: {
+      type: String,
+    },
+    resume: {
+      type: Buffer,
+    },
+    units: {
+      type: Array,
+    },
     email: {
       type: String,
       required: [true, 'Please add an email'],

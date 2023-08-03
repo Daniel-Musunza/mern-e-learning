@@ -5,16 +5,19 @@ import { toast } from 'react-toastify'
 import { FaUser } from 'react-icons/fa'
 import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
+import { getallsubjects} from '../features/subjects/allSubjectSlice'
+import { getCourses} from '../features/courses/courseSlice'
 
 function Register() {
   const [formData, setFormData] = useState({
     name: '',
+    resume: '',
     email: '',
     password: '',
     password2: '',
   })
 
-  const { name, email, password, password2 } = formData
+  const { name,   resume, email, password, password2 } = formData
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -22,6 +25,12 @@ function Register() {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   )
+  const { allsubjects} = useSelector((state) => state.allsubjects);
+  const { courses} = useSelector((state) => state.courses);
+
+  const [userType, setUserType] = useState('student');
+  const [courseName, setCourseName] = useState('');
+  const [selectedUnits, setSelectedUnits] = useState([]);
 
   useEffect(() => {
     if (isError) {
@@ -31,32 +40,88 @@ function Register() {
     if (isSuccess || user) {
       navigate('/')
     }
-
+    dispatch(getallsubjects());
+    dispatch(getCourses());
     dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
   const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }))
-  }
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-
-    if (password !== password2) {
-      toast.error('Passwords do not match')
+    const { name, value } = e.target;
+  
+    if (name === 'userType') {
+      setUserType(value);
+    } else if (name === 'courseName') {
+      setCourseName(value); // Update the courseName state separately
     } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
+  
+  
+
+const handleUnitChange = (e, unit) => {
+  if (e.target.checked) {
+    setSelectedUnits((prevUnits) => [...prevUnits, unit]);
+  } else {
+    setSelectedUnits((prevUnits) => prevUnits.filter((u) => u !== unit));
+  }
+};
+
+const onSubmit = (e) => {
+  e.preventDefault();
+
+  if (password !== password2) {
+    toast.error('Passwords do not match');
+  } else {
+    if (userType === 'tutor') {
       const userData = {
         name,
         email,
         password,
+        resume, // Add resume to the userData
+        units: userType === 'tutor' ? selectedUnits : [], // Add selectedUnits if userType is tutor, otherwise an empty array
+      };
+
+      if (userData.resume === '') {
+        toast.error('Please upload your Resume');
       }
 
-      dispatch(register(userData))
+      if (userData.units.length === 0) {
+        toast.error('Please select units');
+      }
+
+      // If there are errors, don't proceed with the registration
+      if (userData.resume === '' || userData.units.length === 0) {
+        return;
+      }
+
+      dispatch(register(userData));
+    } else if (userType === 'student') {
+      const userData = {
+        name,
+        email,
+        password,
+        course: courseName, // Add courseName to the userData
+      };
+
+      if (userData.course === '') {
+        toast.error('Please select a course');
+      }
+
+      // If there are errors, don't proceed with the registration
+      if (userData.course === '') {
+        return;
+      }
+
+      dispatch(register(userData));
     }
   }
+};
+
+
 
   if (isLoading) {
     return <Spinner />
@@ -74,9 +139,79 @@ function Register() {
           <FaUser /> Register
         </h1>
       </section>
-      <section className='form'>
-        <form onSubmit={onSubmit}>
+    <section className='form'>
+      <form onSubmit={onSubmit}>
+        {/* ... */}
+        <div className='form-group'>
+          <select
+            className='form-control'
+            id='userType'
+            name='userType'
+            value={userType}
+            onChange={onChange}
+          >
+            <option value='student'>Student</option>
+            <option value='tutor'>Tutor</option>
+          </select>
+        </div>
+        {userType === 'student' && (
           <div className='form-group'>
+          <select
+            className='form-control'
+            id='courseName'
+            name='courseName'
+            value={courseName}
+            onChange={onChange}  // Use the onChange function here
+          >
+            {/* Add options for different course names */}
+            <option value=''>Select Course</option>
+            {courses.map((course) => (
+              <option key={course.course_name} value={course.course_name}>
+                {course.course_name}
+              </option>
+            ))}
+          </select>
+
+          </div>
+        )}
+        {userType === 'tutor' && (
+          <div className='form-group'>
+            {/* Add checkboxes for selecting units */}
+            <h3 htmlFor="resume" style={{color: '#0077b6'}}>Select Your Subjects</h3>
+            <hr />
+            {allsubjects.map((subject) => (
+              <>
+              <div class="checkbox">
+                <input id={subject.text} class="checkbox__input" type="checkbox"
+                  name={subject.text}
+                  checked={selectedUnits.includes(subject.text)}
+                  onChange={(e) => handleUnitChange(e, subject.text)}
+                />
+                <label for={subject.text} class="checkbox__label">
+                  <span class="checkbox__custom"></span>
+                 {subject.text}
+                </label>
+              </div>
+              <hr/>
+              
+              </>
+            ))}
+            <h3 htmlFor="resume" style={{color: '#0077b6'}}>Upload Resume</h3>
+            <div className='form-group'>
+                <input
+                  type='file'
+                  className='form-control'
+                  id='resume'
+                  name='resume'
+                  value={resume}
+                  title='Upload Resume'
+                  onChange={onChange}
+                />
+              </div>
+            {/* Add more checkboxes for different units */}
+          </div>
+        )}
+         <div className='form-group'>
             <input
               type='text'
               className='form-control'
@@ -120,13 +255,13 @@ function Register() {
               onChange={onChange}
             />
           </div>
-          <div className='form-group'>
-            <button type='submit' className='btn btn-block'>
-              Submit
-            </button>
-          </div>
-        </form>
-      </section>
+        <div className='form-group'>
+          <button type='submit' className='btn btn-block'>
+            Submit
+          </button>
+        </div>
+      </form>
+    </section>
     </>
   )
 }

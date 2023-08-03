@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import subjectService from './subjectService'
+import courseService from './courseService'
 
 const initialState = {
-  subjects: [],
+  courses: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -10,12 +10,11 @@ const initialState = {
 }
 
 // Get user subjects
-export const getsubjects = createAsyncThunk(
-  'subjects/getAll',
+export const getCourses = createAsyncThunk(
+  'courses/getAll',
   async (_, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token
-      return await subjectService.getsubjects(token)
+      return await courseService.getCourses()
     } catch (error) {
       const message =
         (error.response &&
@@ -29,23 +28,23 @@ export const getsubjects = createAsyncThunk(
 )
 
 
-export const subjectSlice = createSlice({
-  name: 'subject',
+export const courseSlice = createSlice({
+  name: 'course',
   initialState,
   reducers: {
     reset: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getsubjects.pending, (state) => {
+      .addCase(getCourses.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(getsubjects.fulfilled, (state, action) => {
+      .addCase(getCourses.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.subjects = action.payload
+        state.allsubjects = action.payload
       })
-      .addCase(getsubjects.rejected, (state, action) => {
+      .addCase(getCourses.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
@@ -53,5 +52,5 @@ export const subjectSlice = createSlice({
   },
 })
 
-export const { reset } = subjectSlice.actions
-export default subjectSlice.reducer
+export const { reset } = courseSlice.actions
+export default courseSlice.reducer

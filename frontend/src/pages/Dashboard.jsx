@@ -17,15 +17,16 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { subjects, isError, message } = useSelector((state) => state.subjects);
+  
 
   useEffect(() => {
     if (isError) {
       console.log(message);
     }
 
-    if (!user) {
-      navigate('/login');
-    }
+    // if (!user) {
+    //   navigate('/login');
+    // }
 
     dispatch(getsubjects());
 
@@ -233,7 +234,7 @@ const Dashboard = () => {
                     </div>   ))}
                 </div>
               ) : (
-                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO s Available</div>
+                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>Register to to see your Units</div>
               )}
             </div>
           </div>
@@ -295,7 +296,7 @@ const Dashboard = () => {
                   </div>))}
                 </div>
               ) : (
-                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO s Available</div>
+                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>Register to to see your Units</div>
               )}
 
             </div>
@@ -481,7 +482,7 @@ const Dashboard = () => {
                       </div>    ))}
                 </div>
               ) : (
-                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO s Available</div>
+                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>Register to to see your Units</div>
               )}
           </div>
         </div>
@@ -554,7 +555,7 @@ const Dashboard = () => {
                   </div> ))}
                 </div>
               ) : (
-                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>NO s Available</div>
+                <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>Register to to see your Units</div>
               )}
              
           </div>
@@ -698,7 +699,7 @@ const Dashboard = () => {
                   ))}
                 </div>
               ) : (
-                <a className="w3-bar-item w3-button ga-nav" href="" title="CSS Tutorial">NO s Available</a>
+                <a className="w3-bar-item w3-button ga-nav" href="" title="CSS Tutorial" style={{display: 'flex', justifyContent: 'center', alignItems:'center'}}>Register to to see your Units</a>
               )}
             </div>
             <a

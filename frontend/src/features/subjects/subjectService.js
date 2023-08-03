@@ -1,8 +1,7 @@
 import axios from 'axios'
 
 const API_URL = '/api/subjects/'
-
-
+const API_URL2 = '/api/subjects/allsubjects/'
 // Get user subjects
 const getsubjects = async (token) => {
   const config = {
@@ -16,8 +15,14 @@ const getsubjects = async (token) => {
   return response.data
 }
 
+const getallsubjects = async (token) => {
+    const response = await axios.get(API_URL2)
+
+  return response.data
+}
 const subjectService = {
   getsubjects,
+  getallsubjects,
 }
 
 

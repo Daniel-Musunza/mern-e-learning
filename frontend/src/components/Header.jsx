@@ -22,9 +22,9 @@ function Header() {
       console.log(message);
     }
 
-    if (!user) {
-      navigate('/login');
-    }
+    // if (!user) {
+    //   navigate('/login');
+    // }
 
     dispatch(getsubjects());
 

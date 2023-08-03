@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import subjectService from './subjectService'
 
 const initialState = {
-  subjects: [],
+  allsubjects: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -10,12 +10,11 @@ const initialState = {
 }
 
 // Get user subjects
-export const getsubjects = createAsyncThunk(
-  'subjects/getAll',
+export const getallsubjects = createAsyncThunk(
+  'allsubjects/getAll',
   async (_, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token
-      return await subjectService.getsubjects(token)
+      return await subjectService.getallsubjects()
     } catch (error) {
       const message =
         (error.response &&
@@ -29,7 +28,7 @@ export const getsubjects = createAsyncThunk(
 )
 
 
-export const subjectSlice = createSlice({
+export const allsubjectSlice = createSlice({
   name: 'subject',
   initialState,
   reducers: {
@@ -37,15 +36,15 @@ export const subjectSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getsubjects.pending, (state) => {
+      .addCase(getallsubjects.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(getsubjects.fulfilled, (state, action) => {
+      .addCase(getallsubjects.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.subjects = action.payload
+        state.allsubjects = action.payload
       })
-      .addCase(getsubjects.rejected, (state, action) => {
+      .addCase(getallsubjects.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
@@ -53,5 +52,5 @@ export const subjectSlice = createSlice({
   },
 })
 
-export const { reset } = subjectSlice.actions
-export default subjectSlice.reducer
+export const { reset } = allsubjectSlice.actions
+export default allsubjectSlice.reducer
