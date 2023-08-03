@@ -2,16 +2,10 @@ import axios from 'axios'
 
 const API_URL = '/api/courses/'
 // Get user courses
-const getCourses = async (token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
+const getCourses = async () => {
+  const response = await axios.get(API_URL)
 
-  const response = await axios.get(API_URL, config)
-
-  return response.data
+return response.data
 }
 
 const courseService = {

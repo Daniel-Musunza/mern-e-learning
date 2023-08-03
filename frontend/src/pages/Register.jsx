@@ -6,7 +6,7 @@ import { FaUser } from 'react-icons/fa'
 import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 import { getallsubjects} from '../features/subjects/allSubjectSlice'
-import { getCourses} from '../features/courses/courseSlice'
+import { fetchCourses } from '../features/courses/courseSlice';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -26,7 +26,7 @@ function Register() {
     (state) => state.auth
   )
   const { allsubjects} = useSelector((state) => state.allsubjects);
-  const { courses} = useSelector((state) => state.courses);
+  const { courses } = useSelector((state) => state.courses);
 
   const [userType, setUserType] = useState('student');
   const [courseName, setCourseName] = useState('');
@@ -34,16 +34,16 @@ function Register() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      toast.error(message);
     }
-
+  
     if (isSuccess || user) {
-      navigate('/')
+      navigate('/');
     }
     dispatch(getallsubjects());
-    dispatch(getCourses());
-    dispatch(reset())
-  }, [user, isError, isSuccess, message, navigate, dispatch])
+    dispatch(fetchCourses()); // Dispatch fetchCourses instead of getCourses
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -166,7 +166,7 @@ const onSubmit = (e) => {
             {/* Add options for different course names */}
             <option value=''>Select Course</option>
             {courses.map((course) => (
-              <option key={course.course_name} value={course.course_name}>
+              <option key={course._id} value={course.course_name}>
                 {course.course_name}
               </option>
             ))}
