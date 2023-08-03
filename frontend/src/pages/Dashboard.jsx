@@ -758,7 +758,7 @@ const Dashboard = () => {
             }}
             id="google_translate_element"
           ></div>
-
+{/* 
           <div id="darkmodemenu" className="ws-black">
             <input
               id="radio_darkpage"
@@ -775,7 +775,7 @@ const Dashboard = () => {
              // You should implement click_darkcode() function
             />
             <label htmlFor="radio_darkcode"> Dark code</label>
-          </div>
+          </div> */}
         </div>
       </div>
       <div id="footer" className="footer w3-container w3-white">

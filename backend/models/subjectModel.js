@@ -15,14 +15,6 @@ const subjectSchema = mongoose.Schema(
       type: String,
       required: [false],
     },
-    completed: {
-      type: Boolean,
-      required: [false],
-    },
-    isEditing: {
-      type: Boolean,
-      required: [false],
-    },
   },
   {
     timestamps: true,
