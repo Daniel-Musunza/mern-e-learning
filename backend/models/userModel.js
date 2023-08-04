@@ -9,6 +9,10 @@ const userSchema = mongoose.Schema(
     course: {
       type: String,
     },
+    course_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'course',
+    },
     resume: {
       type: Buffer,
     },

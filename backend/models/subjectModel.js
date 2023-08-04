@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 
 const subjectSchema = mongoose.Schema(
   {
-    user: {
+    course_id: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User',
+      ref: 'course',
     },
     subject: {
       type: String,

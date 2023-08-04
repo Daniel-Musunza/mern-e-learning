@@ -32,6 +32,7 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     resume, 
     course,
+    course_id,
     units,
     password: hashedPassword,
   })
@@ -43,6 +44,7 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       resume: user.resume,
       course: user.course,
+      course_id: user.course_id,
       units: user.units,
       token: generateToken(user._id),
     })
@@ -65,6 +67,10 @@ const loginUser = asyncHandler(async (req, res) => {
     res.json({
       _id: user.id,
       name: user.name,
+      resume: user.resume,
+      course: user.course,
+      course_id: user.course_id,
+      units: user.units,
       email: user.email,
       token: generateToken(user._id),
     })

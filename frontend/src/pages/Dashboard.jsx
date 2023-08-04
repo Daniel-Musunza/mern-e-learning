@@ -29,7 +29,6 @@ const Dashboard = () => {
     // }
 
     dispatch(getsubjects());
-
     return () => {
       dispatch(reset());
     };
