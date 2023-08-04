@@ -478,8 +478,13 @@ const Dashboard = () => {
                         <h3 className="w3-margin-top">{subject.subject}</h3>
                         <div className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html" >
                           <span className="learn-span">Learn</span> 
-                        </div>
-                        <Link className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html" to="/tutorial-notes" title="HTML Tutorial">Tutorial</Link>
+                        </div>  
+                        <Link
+                          className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html"
+                          to={`/tutorial-notes/${subject._id}`} // Pass the subject's ID as a parameter in the link
+                          title="HTML Tutorial"
+                        >Tutorial</Link>
+                        
                         <br />
                         {/* More anchor tags for HTML and CSS */}
                         {/* ... */}

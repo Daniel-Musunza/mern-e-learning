@@ -28,6 +28,24 @@ export const getsubjects = createAsyncThunk(
   }
 )
 
+export const addNotes = createAsyncThunk(
+  'subjects/update',
+  async (subjectData, thunkAPI) => {
+    try {
+      const { id } = subjectData; // Extract the id from subjectData
+      const token = thunkAPI.getState().auth.user.token;
+      return await subjectService.addNotes(subjectData, id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 export const subjectSlice = createSlice({
   name: 'subject',

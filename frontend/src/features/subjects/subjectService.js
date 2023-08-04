@@ -14,14 +14,26 @@ const getsubjects = async (token) => {
 
   return response.data
 }
+const addNotes = async (subjectData, subjectId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
 
+  const response = await axios.put(API_URL + subjectId, subjectData, config)
+
+  return response.data
+}
 const getallsubjects = async (token) => {
     const response = await axios.get(API_URL2)
 
   return response.data
 }
+
 const subjectService = {
   getsubjects,
+  addNotes,
   getallsubjects,
 }
 
