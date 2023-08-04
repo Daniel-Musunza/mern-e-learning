@@ -4,10 +4,10 @@ const {
   getsubjects,
   getallsubjects
 } = require('../controllers/subjectController');
-
+const { protect } = require('../middleware/authMiddleware');
 
 // Keep this route as it requires authentication to get subjects by user ID
-router.route('/').get( getsubjects);
+router.route('/').get(protect, getsubjects);
 
 // Remove the protect middleware from this route to allow unauthenticated access
 router.route('/allsubjects').get(getallsubjects);

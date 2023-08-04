@@ -90,7 +90,15 @@ const Dashboard = () => {
         <a href="index.html" className="w3-bar-item w3-button w3-hover-none w3-left ga-top ga-top-w3home" title="Home" style={{ width: "75px" }}>
           <img src="favicon.ico" alt="" width="50px" />
         </a>
-
+        {user ? ( 
+          <div className="w3-bar-item w3-button w3-hide-small barex w3-padding-16 ga-top ga-top-cert-and-course ws-hide-750" id="navbtn_certified" title="Your Course" style={{fontWeight: '500px', color: '#0077b6;'}}>
+          {user && user.course_name}
+          </div>
+          ): (
+            <></>
+          )
+        }
+      
         <a
           className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-tut-and-ref"
           id="navbtn_tutorials"
@@ -106,10 +114,7 @@ const Dashboard = () => {
           <i className='fa fa-caret-up' style={{ display: showExercises ? 'inline' : 'none', fontSize: '15px' }}></i>
         </a>
 
-        {/* <a onClick={toggleExams} className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-cert-and-course ws-hide-750" href="javascript:void(0)" id="navbtn_certified" title="Main Exam">
-          Main Exam <i className='fa fa-caret-down' style={{ fontSize: '15px', display: showExams ? 'none' : 'inline' }}></i>
-          <i className='fa fa-caret-up' style={{ display: showExams ? 'inline' : 'none', fontSize: '15px' }}></i>
-        </a> */}
+      
 
         <a onClick={toggleServices} className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-services" href="javascript:void(0)" id="navbtn_services" title="Our Services">
           Services <i className='fa fa-caret-down' style={{ fontSize: '15px', display: showServices ? 'none' : 'inline' }}></i>
@@ -471,10 +476,10 @@ const Dashboard = () => {
                   {subjects.map((subject) => (
                     <div className="w3-col l4 m6">
                         <h3 className="w3-margin-top">{subject.subject}</h3>
-                        <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html" href="">
+                        <div className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html" >
                           <span className="learn-span">Learn</span> 
-                        </a>
-                        <a className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html" href="" title="HTML Tutorial">Tutorial</a>
+                        </div>
+                        <Link className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html" to="/tutorial-notes" title="HTML Tutorial">Tutorial</Link>
                         <br />
                         {/* More anchor tags for HTML and CSS */}
                         {/* ... */}
