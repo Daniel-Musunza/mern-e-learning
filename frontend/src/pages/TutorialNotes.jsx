@@ -54,6 +54,7 @@ function TutorialNotes() {
         height: '100%',
         top: 56,
         overflowY: 'scroll',
+        overflowX: 'none',
         backgroundColor: '#282A35',
         color: 'white',
         paddingBottom: 60,

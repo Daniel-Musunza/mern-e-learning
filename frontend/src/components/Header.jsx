@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
 import { getsubjects} from '../features/subjects/subjectSlice';
+import { getchapters } from '../features/chapters/chapterSlice';
 
 function Header() {
   const [showTutorials, setShowTutorials] = useState(false);
@@ -16,6 +17,7 @@ function Header() {
   const { user } = useSelector((state) => state.auth)
 
   const { subjects, isError, message } = useSelector((state) => state.subjects);
+  const { chapters } = useSelector((state) => state.chapters);
 
   useEffect(() => {
     if (isError) {
@@ -27,7 +29,7 @@ function Header() {
     // }
 
     dispatch(getsubjects());
-
+    dispatch(getchapters());
     return () => {
       dispatch(reset());
     };
@@ -97,8 +99,8 @@ function Header() {
           <i className='fa fa-caret-up' style={{ display: showTutorials ? 'inline' : 'none', fontSize: '15px' }}></i>
         </a>
 
-        <a onClick={toggleExercises} className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-exc-and-quz" id="navbtn_Exercises" title="Exercises and CATS">
-         Exercises and CATS<i className='fa fa-caret-down' style={{ fontSize: '15px', display: showExercises ? 'none' : 'inline' }}></i>
+        <a onClick={toggleExercises} className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-exc-and-quz" id="navbtn_Exercises" title="Chapterwise Questions">
+         Chapterwise Questions<i className='fa fa-caret-down' style={{ fontSize: '15px', display: showExercises ? 'none' : 'inline' }}></i>
           <i className='fa fa-caret-up' style={{ display: showExercises ? 'inline' : 'none', fontSize: '15px' }}></i>
         </a>
 
@@ -212,18 +214,22 @@ function Header() {
              
                 {subjects.length > 0 ? (
                 <div>
-                  {subjects.map((subject) => (
+                 {subjects.map((subject) => (
                     <div className="w3-col l4 m6">
-                      <h3 className="w3-margin-top">{subject.subject}</h3>
-                      <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html">
-                        <span className="learn-span">Learn</span> 
-                      </a>
-                      <a className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html" title="HTML Tutorial">Tutorial</a>
-                      
-                      <br />
-                      {/* More anchor tags for HTML and CSS */}
-                      {/* ... */}
-                    </div>   ))}
+                        <h3 className="w3-margin-top">{subject.subject}</h3>
+                        <div className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html" >
+                          <span className="learn-span">Learn</span> 
+                        </div>  
+                        <Link
+                          className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html"
+                          to={`/tutorial-notes/${subject._id}`} // Pass the subject's ID as a parameter in the link
+                          title="Read Notes"
+                        >Tutorial</Link>
+                        
+                        <br />
+                        {/* More anchor tags for HTML and CSS */}
+                        {/* ... */}
+                      </div>    ))}
                 </div>
               ) : (
                 <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>Register to to see your Units</div>
@@ -232,7 +238,7 @@ function Header() {
           </div>
         </div>)}
         <a onClick={toggleExercises} className="w3-button w3-block ga-top ga-top-menu-exc-and-quz" style={{ fontSize: '22px' }} href="javascript:void(0);">
-          Exercises and CATS<i className='fa fa-caret-down w3-right'></i>
+          Chapterwise Questions<i className='fa fa-caret-down w3-right'></i>
         </a>
         {showExercises && (<div id="sectionxs_Exercises" className="w3-show" style={{ backgroundColor: '#282A35', color: 'white' }}>
           <div className="w3-content" style={{ maxWidth: 1100, fontSize: 18, paddingLeft: '3%' }}>
@@ -246,46 +252,33 @@ function Header() {
             <div className="w3-row-padding w3-bar-block">
               <div className="w3-container" style={{ paddingLeft: 13, position: 'relative', marginBottom: 25 }}>
                 <h2 style={{ color: '#FFF4A3' }}>
-                  <b>Exercises and CATS</b>
+                  <b>Chapterwise Questions</b>
                 </h2>
               </div>
             {subjects.length > 0 ? (
                 <div>
-                  {subjects.map((subject) => (
-                  <div className="w3-col l4 m6">
+                 {subjects.map((subject) => (
+                  <div className="w3-col l4 m6" key={subject._id}>
                     <h3 className="w3-margin-top">{subject.subject}</h3>
-                    <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html">
-                      chapter1
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" href="" >
-                      Exercise
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-html" href="" >
-                      CAT
-                    </a>
-                    <br />
-                    <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-css" href="" >
-                      chapter2
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-css" href="" >
-                      Exercise
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-css" href="">
-                      CAT
-                    </a>
-                    <br />
-                    <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-bs" href="" >
-                     chapter3
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-bs" href="">
-                      Exercise
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-bs" href="" >
-                      CAT
-                    </a>
-                    <br />
-                   
-                  </div>))}
+                    <h4 className="w3-margin-top">Topics</h4>
+                    <ol>
+                      {chapters
+                        .filter((chapter) => chapter.subject_id === subject._id)
+                        .map((chapter) => (
+                          <li key={chapter._id}>
+                            <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html">
+                              {chapter.chapter}
+                            </a>
+                            <Link className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" to={`/questions/${chapter._id}`}>
+                              Questions
+                            </Link>
+                            <br />
+                          </li>
+                        ))}
+                    </ol>
+                  </div>
+                ))}
+
                 </div>
               ) : (
                 <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>Register to to see your Units</div>
@@ -358,7 +351,7 @@ function Header() {
                 >
                   <div className="w3-padding services w3-round">
                     <h4>CATS</h4>
-                    <p>Test yourself with multiple choice Exercises and CATS</p>
+                    <p>Test yourself with multiple choice Chapterwise Questions</p>
                   </div>
                 </a>
               </div>
@@ -466,8 +459,13 @@ function Header() {
                         <h3 className="w3-margin-top">{subject.subject}</h3>
                         <div className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-tut-html" >
                           <span className="learn-span">Learn</span> 
-                        </div>
-                        <Link className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html" to="/tutorial-notes" title="HTML Tutorial">Tutorial</Link>
+                        </div>  
+                        <Link
+                          className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html"
+                          to={`/tutorial-notes/${subject._id}`} // Pass the subject's ID as a parameter in the link
+                          title="Read Notes"
+                        >Tutorial</Link>
+                        
                         <br />
                         {/* More anchor tags for HTML and CSS */}
                         {/* ... */}
@@ -507,44 +505,34 @@ function Header() {
           <div className="w3-row-padding w3-bar-block">
             <div className="w3-container" style={{ paddingLeft: 13, position: 'relative', marginBottom: 25 }}>
               <h2 style={{ color: '#FFF4A3' }}>
-                <b>Exercises and CATS</b>
+                <b>Chapterwise Questions</b>
               </h2>
             </div>
             {subjects.length > 0 ? (
                 <div>
+                  
                   {subjects.map((subject) => (
-                  <div className="w3-col l4 m6">
+                  <div className="w3-col l4 m6" key={subject._id}>
                     <h3 className="w3-margin-top">{subject.subject}</h3>
-                    <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html" href="" >
-                      chapter1
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" href="">
-                      Exercise
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-html" href="">
-                      CAT
-                    </a>
-                    <br />
-                    <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html" href="" >
-                      chapter2
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" href="">
-                      Exercise
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-html" href="">
-                      CAT
-                    </a>
-                    <br /> <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html" href="" >
-                      chapter3
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" href="">
-                      Exercise
-                    </a>
-                    <a className="ws-btn acclink-text ga-top-drop ga-top-drop-qz-html" href="">
-                      CAT
-                    </a>
-                 
-                  </div> ))}
+                    <h4 className="w3-margin-top">Topics</h4>
+                    <ol>
+                      {chapters
+                        .filter((chapter) => chapter.subject_id === subject._id)
+                        .map((chapter) => (
+                          <li key={chapter._id}>
+                            <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html">
+                              {chapter.chapter}
+                            </a>
+                            <Link className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" to={`/questions/${chapter._id}`}>
+                              Questions
+                            </Link>
+                            <br />
+                          </li>
+                        ))}
+                    </ol>
+                  </div>
+                ))}
+
                 </div>
               ) : (
                 <div style={{display:'flex', justifyContent:'center', alignItems: 'center'}}>Register to to see your Units</div>
@@ -627,7 +615,7 @@ function Header() {
                 >
                   <div className="w3-padding services w3-round">
                     <h4>CATS</h4>
-                    <p>Test yourself with multiple choice Exercises and CATS</p>
+                    <p>Test yourself with multiple choice Chapterwise Questions</p>
                   </div>
                 </a>
               </div>

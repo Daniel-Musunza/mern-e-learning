@@ -10,10 +10,13 @@ const subjectSchema = mongoose.Schema(
       type: String,
       required: [true, 'Please add a unit'],
     },
+    notes: {
+      type: String
+    },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model('subject', subjectSchema);
+module.exports = mongoose.model('Subject', subjectSchema);

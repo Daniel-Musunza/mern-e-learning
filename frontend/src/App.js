@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import TutorialNotes from './pages/TutorialNotes'
+import Questions from './pages/Questions'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/tutorial-notes/:id' element={<TutorialNotes />} />
+            <Route path='/questions/:id' element={<Questions />} />
           </Routes>
         </div>
       </Router>

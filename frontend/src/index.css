@@ -146,13 +146,14 @@ li{
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .form {
     width: 90%;
   }
   .notes {
     width: 90%;
     margin: 10px;
+    margin-left: 10px;
   }
   .container{
     margin-left: 10px;
@@ -168,19 +169,18 @@ li{
 }
 .notes{
   max-width: 60%;
-  margin-left: 400px;
-  margin-right: 100px;
+  margin-left: 250px;
+  margin-right: 250px;
   margin-top: 40px;
+  padding: 20px;
+  background-color: #e6e6e6;
+  color: #212121;
 }
 .notes img{
   max-width: 300px;
   height: auto;
 }
 
-.notes code{
-  background-color: #e6e6e6;
-  color: #000;
-}
 
 /* CSS for larger screens (over 768px) */
 @media (min-width: 769px) {
@@ -244,3 +244,19 @@ li{
   transform: scale(1.2);
 }
 
+.section1{
+  min-height: 500px;
+  background-color: #40c9ff;
+}
+.section2{
+  min-height: 200px;
+  background-color:#212121;
+}
+.section3{
+  min-height: 200px;
+  background-color: #e6e6e6;
+}
+.sectio4{
+  min-height: 200px;
+  background-color: #40c9ff;
+}
