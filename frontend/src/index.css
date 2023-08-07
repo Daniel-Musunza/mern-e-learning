@@ -152,12 +152,11 @@ li{
   }
   .notes {
     width: 90%;
-    margin: 10px;
-    margin-left: 10px;
+    margin:10px;
   }
-  .container{
-    margin-left: 10px;
-    margin-right: 10px;
+  .notes img {
+    max-width: 100%;
+    height: auto;
   }
   .heading h1 {
     font-size: 2rem;
@@ -167,24 +166,24 @@ li{
     font-size: 1.5rem;
   }
 }
-.notes{
-  max-width: 60%;
-  margin-left: 250px;
-  margin-right: 250px;
-  margin-top: 40px;
-  padding: 20px;
-  background-color: #e6e6e6;
-  color: #212121;
-}
-.notes img{
-  max-width: 300px;
-  height: auto;
-}
 
 
 /* CSS for larger screens (over 768px) */
-@media (min-width: 769px) {
-
+@media (min-width: 800px) {
+  .notes{
+    max-width: 60%;
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #e6e6e6;
+    color: #212121;
+  }
+  .notes img{
+    max-width: 300px;
+    height: auto;
+  }
+  
   .menu-bar {
     display: none; /* Hide the link for larger screens */
   }

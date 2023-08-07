@@ -36,7 +36,7 @@ function Questions() {
         marginLeft: 0,
       }}
     >
-      <h3>Chapter Questions</h3>
+      <h3 style={{textAlign: 'center'}}>Chapter Questions</h3>
       <ol>
      {filteredQuestions
        .map((question) => (

@@ -606,26 +606,14 @@ const Dashboard = () => {
                   </div>
                 </a>
               </div>
-              <div className="w3-col m4 servic s12">
-                <a
-                  href=""
-                  className="serviceslink ga-top-drop ga-top-drop-services-ex"
-                  title="Test yourself with Exercises"
-                >
-                  <div className="w3-padding services w3-round">
-                    <h4>Exercises</h4>
-                    <p>Test your skills with different Exercises</p>
-                  </div>
-                </a>
-              </div>
-              <div className="w3-col m4 servic s12">
+            <div className="w3-col m4 servic s12">
                 <a
                   href=""
                   className="serviceslink ga-top-drop ga-top-drop-services-qz"
-                  title="Test yourself with CATS"
+                  title="Test yourself with Chapterwise Questions"
                 >
                   <div className="w3-padding services w3-round">
-                    <h4>CATS</h4>
+                    <h4>Chapterwise Questions</h4>
                     <p>Test yourself with multiple choice Chapterwise Questions</p>
                   </div>
                 </a>

@@ -61,7 +61,7 @@ function TutorialNotes() {
         marginLeft: 0,
       }}
     >
-      {/* <div
+       {/* <div
         style={{
           display: 'flex',
           justifyContent: 'center',
@@ -72,10 +72,10 @@ function TutorialNotes() {
           <ReactQuill value={notes} onChange={handleChange} />
           <button onClick={onSubmit}>Submit</button>
         </div>
-      </div> */}
-      <div className='notes'>
+      </div>  */}
+      <div >
       {subject && (
-        <div
+        <div className='notes' 
           dangerouslySetInnerHTML={renderFormattedHTML(subject.notes)}
         ></div>
       )}
