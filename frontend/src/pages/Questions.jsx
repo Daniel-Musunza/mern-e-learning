@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getquestions } from '../features/questions/questionSlice';
 import { getanswers } from '../features/answers/answerSlice';
+import { getchapters } from '../features/chapters/chapterSlice';
 
 function Questions() {
   const { id } = useParams();
@@ -11,14 +12,16 @@ function Questions() {
   useEffect(() => {
     dispatch(getquestions());
     dispatch(getanswers());
+    dispatch(getchapters());
   }, [dispatch]);
 
   const questions = useSelector((state) => state.questions.questions);
   const { answers } = useSelector((state) => state.answers);
+  const { chapters } = useSelector((state) => state.chapters);
 
   // Filter questions based on the matching chapter_id
   const filteredQuestions = questions.filter((question) => question.chapter_id === id);
-
+  const filteredChapter = chapters.find((chapter) => chapter._id === id);
   return (
     <div
       className="container"
@@ -36,15 +39,18 @@ function Questions() {
         marginLeft: 0,
       }}
     >
-      <h3 style={{textAlign: 'center'}}>Chapter Questions</h3>
-      <ol>
+      <div className='questions'>
+      <h3 style={{textAlign: 'center'}}>
+        <span style={{color: '#40c9ff'}}>{filteredChapter.chapter} </span>
+        Questions</h3>
+      <ol className='ol'>
      {filteredQuestions
        .map((question) => (
          <li key={question._id}>
          <h4 className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html">
             {question.question}
          </h4>
-        <ul>
+        <ul className='ul'>
         {answers
           .filter((answer) => answer.question_id === question._id)
           .map((answer) => (
@@ -59,7 +65,8 @@ function Questions() {
          <br />
          </li>
           ))}
-        </ol>
+      </ol>
+      </div>
     </div>
   );
 }

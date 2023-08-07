@@ -153,6 +153,10 @@ li{
   .form {
     width: 90%;
   }
+  .ol.ul{ 
+  max-width: 300px;
+  overflow-x: none;
+  }
   .notes {
     width: 90%;
     margin:10px;
@@ -181,6 +185,13 @@ li{
     padding: 20px;
     background-color: #e6e6e6;
     color: #212121;
+  }
+  .questions{
+    max-width: 60%;
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-top: 40px;
+    padding: 20px;
   }
   .notes img{
     max-width: 300px;
