@@ -147,6 +147,9 @@ li{
 }
 
 @media (max-width: 800px) {
+  .container{
+    margin: 10px;
+  }
   .form {
     width: 90%;
   }

@@ -674,11 +674,11 @@ const Dashboard = () => {
             {subjects.length > 0 ? (
                 <div>
                   {subjects.map((subject) => (
-                    <a className="w3-bar-item w3-button ga-nav" href="css/default.html" title="CSS Tutorial" key={subject._id}>{subject.subject}</a>
+                    <Link className="w3-bar-item w3-button ga-nav" to={`/tutorial-notes/${subject._id}`}  title="Tutorial" key={subject._id}>{subject.subject}</Link>
                   ))}
                 </div>
               ) : (
-                <a className="w3-bar-item w3-button ga-nav" href="" title="CSS Tutorial" style={{display: 'flex', justifyContent: 'center', alignItems:'center'}}>Register to to see your Units</a>
+                <Link className="w3-bar-item w3-button ga-nav" to={'/login'} title="LogIn" style={{display: 'flex', justifyContent: 'center', alignItems:'center'}}>Register to to see your Units</Link>
               )}
             </div>
             <a
