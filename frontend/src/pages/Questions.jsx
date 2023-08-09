@@ -43,11 +43,11 @@ function Questions() {
       <h3 style={{textAlign: 'center'}}>
         <span style={{color: '#40c9ff'}}>{filteredChapter.chapter} </span>
         Questions</h3>
-      <ol className='ol'>
+      <ol className='ol' style={{ listStyle: 'decimal' }}>
      {filteredQuestions
        .map((question) => (
-         <li key={question._id}>
-         <h4 className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html">
+         <li key={question._id} style={{ listStyle: 'decimal' }}>
+         <h4 className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html" style={{color: '#40c9ff'}}>
             {question.question}
          </h4>
         <ul className='ul'>
