@@ -6,6 +6,8 @@ import courseReducer from '../features/courses/courseSlice'
 import chapterReducer from '../features/chapters/chapterSlice'
 import questionReducer from '../features/questions/questionSlice'
 import answerReducer from '../features/answers/answerSlice'
+import useranswerReducer from '../features/answers/useranswerSlice'
+import correctanswerReducer from '../features/answers/correctanswerSlice'
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -15,5 +17,7 @@ export const store = configureStore({
     chapters: chapterReducer,
     questions: questionReducer,
     answers: answerReducer,
+    useranswers: useranswerReducer,
+    correctanswers: correctanswerReducer,
   },
 })

@@ -3,6 +3,38 @@
   margin-right: 100px;
 
 }
+.myscores{
+  background-color: rgb(17, 249, 17);
+  width: 80px;
+  height: 80px;
+  border: 2px #555;
+  border-radius: 50px;
+  position: fixed;
+  right: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
+}
+
+.submitanswers{
+  cursor: pointer;
+  background-color: black;
+  width: 110px;
+  height: fit-content;
+  padding: 10px;
+  font-size: medium;
+  border: 2px #555;
+  border-radius: 25px;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+}
+.selected-answer {
+  color: black;
+  background-color: #ccc;
+}
 li{
   list-style: none;
 }
