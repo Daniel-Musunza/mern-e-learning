@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getquestions } from '../features/questions/questionSlice';
 import { getanswers } from '../features/answers/answerSlice';
-import { submitAnswers, getuseranswers } from '../features/answers/useranswerSlice';
-import { getcorrectanswers } from '../features/answers/correctanswerSlice';
 import { getchapters } from '../features/chapters/chapterSlice';
 
 function Questions() {
@@ -14,30 +12,25 @@ function Questions() {
   useEffect(() => {
     dispatch(getquestions());
     dispatch(getanswers());
-    dispatch(getuseranswers());
-    dispatch(getcorrectanswers());
     dispatch(getchapters());
   }, [dispatch]);
 
   const questions = useSelector((state) => state.questions.questions);
   const { answers } = useSelector((state) => state.answers);
-  const { correctanswers } = useSelector((state) => state.correctanswers);
-  const { useranswers } = useSelector((state) => state.useranswers);
   const { chapters } = useSelector((state) => state.chapters);
 
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [attempted, setAttempted] = useState(0);
 
-  const user = useSelector((state) => state.auth.user);
 
-  const handleAnswerClick = (questionId, answerId) => {
+  const handleAnswerClick = (questionId, answerId, answer) => {
     setSelectedAnswers((prevSelectedAnswers) => ({
       ...prevSelectedAnswers,
-      [questionId]: answerId,
+      [questionId]: { answerId, answer },
     }));
   };
-
+  
   const handleMyScores = async (e) => {
     e.preventDefault();
   
@@ -45,42 +38,26 @@ function Questions() {
     let userScore = 0;
     let userAttempted = 0;
   
+    // Iterate through filtered questions
+    filteredQuestions.forEach((question) => {
+      const selectedAnswer = selectedAnswers[question._id];
+      const correctAnswer = question.correctanswer;
   
-    // Prepare data to send to the API
-    const answerData = filteredQuestions.map((question) => ({
-      user_id: user._id, // Assuming you have the user ID available
-      question_id: question._id,
-      answer_id: selectedAnswers[question._id],
-    }));
+      if (selectedAnswer && selectedAnswer.answer === correctAnswer) {
+        userScore++;
+      }
   
-    try {
-      // Call the submitAnswers function
-      await dispatch(submitAnswers(answerData));
+      if (selectedAnswer) {
+        userAttempted++;
+      }
+    });
   
-      
-      filteredQuestions.forEach((question) => {
-        if (selectedAnswers[question.question_id]) {
-          userAttempted++;
-          const selectedAnswerId = selectedAnswers[question._id];
-          const correctAnswer = correctanswers.find(
-            (answer) => answer.question_id === question.question_id
-          );
-          if (correctAnswer && correctAnswer.answer_id === selectedAnswerId) {
-            userScore++;
-          }
-        }
-      });
-    
-      // Update the state with calculated values
-      setScore(userScore);
-      setAttempted(userAttempted);
-      // Handle success if needed
-    } catch (error) {
-      // Handle error if needed
-    }
+    // Update the state with calculated values
+    setScore(userScore);
+    setAttempted(userAttempted);
+  
+    // Handle success if needed
   };
-  
-  
   
 
   // Filter questions based on the matching chapter_id
@@ -135,23 +112,26 @@ function Questions() {
               <h4 className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html" style={{ color: '#40c9ff' }}>
                 {question.question}
               </h4>
+              <br />
+              <span style={{ color: 'rgb(17, 249, 17)' }}>{question.correctanswer}</span>
               <ul className='ul'>
-                {answers
-                  .filter((answer) => answer.question_id === question._id)
-                  .map((answer) => (
-                    <li key={answer._id}>
-                      <div
-                        className={`w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html ${
-                          selectedAnswers[question._id] === answer._id ? 'selected-answer' : ''
-                        }`}
-                        onClick={() => handleAnswerClick(question._id, answer._id)}
-                      >
-                        {answer.answer}
-                      </div>
-                      <br />
-                    </li>
-                  ))}
-              </ul>
+              {answers
+                .filter((answer) => answer.question_id === question._id)
+                .map((answer) => (
+                  <li key={answer._id}>
+                    <div
+                      className={`w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html ${
+                        selectedAnswers[question._id]?.answerId === answer._id ? 'selected-answer' : ''
+                      }`}
+                      onClick={() => handleAnswerClick(question._id, answer._id, answer.answer)}
+                    >
+                      {answer.answer}
+                    </div>
+                    <br />
+                  </li>
+                ))}
+
+            </ul>
               <br />
             </li>
           ))}

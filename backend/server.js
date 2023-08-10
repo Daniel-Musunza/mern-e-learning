@@ -19,8 +19,6 @@ app.use('/api/courses', require('./routes/courseRoutes'));
 app.use('/api/chapters', require('./routes/chapterRoutes'));
 app.use('/api/questions', require('./routes/questionRoutes'));
 app.use('/api/answers', require('./routes/answerRoutes'));
-app.use('/api/useranswers', require('./routes/useranswerRoutes'));
-app.use('/api/correctanswers', require('./routes/correctanswerRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 
 // Serve frontend
