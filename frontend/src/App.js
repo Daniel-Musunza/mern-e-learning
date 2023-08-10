@@ -7,6 +7,8 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import TutorialNotes from './pages/TutorialNotes'
 import Questions from './pages/Questions'
+import AdministartionDashboard from './administration/AdministrationDashboard'
+import AddCoursesAndSubjects from './administration/AddCoursesAndSubjects'
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Header />
           <Routes>
             <Route path='/' element={<Dashboard />} />
+            <Route path='/dashboard' element={<AdministartionDashboard />} />
+            <Route path='/add-courses' element={<AddCoursesAndSubjects />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/tutorial-notes/:id' element={<TutorialNotes />} />
