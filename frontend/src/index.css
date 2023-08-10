@@ -18,6 +18,14 @@
   font-size: x-large;
 }
 
+.correct-answer {
+  background-color: rgb(17, 249, 17); /* Set the color for correct answers */
+}
+
+.wrong-answer {
+  background-color: red; /* Set the color for wrong answers */
+}
+
 .submitanswers{
   cursor: pointer;
   background-color: black;

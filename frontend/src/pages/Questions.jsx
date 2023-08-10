@@ -22,15 +22,42 @@ function Questions() {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [attempted, setAttempted] = useState(0);
-
+  
+  // Initialize answer styles state
+  const initialAnswerStyles = {};
+  questions.forEach((question) => {
+    answers.forEach((answer) => {
+      initialAnswerStyles[question._id] = {
+        ...initialAnswerStyles[question._id],
+        [answer._id]: {
+          color: 'black',
+          backgroundColor: '#ccc',
+        },
+      };
+    });
+  });
+  const [answerStyles, setAnswerStyles] = useState(initialAnswerStyles);
 
   const handleAnswerClick = (questionId, answerId, answer) => {
     setSelectedAnswers((prevSelectedAnswers) => ({
       ...prevSelectedAnswers,
       [questionId]: { answerId, answer },
     }));
+  
+    // Update answer styles when an answer is selected
+    setAnswerStyles((prevAnswerStyles) => ({
+      ...prevAnswerStyles,
+      [questionId]: {
+        ...prevAnswerStyles[questionId], // Preserve existing styles for other answers
+        [answerId]: {
+          color: 'black',
+          backgroundColor: '#ccc',
+        },
+      },
+    }));
   };
   
+
   const handleMyScores = async (e) => {
     e.preventDefault();
   
@@ -38,25 +65,30 @@ function Questions() {
     let userScore = 0;
     let userAttempted = 0;
   
-    // Iterate through filtered questions
-    filteredQuestions.forEach((question) => {
+    // Update answer styles based on correctness
+    const updatedAnswerStyles = { ...answerStyles };
+    questions.forEach((question) => {
       const selectedAnswer = selectedAnswers[question._id];
       const correctAnswer = question.correctanswer;
-  
-      if (selectedAnswer && selectedAnswer.answer === correctAnswer) {
-        userScore++;
-      }
-  
       if (selectedAnswer) {
+        const answerId = selectedAnswer.answerId;
+        updatedAnswerStyles[question._id] = {
+          ...updatedAnswerStyles[question._id], // Preserve existing styles for other answers
+          [answerId]: {
+            backgroundColor: selectedAnswer.answer === correctAnswer ? 'rgb(17, 249, 17)' : 'red',
+          },
+        };
         userAttempted++;
+        if (selectedAnswer.answer === correctAnswer) {
+          userScore++;
+        }
       }
     });
+    setAnswerStyles(updatedAnswerStyles);
   
     // Update the state with calculated values
     setScore(userScore);
     setAttempted(userAttempted);
-  
-    // Handle success if needed
   };
   
 
@@ -113,25 +145,32 @@ function Questions() {
                 {question.question}
               </h4>
               <br />
-              <span style={{ color: 'rgb(17, 249, 17)' }}>{question.correctanswer}</span>
+              {/* <span style={{ color: 'rgb(17, 249, 17)' }}>{question.correctanswer}</span> */}
               <ul className='ul'>
               {answers
                 .filter((answer) => answer.question_id === question._id)
                 .map((answer) => (
                   <li key={answer._id}>
                     <div
-                      className={`w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html ${
-                        selectedAnswers[question._id]?.answerId === answer._id ? 'selected-answer' : ''
-                      }`}
+                      className='w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html'
                       onClick={() => handleAnswerClick(question._id, answer._id, answer.answer)}
+                      // style={{
+                      //   color: answerStyles[question._id]?.color,
+                      //   backgroundColor: answerStyles[question._id]?.backgroundColor,
+                      // }}
+                      style={{
+                        color: answerStyles[question._id]?.[answer._id]?.color,
+                        backgroundColor: answerStyles[question._id]?.[answer._id]?.backgroundColor,
+                      }}
                     >
                       {answer.answer}
                     </div>
                     <br />
                   </li>
                 ))}
-
             </ul>
+
+
               <br />
             </li>
           ))}
