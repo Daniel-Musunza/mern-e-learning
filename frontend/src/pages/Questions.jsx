@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getquestions } from '../features/questions/questionSlice';
@@ -8,12 +9,14 @@ import { getchapters } from '../features/chapters/chapterSlice';
 function Questions() {
   const { id } = useParams();
   const dispatch = useDispatch();
+ 
 
   useEffect(() => {
     dispatch(getquestions());
     dispatch(getanswers());
     dispatch(getchapters());
-  }, [dispatch]);
+
+    }, [dispatch]);
 
   const questions = useSelector((state) => state.questions.questions);
   const { answers } = useSelector((state) => state.answers);

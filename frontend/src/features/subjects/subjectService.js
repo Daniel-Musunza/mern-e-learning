@@ -25,6 +25,17 @@ const addNotes = async (subjectData, subjectId, token) => {
 
   return response.data
 }
+const addSubject = async (subjectData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await axios.post(API_URL , subjectData, config)
+
+  return response.data
+}
 const getallsubjects = async (token) => {
     const response = await axios.get(API_URL2)
 
@@ -34,6 +45,7 @@ const getallsubjects = async (token) => {
 const subjectService = {
   getsubjects,
   addNotes,
+  addSubject,
   getallsubjects,
 }
 

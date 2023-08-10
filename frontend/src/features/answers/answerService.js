@@ -7,9 +7,20 @@ const getanswers = async () => {
 
   return response.data
 }
+const addanswer = async (answerData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
 
+  const response = await axios.post(API_URL , answerData, config)
+
+  return response.data
+}
 const answerService = {
   getanswers,
+  addanswer
 }
 
 

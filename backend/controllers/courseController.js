@@ -8,6 +8,20 @@ const getCourses = asyncHandler(async (req, res) => {
 })
 
 
+const addcourse = asyncHandler(async (req, res) => {
+  const { course_name } = req.body;
+
+  const newCourse = new Course({
+    course_name
+  });
+
+  const createdCourse = await newCourse.save();
+
+  res.status(201).json(createdCourse);
+});
+
+
 module.exports = {
-  getCourses
+  getCourses,
+  addcourse
 }

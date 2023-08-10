@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const {
+  addcourse,
   getCourses
 } = require('../controllers/courseController');
 
-router.route('/').get(getCourses);
+const { protect } = require('../middleware/authMiddleware');
 
+router.route('/').get(getCourses).post(protect, addcourse);
 module.exports = router;

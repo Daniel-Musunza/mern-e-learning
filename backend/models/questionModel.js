@@ -9,6 +9,9 @@ const questionSchema = mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'chapter',
       },
+      correctanswer: {
+        type: String,
+      }
   },
 );
 

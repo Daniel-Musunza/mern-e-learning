@@ -7,9 +7,20 @@ const getquestions = async () => {
 
   return response.data
 }
+const addquestion = async (questionData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
 
+  const response = await axios.post(API_URL , questionData, config)
+
+  return response.data
+}
 const questionService = {
   getquestions,
+  addquestion
 }
 
 

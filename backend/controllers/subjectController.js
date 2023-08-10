@@ -38,6 +38,18 @@ const addNotes = async (req, res) => {
   }
 };
 
+const addSubject = asyncHandler(async (req, res) => {
+  const { subject, course_id } = req.body;
+
+  const newSubject = new Subject({
+    subject,
+    course_id
+  });
+
+  const createdSubject = await newSubject.save();
+
+  res.status(201).json(createdSubject);
+});
 
 
 const getallsubjects = asyncHandler(async (req, res) => {
@@ -53,4 +65,5 @@ module.exports = {
   getsubjects,
   addNotes,
   getallsubjects,
+  addSubject 
 }

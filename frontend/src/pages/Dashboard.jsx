@@ -595,8 +595,7 @@ const Dashboard = () => {
             </div>
             <div className='servics'>
               <div className="w3-col m4 servic s12">
-                <a
-                  href="tutorials/index.html"
+                <p
                   className="serviceslink ga-top-drop ga-top-drop-services-tut"
                   title="Tutorials"
                 >
@@ -604,11 +603,10 @@ const Dashboard = () => {
                     <h4>Free Tutorials</h4>
                     <p>Enjoy our free tutorials like millions of other internet users</p>
                   </div>
-                </a>
+                </p>
               </div>
             <div className="w3-col m4 servic s12">
-                <a
-                  href=""
+                <p
                   className="serviceslink ga-top-drop ga-top-drop-services-qz"
                   title="Test yourself with Chapterwise Questions"
                 >
@@ -616,11 +614,10 @@ const Dashboard = () => {
                     <h4>Chapterwise Questions</h4>
                     <p>Test yourself with multiple choice Chapterwise Questions</p>
                   </div>
-                </a>
+                </p>
               </div>
               <div className="w3-col m4 servic s12">
-                <a
-                  href=""
+                <p
                   className="serviceslink ga-top-drop ga-top-drop-services-cert"
                   target="_blank"
                   title="Main Exam"
@@ -650,7 +647,7 @@ const Dashboard = () => {
                       ></path>
                     </svg>
                   </div>
-                </a>
+                </p>
               </div>
             </div>
           </div>
