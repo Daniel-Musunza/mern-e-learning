@@ -426,7 +426,7 @@ textarea {
     }
  }
  
-.container {
+.contain {
     display: flex;
     flex-direction:column;
     background-color: #fff;

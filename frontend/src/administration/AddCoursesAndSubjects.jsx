@@ -7,7 +7,7 @@ function AddCoursesAndSubjects() {
       <SideBar />
       <div className="main-content">
          <main className='content-area'>
-            <div className="container">
+            <div className="contain">
             <h3>Add Course</h3>
                 <form className="add-subject">
                    
