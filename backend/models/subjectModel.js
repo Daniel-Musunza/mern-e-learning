@@ -10,6 +10,10 @@ const subjectSchema = mongoose.Schema(
       type: String,
       required: [true, 'Please add a unit'],
     },
+    course_name: {
+      type: String,
+      required: [true, 'Please add Course Name'],
+    },
     notes: {
       type: String
     },

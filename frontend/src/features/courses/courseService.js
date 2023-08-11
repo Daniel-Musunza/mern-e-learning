@@ -7,7 +7,7 @@ const getCourses = async () => {
 
 return response.data
 }
-const addcourse = async (courseData, token) => {
+const createCourse = async (courseData, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -20,7 +20,7 @@ const addcourse = async (courseData, token) => {
 }
 const courseService = {
   getCourses,
-  addcourse
+  createCourse
 }
 
 

@@ -90,7 +90,7 @@ export const subjectSlice = createSlice({
       .addCase(addSubject.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.subjects = action.payload
+        state.subjects.push(action.payload)
       })
       .addCase(addSubject.rejected, (state, action) => {
         state.isLoading = false

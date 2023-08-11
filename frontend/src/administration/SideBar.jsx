@@ -39,7 +39,7 @@ function SideBar() {
             <li>
                 <Link to='/add-courses'>
                 <i className="fa fa-book" aria-hidden="true"></i>
-                    Add Subjects
+                    Courses/Subjects
                 </Link>
             </li>
             <li>

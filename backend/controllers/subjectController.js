@@ -38,20 +38,20 @@ const addNotes = async (req, res) => {
   }
 };
 
-const addSubject = asyncHandler(async (req, res) => {
-  const { subject, course_id } = req.body;
+const setSubject = asyncHandler(async (req, res) => {
+  if (!req.body.subject||!req.body.course_name) {
+    res.status(400)
+    throw new Error('Please add a subject and Course Name')
+  }
 
-  const newSubject = new Subject({
-    subject,
-    course_id
-  });
+  const subject = await Subject.create({
+    subject: req.body.subject,
+    course_id: req.body.course_id,
+    course_name: req.body.course_name,
+  })
 
-  const createdSubject = await newSubject.save();
-
-  res.status(201).json(createdSubject);
+  res.status(200).json(subject)
 });
-
-
 const getallsubjects = asyncHandler(async (req, res) => {
  
   const subjects = await Subject.find()
@@ -65,5 +65,5 @@ module.exports = {
   getsubjects,
   addNotes,
   getallsubjects,
-  addSubject 
+  setSubject 
 }

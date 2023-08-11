@@ -1,27 +1,28 @@
 const asyncHandler = require('express-async-handler')
 
-const course = require('../models/courseModel')
+const Course = require('../models/courseModel')
 
 const getCourses = asyncHandler(async (req, res) => {
-  const courses = await course.find()
+  const courses = await Course.find()
   res.status(200).json(courses)
 })
 
 
-const addcourse = asyncHandler(async (req, res) => {
-  const { course_name } = req.body;
+const setCourse = asyncHandler(async (req, res) => {
+  if (!req.body.course_name) {
+    res.status(400)
+    throw new Error('Please add a text field')
+  }
 
-  const newCourse = new Course({
-    course_name
-  });
+  const course = await Course.create({
+    course_name: req.body.course_name,
+  })
 
-  const createdCourse = await newCourse.save();
-
-  res.status(201).json(createdCourse);
+  res.status(200).json(course)
 });
 
 
 module.exports = {
   getCourses,
-  addcourse
+  setCourse
 }
