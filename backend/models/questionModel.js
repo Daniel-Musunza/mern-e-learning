@@ -11,6 +11,18 @@ const questionSchema = mongoose.Schema(
       },
       correctanswer: {
         type: String,
+      },
+      answerA: {
+        type: String,
+      },
+      answerB: {
+        type: String,
+      },
+      answerC: {
+        type: String,
+      },
+      answerD: {
+        type: String,
       }
   },
 );

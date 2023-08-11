@@ -72,7 +72,7 @@ export const chapterSlice = createSlice({
       .addCase(addchapter.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.chapters= action.payload
+        state.chapters.push(action.payload)
       })
       .addCase(addchapter.rejected, (state, action) => {
         state.isLoading = false

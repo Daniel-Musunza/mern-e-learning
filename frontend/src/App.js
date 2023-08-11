@@ -9,7 +9,8 @@ import TutorialNotes from './pages/TutorialNotes'
 import Questions from './pages/Questions'
 import AdministartionDashboard from './administration/AdministrationDashboard'
 import AddCoursesAndSubjects from './administration/AddCoursesAndSubjects'
-
+import AddChapters from './administration/AddChapters'
+import AddQuestions from './administration/AddQuestions'
 function App() {
   return (
     <>
@@ -20,6 +21,8 @@ function App() {
             <Route path='/' element={<Dashboard />} />
             <Route path='/dashboard' element={<AdministartionDashboard />} />
             <Route path='/add-courses' element={<AddCoursesAndSubjects />} />
+            <Route path='/add-chapters' element={<AddChapters />} />
+            <Route path='/add-questions' element={<AddQuestions />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/tutorial-notes/:id' element={<TutorialNotes />} />

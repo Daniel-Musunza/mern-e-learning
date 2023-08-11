@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Spinner from '../components/Spinner';
-import SideBar from './SideBar';
 import { useSelector, useDispatch } from 'react-redux';
 import { addSubject } from '../features/subjects/subjectSlice';
 import { fetchCourses, createCourse } from '../features/courses/courseSlice';
 
 function AddCoursesAndSubjects() {
   const dispatch = useDispatch();
-  const { isLoading, isError, isSuccess, message } = useSelector(
+  const { isLoading, isError, message } = useSelector(
     (state) => state.auth
   );
 
   const { courses } = useSelector((state) => state.courses);
 
   const [course_name, setCourseName] = useState('');
+
+  const [selectedCourseId, setSelectedCourseId] = useState('');
+  const [selectedCourseName, setSelectedCourseName] = useState('');
+  const [subjectName, setSubjectName] = useState('');
 
   useEffect(() => {
     if (isError) {
@@ -39,9 +42,39 @@ function AddCoursesAndSubjects() {
     alert("Course Added Successfully !!")
   };
 
+  const handleSelectCourse = (e) => {
+    const courseId = e.target.value;
+    const selectedCourse = courses.find((course) => course._id === courseId);
+    if (selectedCourse) {
+      setSelectedCourseId(courseId);
+      setSelectedCourseName(selectedCourse.course_name);
+    }
+    console.log(selectedCourse);
+  };
+
+  const handleAddSubject = (e) => {
+    e.preventDefault();
+
+    if (selectedCourseId.trim() === '' || subjectName.trim() === '') {
+      return;
+    }
+
+    dispatch(
+      addSubject({
+        course_id: selectedCourseId,
+        course_name: selectedCourseName,
+        subject: subjectName,
+      })
+    );
+    setSelectedCourseId('');
+    setSelectedCourseName('');
+    setSubjectName('');
+    alert('Subject Added Successfully !!');
+  };
+
   return (
     <div>
-      <SideBar />
+
       <div className="main-content">
         <main className="content-area">
           <div className="contain">
@@ -57,17 +90,28 @@ function AddCoursesAndSubjects() {
                 Submit
               </button>
             </form>
+            <hr />
             <h3>Add Subject</h3>
-            <form>
+            <form onSubmit={handleAddSubject}>
               <label htmlFor="school-level">Select Course:</label>
-              <select id="school-level">
+              <select
+                id="school-level"
+                value={selectedCourseId}
+                onChange={handleSelectCourse}
+              >
+                <option value="">Select a course</option>
                 {courses.map((course) => (
                   <option key={course._id} value={course._id}>
                     {course.course_name}
                   </option>
                 ))}
               </select>
-              <input type="text" placeholder="Subject Name" />
+              <input
+                type="text"
+                placeholder="Subject Name"
+                value={subjectName}
+                onChange={(e) => setSubjectName(e.target.value)}
+              />
               <button id="submit" type="submit">
                 Submit
               </button>
