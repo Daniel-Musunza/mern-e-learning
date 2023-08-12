@@ -63,7 +63,15 @@ function AddQuestions() {
       return;
     }
 
-    dispatch(addquestion({ chapter_id: selectedChapterId, question: questionName }));
+    dispatch(addquestion({ 
+      chapter_id: selectedChapterId,
+      question: questionName,
+      correctAnswer: correctAnswer, 
+      answerA: answerA,
+      answerB: answerB,
+      answerC: answerC,
+      answerD: answerD
+     }));
     setQuestionName('');
     alert("Question Added Successfully ...")
   };
