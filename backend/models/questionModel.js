@@ -6,12 +6,12 @@ const questionSchema = mongoose.Schema(
       type: String,
     },
     chapter_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'chapter',
-      },
-      correctanswer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'chapter',
+    },
+    correctanswer: {
         type: String,
-      },
+    },
       answerA: {
         type: String,
       },
