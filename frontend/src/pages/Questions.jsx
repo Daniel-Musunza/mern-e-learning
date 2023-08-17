@@ -157,10 +157,7 @@ function Questions() {
                     <div
                       className='w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html'
                       onClick={() => handleAnswerClick(question._id, answer._id, answer.answer)}
-                      // style={{
-                      //   color: answerStyles[question._id]?.color,
-                      //   backgroundColor: answerStyles[question._id]?.backgroundColor,
-                      // }}
+
                       style={{
                         color: answerStyles[question._id]?.[answer._id]?.color,
                         backgroundColor: answerStyles[question._id]?.[answer._id]?.backgroundColor,
