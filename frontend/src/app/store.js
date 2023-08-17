@@ -5,7 +5,6 @@ import allsubjectReducer from '../features/subjects/allSubjectSlice'
 import courseReducer from '../features/courses/courseSlice'
 import chapterReducer from '../features/chapters/chapterSlice'
 import questionReducer from '../features/questions/questionSlice'
-import answerReducer from '../features/answers/answerSlice'
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -13,7 +12,6 @@ export const store = configureStore({
     allsubjects: allsubjectReducer,
     courses: courseReducer,
     chapters: chapterReducer,
-    questions: questionReducer,
-    answers: answerReducer
+    questions: questionReducer
   },
 })

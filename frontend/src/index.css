@@ -17,7 +17,11 @@
   align-items: center;
   font-size: x-large;
 }
-
+.answer{
+  display: flex;
+  flex-direction: column;
+  
+}
 .correct-answer {
   background-color: rgb(17, 249, 17); /* Set the color for correct answers */
 }

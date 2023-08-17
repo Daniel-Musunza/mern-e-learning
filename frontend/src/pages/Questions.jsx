@@ -3,96 +3,76 @@ import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getquestions } from '../features/questions/questionSlice';
-import { getanswers } from '../features/answers/answerSlice';
 import { getchapters } from '../features/chapters/chapterSlice';
 
 function Questions() {
   const { id } = useParams();
   const dispatch = useDispatch();
- 
+  
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [answerStyles, setAnswerStyles] = useState({});
 
   useEffect(() => {
     dispatch(getquestions());
-    dispatch(getanswers());
     dispatch(getchapters());
 
     }, [dispatch]);
 
   const questions = useSelector((state) => state.questions.questions);
-  const { answers } = useSelector((state) => state.answers);
+
   const { chapters } = useSelector((state) => state.chapters);
 
-  const [selectedAnswers, setSelectedAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [attempted, setAttempted] = useState(0);
-  
-  // Initialize answer styles state
-  const initialAnswerStyles = {};
-  questions.forEach((question) => {
-    answers.forEach((answer) => {
-      initialAnswerStyles[question._id] = {
-        ...initialAnswerStyles[question._id],
-        [answer._id]: {
-          color: 'black',
-          backgroundColor: '#ccc',
-        },
-      };
-    });
-  });
-  const [answerStyles, setAnswerStyles] = useState(initialAnswerStyles);
 
-  const handleAnswerClick = (questionId, answerId, answer) => {
+
+  const handleAnswerClick = (questionId, selectedAnswer) => {
     setSelectedAnswers((prevSelectedAnswers) => ({
       ...prevSelectedAnswers,
-      [questionId]: { answerId, answer },
+      [questionId]: selectedAnswer,
     }));
-  
-    // Update answer styles when an answer is selected
+
     setAnswerStyles((prevAnswerStyles) => ({
       ...prevAnswerStyles,
       [questionId]: {
-        ...prevAnswerStyles[questionId], // Preserve existing styles for other answers
-        [answerId]: {
-          color: 'black',
-          backgroundColor: '#ccc',
-        },
+        backgroundColor: '#ccc',
+        color: 'black',
       },
     }));
   };
-  
 
-  const handleMyScores = async (e) => {
+  const handleMyScores = (e) => {
     e.preventDefault();
-  
-    // Calculate the score and attempted questions
+
     let userScore = 0;
     let userAttempted = 0;
-  
-    // Update answer styles based on correctness
+
     const updatedAnswerStyles = { ...answerStyles };
-    questions.forEach((question) => {
+
+    filteredQuestions.forEach((question) => {
       const selectedAnswer = selectedAnswers[question._id];
       const correctAnswer = question.correctanswer;
+
       if (selectedAnswer) {
-        const answerId = selectedAnswer.answerId;
-        updatedAnswerStyles[question._id] = {
-          ...updatedAnswerStyles[question._id], // Preserve existing styles for other answers
-          [answerId]: {
-            backgroundColor: selectedAnswer.answer === correctAnswer ? 'rgb(17, 249, 17)' : 'red',
-          },
-        };
-        userAttempted++;
-        if (selectedAnswer.answer === correctAnswer) {
+        if (selectedAnswer === correctAnswer) {
           userScore++;
+          updatedAnswerStyles[question._id] = {
+            backgroundColor: 'rgb(17, 249, 17)', // Correct answer style
+          };
+        } else {
+          updatedAnswerStyles[question._id] = {
+            backgroundColor: 'red', // Wrong answer style
+          };
         }
+        userAttempted++;
       }
     });
+
     setAnswerStyles(updatedAnswerStyles);
-  
-    // Update the state with calculated values
     setScore(userScore);
     setAttempted(userAttempted);
   };
+  
   
 
   // Filter questions based on the matching chapter_id
@@ -144,30 +124,51 @@ function Questions() {
         <ol className='ol' style={{ listStyle: 'decimal' }}>
           {filteredQuestions.map((question) => (
             <li key={question._id} style={{ listStyle: 'decimal' }}>
-              <h4 className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html" style={{ color: '#40c9ff' }}>
+              <h4 className="acctop-link ga-top-drop ga-top-drop-ex-html" style={{ color: '#40c9ff' }}>
                 {question.question}
               </h4>
               <br />
-              {/* <span style={{ color: 'rgb(17, 249, 17)' }}>{question.correctanswer}</span> */}
+              <span style={{ color: 'rgb(17, 249, 17)' }}>{question.correctanswer}</span>
               <ul className='ul'>
-              {answers
-                .filter((answer) => answer.question_id === question._id)
-                .map((answer) => (
-                  <li key={answer._id}>
+                  <li >
+                  <div
+                    className={`acctop-link ga-top-drop ga-top-drop-ex-html answer ${
+                      answerStyles[question._id]?.backgroundColor || ''
+                    }`}
+                    onClick={() => handleAnswerClick(question._id, 'A')}
+                  >
+                       <span style={{paddingRight: '10px', color: '#40c9ff'}}> A. </span>
+                      <span>{question.answerA}</span>
+                    </div>
+                 
+                  </li>
+                  <br />
+                  <li >
                     <div
-                      className='w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html'
-                      onClick={() => handleAnswerClick(question._id, answer._id, answer.answer)}
-
-                      style={{
-                        color: answerStyles[question._id]?.[answer._id]?.color,
-                        backgroundColor: answerStyles[question._id]?.[answer._id]?.backgroundColor,
-                      }}
-                    >
-                      {answer.answer}
+                      className='acctop-link ga-top-drop ga-top-drop-ex-html answer'>
+                      <span style={{paddingRight: '10px', color: '#40c9ff'}}> B. </span>
+                     <span>{question.answerB}</span>
+                    </div>
+                   
+                  </li>
+                  <br />
+                  <li >
+                    <div
+                      className='acctop-link ga-top-drop ga-top-drop-ex-html answer'>
+                      <span style={{paddingRight: '10px', color: '#40c9ff'}}> C. </span>
+                     <span>{question.answerC}</span>
+                    </div>
+                   
+                  </li>
+                  <br />
+                  <li >
+                    <div
+                      className='acctop-link ga-top-drop ga-top-drop-ex-html answer'>
+                      <span style={{paddingRight: '10px', color: '#40c9ff'}}> D. </span>
+                     <span>{question.answerD}</span>
                     </div>
                     <br />
                   </li>
-                ))}
             </ul>
 
 
