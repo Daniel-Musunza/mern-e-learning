@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import chapterService from './chapterService'
 
-
 const initialState = {
   chapters: [],
   isError: false,
