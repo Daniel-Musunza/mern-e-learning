@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom'
 import Spinner from '../components/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { addSubject } from '../features/subjects/subjectSlice';
+import { getallsubjects} from '../features/subjects/allSubjectSlice';
 import { fetchCourses, createCourse } from '../features/courses/courseSlice';
 
 function AddCoursesAndSubjects() {
@@ -12,7 +14,7 @@ function AddCoursesAndSubjects() {
   );
 
   const { courses } = useSelector((state) => state.courses);
-
+  const { allsubjects } = useSelector((state) => state.allsubjects);
   const [course_name, setCourseName] = useState('');
 
   const [selectedCourseId, setSelectedCourseId] = useState('');
@@ -25,6 +27,7 @@ function AddCoursesAndSubjects() {
     }
 
     dispatch(fetchCourses());
+    dispatch(getallsubjects());
   }, [isError, message, dispatch]);
 
   if (isLoading) {
@@ -77,6 +80,14 @@ function AddCoursesAndSubjects() {
 
       <div className="main-content">
         <main className="content-area">
+        <div className="contain">
+            <h3 style={{color: 'GrayText'}}>All Courses</h3>
+            {courses.map((course) => (
+                  <h4 key={course._id}>
+                    {course.course_name}
+                  </h4>
+                )).slice(0, 10)}
+          </div>
           <div className="contain">
             <h3>Add Course</h3>
             <form className="add-subject" onSubmit={handleAddCourse}>
@@ -116,6 +127,41 @@ function AddCoursesAndSubjects() {
                 Submit
               </button>
             </form>
+          </div>
+          <div className="contain">
+          <h3 style={{color: 'GrayText'}}>All Subjects</h3>
+          <label htmlFor="school-level">Select Course:</label>
+          <select
+                id="school-level"
+                value={selectedCourseId}
+                onChange={handleSelectCourse}
+              >
+                <option value="">Select a course</option>
+                {courses.map((course) => (
+                  <option key={course._id} value={course._id}>
+                    {course.course_name}
+                  </option>
+                ))}
+              </select>
+
+              {selectedCourseId && (
+                <>
+                    {allsubjects
+                      .filter((subject) => subject.course_id === selectedCourseId)
+                      .map((subject) => (
+                        <>
+                        <h4 value={subject._id}>
+                          {subject.subject}
+                        </h4>
+                         <Link
+                         className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html"
+                         to={`/tutorial-notes/${subject._id}`} // Pass the subject's ID as a parameter in the link
+                         title="Add Notes"
+                       >Add Notes</Link>
+                       </>
+                      ))}
+                </>
+              )}
           </div>
         </main>
       </div>
