@@ -26,20 +26,25 @@ function Questions() {
   const [attempted, setAttempted] = useState(0);
 
 
-  const handleAnswerClick = (questionId, selectedAnswer) => {
+ 
+  const handleAnswerClick = (questionId, answer) => {
     setSelectedAnswers((prevSelectedAnswers) => ({
       ...prevSelectedAnswers,
-      [questionId]: selectedAnswer,
+      [questionId]: answer,
     }));
-
+  
     setAnswerStyles((prevAnswerStyles) => ({
       ...prevAnswerStyles,
       [questionId]: {
-        backgroundColor: '#ccc',
-        color: 'black',
+        ...prevAnswerStyles[questionId],
+        [answer]: {
+          color: 'black',
+          backgroundColor: '#ccc',
+        },
       },
     }));
   };
+  
 
   const handleMyScores = (e) => {
     e.preventDefault();
@@ -54,16 +59,15 @@ function Questions() {
       const correctAnswer = question.correctanswer;
 
       if (selectedAnswer) {
+        updatedAnswerStyles[question._id] = {
+          ...updatedAnswerStyles[question._id], // Preserve existing styles for other answers
+          [selectedAnswer]: {
+            backgroundColor: selectedAnswer === correctAnswer ? 'rgb(17, 249, 17)' : 'red',
+          },
+        };
         if (selectedAnswer === correctAnswer) {
           userScore++;
-          updatedAnswerStyles[question._id] = {
-            backgroundColor: 'rgb(17, 249, 17)', // Correct answer style
-          };
-        } else {
-          updatedAnswerStyles[question._id] = {
-            backgroundColor: 'red', // Wrong answer style
-          };
-        }
+        } 
         userAttempted++;
       }
     });
@@ -130,46 +134,63 @@ function Questions() {
               <br />
               <span style={{ color: 'rgb(17, 249, 17)' }}>{question.correctanswer}</span>
               <ul className='ul'>
-                  <li >
+                <li>
                   <div
-                    className={`acctop-link ga-top-drop ga-top-drop-ex-html answer ${
-                      answerStyles[question._id]?.backgroundColor || ''
-                    }`}
-                    onClick={() => handleAnswerClick(question._id, 'A')}
+                    className='acctop-link ga-top-drop ga-top-drop-ex-html answer '
+                    onClick={() => handleAnswerClick(question._id, question.answerA)}  
+                    style={{
+                        color: answerStyles[question._id]?.[question.answerA]?.color,
+                        backgroundColor: answerStyles[question._id]?.[question.answerA]?.backgroundColor,
+                      }}
                   >
-                       <span style={{paddingRight: '10px', color: '#40c9ff'}}> A. </span>
-                      <span>{question.answerA}</span>
-                    </div>
-                 
-                  </li>
+                    <span style={{ paddingRight: '10px', color: '#40c9ff' }}> A. </span>
+                    <span>{question.answerA}</span>
+                  </div>
+                </li>
+                <br />
+                <li>
+                  <div
+                    className='acctop-link ga-top-drop ga-top-drop-ex-html answer '
+                    onClick={() => handleAnswerClick(question._id, question.answerB)}  
+                    style={{
+                        color: answerStyles[question._id]?.[question.answerB]?.color,
+                        backgroundColor: answerStyles[question._id]?.[question.answerB]?.backgroundColor,
+                      }}
+                  >
+                    <span style={{ paddingRight: '10px', color: '#40c9ff' }}> B. </span>
+                    <span>{question.answerB}</span>
+                  </div>
+                </li>
+                <br />
+                <li>
+                  <div
+                    className='acctop-link ga-top-drop ga-top-drop-ex-html answer '
+                    onClick={() => handleAnswerClick(question._id, question.answerC)}  
+                    style={{
+                        color: answerStyles[question._id]?.[question.answerC]?.color,
+                        backgroundColor: answerStyles[question._id]?.[question.answerC]?.backgroundColor,
+                      }}
+                  >
+                    <span style={{ paddingRight: '10px', color: '#40c9ff' }}> C. </span>
+                    <span>{question.answerC}</span>
+                  </div>
+                </li>
+                <br />
+                <li>
+                  <div
+                    className='acctop-link ga-top-drop ga-top-drop-ex-html answer '
+                    onClick={() => handleAnswerClick(question._id, question.answerD)}  style={{
+                        color: answerStyles[question._id]?.[question.answerD]?.color,
+                        backgroundColor: answerStyles[question._id]?.[question.answerD]?.backgroundColor,
+                      }}
+                  >
+                    <span style={{ paddingRight: '10px', color: '#40c9ff' }}> D. </span>
+                    <span>{question.answerD}</span>
+                  </div>
                   <br />
-                  <li >
-                    <div
-                      className='acctop-link ga-top-drop ga-top-drop-ex-html answer'>
-                      <span style={{paddingRight: '10px', color: '#40c9ff'}}> B. </span>
-                     <span>{question.answerB}</span>
-                    </div>
-                   
-                  </li>
-                  <br />
-                  <li >
-                    <div
-                      className='acctop-link ga-top-drop ga-top-drop-ex-html answer'>
-                      <span style={{paddingRight: '10px', color: '#40c9ff'}}> C. </span>
-                     <span>{question.answerC}</span>
-                    </div>
-                   
-                  </li>
-                  <br />
-                  <li >
-                    <div
-                      className='acctop-link ga-top-drop ga-top-drop-ex-html answer'>
-                      <span style={{paddingRight: '10px', color: '#40c9ff'}}> D. </span>
-                     <span>{question.answerD}</span>
-                    </div>
-                    <br />
-                  </li>
-            </ul>
+                </li>
+              </ul>
+
 
 
               <br />

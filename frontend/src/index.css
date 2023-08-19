@@ -20,6 +20,7 @@
 .answer{
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   
 }
 .correct-answer {
