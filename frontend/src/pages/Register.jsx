@@ -51,8 +51,12 @@ function Register() {
     if (name === 'userType') {
       setUserType(value);
     } else if (name === 'courseName') {
-      const { id, value } = e.target;
-      setCourseName({ id, name: value });
+      const selectedCourse = courses.find(course => course._id === value);
+      if (selectedCourse) {
+        setCourseName({ id: value, name: selectedCourse.course_name });
+      } else {
+        setCourseName({ id: '', name: '' });
+      }
     } else {
       setFormData((prevState) => ({
         ...prevState,
@@ -60,6 +64,7 @@ function Register() {
       }));
     }
   };
+  
   
   
 
@@ -105,7 +110,9 @@ const onSubmit = (e) => {
         name,
         email,
         password,
-        course: courseName, // Add courseName to the userData
+        course_id: courseName.id,
+        course_name: courseName.name
+         // Add courseName to the userData
       };
 
       if (userData.course === '') {
@@ -117,6 +124,7 @@ const onSubmit = (e) => {
         return;
       }
 
+      // console.log(userData)
       dispatch(register(userData));
     }
   }
@@ -157,11 +165,11 @@ const onSubmit = (e) => {
         </div>
         {userType === 'student' && (
           <div className='form-group'>
-          <select
+         <select
             className='form-control'
             id='courseName'
             name='courseName'
-            value={courseName}
+            value={courseName.id}  // Use courseName.id as the selected value
             onChange={onChange}  // Use the onChange function here
           >
             {/* Add options for different course names */}
@@ -172,6 +180,7 @@ const onSubmit = (e) => {
               </option>
             ))}
           </select>
+
 
           </div>
         )}

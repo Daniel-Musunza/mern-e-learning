@@ -81,12 +81,15 @@ function AddCoursesAndSubjects() {
       <div className="main-content">
         <main className="content-area">
         <div className="contain">
+          
             <h3 style={{color: 'GrayText'}}>All Courses</h3>
+            <div className='courses-list'>
             {courses.map((course) => (
                   <h4 key={course._id}>
                     {course.course_name}
                   </h4>
-                )).slice(0, 10)}
+                ))}
+            </div>
           </div>
           <div className="contain">
             <h3>Add Course</h3>
@@ -111,6 +114,7 @@ function AddCoursesAndSubjects() {
                 onChange={handleSelectCourse}
               >
                 <option value="">Select a course</option>
+
                 {courses.map((course) => (
                   <option key={course._id} value={course._id}>
                     {course.course_name}
@@ -145,7 +149,8 @@ function AddCoursesAndSubjects() {
               </select>
 
               {selectedCourseId && (
-                <>
+                <div className='subject-list'>
+
                     {allsubjects
                       .filter((subject) => subject.course_id === selectedCourseId)
                       .map((subject) => (
@@ -160,7 +165,7 @@ function AddCoursesAndSubjects() {
                        >Add Notes</Link>
                        </>
                       ))}
-                </>
+                </div>
               )}
           </div>
         </main>

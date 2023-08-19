@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import { useDispatch, useSelector } from 'react-redux';
 import 'react-quill/dist/quill.snow.css';
-import { addNotes, getsubjects } from '../features/subjects/subjectSlice';
+import { addNotes } from '../features/subjects/subjectSlice';
+import { getallsubjects } from '../features/subjects/allSubjectSlice';
 
 function TutorialNotes() {
   const { id } = useParams();
@@ -12,14 +13,14 @@ function TutorialNotes() {
 
   // Fetch subject data when the component mounts
   useEffect(() => {
-    dispatch(getsubjects());
+    dispatch(getallsubjects());
   }, [dispatch]);
 
   // Get the subject data from Redux state
-  const subjects = useSelector((state) => state.subjects.subjects);
+  const allsubjects = useSelector((state) => state.allsubjects.allsubjects);
 
   // Find the subject with the specified id
-  const subject = subjects.find((subject) => subject._id === id);
+  const subject = allsubjects.find((subject) => subject._id === id);
 
   useEffect(() => {
     // Set the notes from the subject in the state when the subject is found
@@ -61,18 +62,18 @@ function TutorialNotes() {
         marginLeft: 0,
       }}
     >
-       {/* <div
+       <div
         style={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
-        <div>
-          <ReactQuill value={notes} onChange={handleChange} />
-          <button onClick={onSubmit}>Submit</button>
+        <div className='editor-section'>
+          <ReactQuill value={notes} onChange={handleChange} className='notes-editor'></ReactQuill>
+          <button onClick={onSubmit} style={{marginTop: '30px', width: '100px'}}>Submit</button>
         </div>
-      </div>  */}
+      </div> 
       <div >
       {subject && (
         <div className='notes' 

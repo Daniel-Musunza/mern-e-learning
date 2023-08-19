@@ -202,7 +202,7 @@ li{
   max-width: 300px;
   overflow-x: none;
   }
-  .notes {
+  .notes , .notes-editor{
     width: 90%;
     margin:10px;
   }
@@ -218,11 +218,19 @@ li{
     font-size: 1.5rem;
   }
 }
-
-
+.notes-editor{
+  height: 500px;
+}
+.editor-section{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: -60px;
+}
 /* CSS for larger screens (over 768px) */
 @media (min-width: 800px) {
-  .notes{
+  .notes, .notes-editor{
     max-width: 60%;
     margin-left: 250px;
     margin-right: 250px;
@@ -231,6 +239,7 @@ li{
     background-color: #e6e6e6;
     color: #212121;
   }
+  
   .questions{
     max-width: 60%;
     margin-left: 250px;
