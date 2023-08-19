@@ -36,14 +36,28 @@ function Questions() {
     setAnswerStyles((prevAnswerStyles) => ({
       ...prevAnswerStyles,
       [questionId]: {
-        ...prevAnswerStyles[questionId],
         [answer]: {
           color: 'black',
           backgroundColor: '#ccc',
         },
       },
     }));
+    
+    // Reset styles for the previously selected answer in the same question
+    if (selectedAnswers[questionId] && answerStyles[questionId]) {
+      setAnswerStyles((prevAnswerStyles) => ({
+        ...prevAnswerStyles,
+        [questionId]: {
+          ...prevAnswerStyles[questionId],
+          [selectedAnswers[questionId]]: {
+            color: '#ffff',
+            backgroundColor: 'initial',
+          },
+        },
+      }));
+    }
   };
+  
   
 
   const handleMyScores = (e) => {
@@ -132,7 +146,6 @@ function Questions() {
                 {question.question}
               </h4>
               <br />
-              <span style={{ color: 'rgb(17, 249, 17)' }}>{question.correctanswer}</span>
               <ul className='ul'>
                 <li>
                   <div
