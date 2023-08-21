@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Spinner from '../components/Spinner';
+import SideBar from './SideBar';
 import { useSelector, useDispatch } from 'react-redux';
 import { getallsubjects} from '../features/subjects/allSubjectSlice';
 import { getchapters } from '../features/chapters/chapterSlice';
@@ -81,6 +82,7 @@ function AddQuestions() {
   return (
     <div>
       <div className="main-content">
+      <SideBar />
         <main className="content-area">
           <div className="contain">
             <h3>Add Chapter</h3>

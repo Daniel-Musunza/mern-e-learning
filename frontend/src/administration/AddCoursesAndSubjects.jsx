@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom'
 import Spinner from '../components/Spinner';
+import SideBar from './SideBar';
 import { useSelector, useDispatch } from 'react-redux';
 import { addSubject } from '../features/subjects/subjectSlice';
 import { getallsubjects} from '../features/subjects/allSubjectSlice';
@@ -79,6 +80,7 @@ function AddCoursesAndSubjects() {
     <div>
 
       <div className="main-content">
+        <SideBar />
         <main className="content-area">
         <div className="contain">
           

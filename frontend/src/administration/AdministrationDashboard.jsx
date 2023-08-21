@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-// import SideBar from './SideBar';
+import SideBar from './SideBar';
 import { Link, useNavigate } from 'react-router-dom'
 function AdministrationDashboard() {
 
   return (
     <div>
-      {/* <SideBar /> */}
+      <SideBar />
       
        
          <main>
