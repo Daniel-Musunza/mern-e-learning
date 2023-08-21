@@ -1,8 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import SideBar from './SideBar';
-import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom'
+import Spinner from '../components/Spinner';
+import { fetchUsers} from '../features/auth/authSlice';
+import { useSelector, useDispatch } from 'react-redux';
 function AdministrationDashboard() {
+    const dispatch = useDispatch();
+    const { isLoading, isError, message } = useSelector(
+        (state) => state.auth
+      );
+    
+    const { users } = useSelector((state) => state.users);
 
+    useEffect(() => {
+        if (isError) {
+          toast.error(message);
+        }
+    console.log(users)
+        dispatch(fetchUsers());
+      }, [isError, message, dispatch]);
+    
+      if (isLoading) {
+        return <Spinner />;
+      }
   return (
     <div>
       <SideBar />
@@ -52,9 +73,7 @@ function AdministrationDashboard() {
                 <div className="card">
                     <div className="card-header">
                         <h2>New Tutors</h2>
-                        <a href="teachers.html">
-                            <button>See all <span><i className="fa-solid fa-arrow-right"></i></span></button>
-                        </a>
+                        
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
@@ -63,33 +82,25 @@ function AdministrationDashboard() {
                                     <tr>
                                         <td>Teacher NO:</td>
                                         <td>Full name</td>
-                                        <td>Subject</td>
-                                        <td>Resume</td>
                                         <td>Email</td>
-                                        <td>Approve</td>
+                                        <td>Subject</td>
+                                        <td></td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>John Doe</td>
-                                        <td>Maths</td>
-                                        <td>file</td>
-                                        <td>JohnDoe@gmail.com</td>
-                                        <td>
-                                            <a href="">View Details</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>James Doe</td>
-                                        <td>Biology</td>
-                                        <td>file</td>
-                                        <td>Jamesdoe@gmail.com</td>
-                                        <td>
-                                            <a href="">View Details</a>
-                                        </td>
-                                    </tr>
+                                {users.map((user, index) => (
+                                <tr key={user._id}>
+                                    <td>{index + 1}</td>
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.units.length > 0 ? user.units[0] : ''}</td>
+                                    <td>
+                                    <a href="">View Details</a>
+                                    </td>
+                                </tr>
+                                ))}
+
+
                                 </tbody>
                             </table>
                         </div>

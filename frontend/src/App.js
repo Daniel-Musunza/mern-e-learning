@@ -11,6 +11,8 @@ import AdministartionDashboard from './administration/AdministrationDashboard'
 import AddCoursesAndSubjects from './administration/AddCoursesAndSubjects'
 import AddChapters from './administration/AddChapters'
 import AddQuestions from './administration/AddQuestions'
+import Students from './administration/Students'
+import Tutors from './administration/Tutors'
 function App() {
   return (
     <>
@@ -23,6 +25,8 @@ function App() {
             <Route path='/add-courses' element={<AddCoursesAndSubjects />} />
             <Route path='/add-chapters' element={<AddChapters />} />
             <Route path='/add-questions' element={<AddQuestions />} />
+            <Route path='/students' element={<Students />} />
+            <Route path='/tutors' element={<Tutors />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/tutorial-notes/:id' element={<TutorialNotes />} />

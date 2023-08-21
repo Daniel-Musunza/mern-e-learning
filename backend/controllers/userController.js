@@ -7,7 +7,7 @@ const User = require('../models/userModel')
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password ,resume, course_id, course_name, units, tutor} = req.body
+  const { name, email, password ,resume, course_id, course_name, units, tutor, admin} = req.body
 
   if (!name || !email || !password) {
     res.status(400)
@@ -35,6 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
     course_id,
     units,
     tutor,
+    admin,
     password: hashedPassword,
   })
 
@@ -48,6 +49,7 @@ const registerUser = asyncHandler(async (req, res) => {
       course_id: user.course_id,
       units: user.units,
       tutor: user.tutor,
+      admin: user.admin,
       token: generateToken(user._id),
     })
   } else {
@@ -75,6 +77,7 @@ const loginUser = asyncHandler(async (req, res) => {
       units: user.units,
       email: user.email,
       tutor: user.tutor,
+      admin: user.admin,
       token: generateToken(user._id),
     })
   } else {
@@ -89,7 +92,10 @@ const loginUser = asyncHandler(async (req, res) => {
 const getMe = asyncHandler(async (req, res) => {
   res.status(200).json(req.user)
 })
-
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find()
+  res.status(200).json(users)
+})
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -101,4 +107,5 @@ module.exports = {
   registerUser,
   loginUser,
   getMe,
+  getUsers
 }

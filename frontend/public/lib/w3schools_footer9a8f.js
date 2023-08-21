@@ -404,7 +404,7 @@ function w3_close_all_topnav() {
 
 /*
 function w3_close_all_nav() {
-  w3_close_nav("tutorials");
+  w3_close_nav("ials");
   w3_close_nav("certified");
   w3_close_nav("services");
   w3_close_nav("Exercises");
@@ -499,7 +499,7 @@ function w3_close_all_nav() {
   close_menu();
 }
 function w3_close_all_topnav() {
-  w3_close_nav("tutorials");
+  w3_close_nav("ials");
   w3_close_nav("references");
   w3_close_nav("Exercises");
 }

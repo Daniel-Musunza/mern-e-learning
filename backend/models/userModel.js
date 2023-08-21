@@ -22,6 +22,9 @@ const userSchema = mongoose.Schema(
     tutor: {
       type: Boolean,
     },
+    admin: {
+      type: Boolean,
+    },
     email: {
       type: String,
       required: [true, 'Please add an email'],
