@@ -17,7 +17,7 @@ function Register() {
     password2: '',
   })
 
-  const { name,   resume, email, password, password2 } = formData
+  const { name, resume, email, password, password2 } = formData
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -89,6 +89,7 @@ const onSubmit = (e) => {
         password,
         resume, // Add resume to the userData
         units: userType === 'tutor' ? selectedUnits : [], // Add selectedUnits if userType is tutor, otherwise an empty array
+        tutor: true
       };
 
       if (userData.resume === '') {
@@ -103,7 +104,7 @@ const onSubmit = (e) => {
       if (userData.resume === '' || userData.units.length === 0) {
         return;
       }
-
+// console.log(userData);
       dispatch(register(userData));
     } else if (userType === 'student') {
       const userData = {

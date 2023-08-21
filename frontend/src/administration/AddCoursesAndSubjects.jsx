@@ -82,7 +82,7 @@ function AddCoursesAndSubjects() {
       <div className="main-content">
         <SideBar />
         <main className="content-area">
-        <div className="contain">
+          <div className="contain">
           
             <h3 style={{color: 'GrayText'}}>All Courses</h3>
             <div className='courses-list'>

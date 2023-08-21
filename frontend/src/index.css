@@ -195,6 +195,7 @@ li{
   .container{
     margin: 10px;
   }
+ 
   .form {
     width: 90%;
   }
@@ -230,6 +231,8 @@ li{
 }
 /* CSS for larger screens (over 768px) */
 @media (min-width: 800px) {
+
+  
   .notes, .notes-editor{
     max-width: 60%;
     margin-left: 250px;

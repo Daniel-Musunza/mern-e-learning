@@ -19,6 +19,9 @@ const userSchema = mongoose.Schema(
     units: {
       type: Array,
     },
+    tutor: {
+      type: Boolean,
+    },
     email: {
       type: String,
       required: [true, 'Please add an email'],

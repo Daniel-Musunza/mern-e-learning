@@ -61,6 +61,7 @@
     .sidebar {
       width: 60px;
       overflow: hidden;
+      display: none;
     }
   
     .sidebar:hover {
