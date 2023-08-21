@@ -18,6 +18,12 @@ function SideBar() {
             </Link>
           </li>
           <li>
+            <Link to="/dashboard">
+              {/* <FontAwesomeIcon icon={faHouse} /> */}
+              Dashboard
+            </Link>
+          </li>
+          <li>
             <Link to="/add-courses">
               {/* <FontAwesomeIcon icon={faSquareArrowUpRight} /> */}
               Courses & Subjects

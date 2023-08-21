@@ -206,6 +206,9 @@ function Header() {
         <Link className="w3-button w3-block ga-top ga-top-menu-tut-and-ref" style={{ fontSize: '22px' }} to="/">
             Home<i className='fa fa-caret-down w3-right'></i>
         </Link>
+        <Link className="w3-button w3-block ga-top ga-top-menu-tut-and-ref" style={{ fontSize: '22px' }} to="/dashboard">
+        Dashboard<i className='fa fa-caret-down w3-right'></i>
+        </Link>
         <Link className="w3-button w3-block ga-top ga-top-menu-tut-and-ref" style={{ fontSize: '22px' }} to="/add-courses">
         Courses & Subjects<i className='fa fa-caret-down w3-right'></i>
         </Link>
