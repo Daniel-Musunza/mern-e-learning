@@ -28,7 +28,11 @@ function AddQuestions() {
   const [answerC, setAnswerC] = useState('');
   const [answerD, setAnswerD] = useState('');
 
-
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = (e) => {
+    e.preventDefault();
+    setShowModal((prevShowModal) => !prevShowModal);
+  };
 
   useEffect(() => {
     if (isError) {
@@ -77,16 +81,52 @@ function AddQuestions() {
 
     setQuestionName('');
     alert("Question Added Successfully ...")
+    toggleModal();
   };
 
   return (
     <div>
       <div className="main-content">
       <SideBar />
+      {showModal && (
+        <div className="modalContainer">
+        <div className='notificationsContainer'>
+        <div className='dadJoke'>
+          <div className='flex'>
+            <div className='flexShrink0'>
+              <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" className='dadJokeSvg'>
+                <path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path>
+              </svg>
+            </div>
+            <div className='dadJokePromptWrap'>
+              <p className='dadJokePromptHeading'>For Confirmation</p>
+              <div className='dadJokePrompt'>
+                <p>
+                 would you like to continue?
+                </p>
+              </div>
+              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <div className='dadJokeButtonContainer'>
+                <button className='dadJokeButtonMain' type="button" onClick={handleQuestionSubmit}>
+                  Confirm
+                </button>
+              </div>
+              <div className='dadJokeButtonContainer'>
+                <button className='dadJokeButtonMain' type="button" onClick={toggleModal}>
+                  Cancel
+                </button>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+        )}
         <main className="content-area">
           <div className="contain">
             <h3>Add Chapter</h3>
-            <form onSubmit={handleQuestionSubmit}>
+            <form onSubmit={toggleModal}>
               <label htmlFor="school-level">Select Course:</label>
               <select
                 id="school-level"

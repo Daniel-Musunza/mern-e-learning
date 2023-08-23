@@ -38,7 +38,11 @@ function Register() {
     }
   
     if (isSuccess || user) {
-      navigate('/');
+      if(user.admin || user.approved) {
+        navigate('/dashboard')
+      } else {
+        navigate('/');
+      }
     }
     dispatch(getallsubjects());
     dispatch(fetchCourses()); // Dispatch fetchCourses instead of getCourses

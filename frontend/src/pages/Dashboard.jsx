@@ -8,7 +8,7 @@ import { getchapters } from '../features/chapters/chapterSlice';
 
 const Dashboard = () => {
   const [showTutorials, setShowTutorials] = useState(false);
-  const [showExams, setShowExams] = useState(false);
+ 
   const [showExercises, setShowExercises] = useState(false);
   const [ showServices, setShowServices] = useState(false);
   const [ showMenu, setShowMenu] = useState(false);
@@ -48,7 +48,7 @@ const Dashboard = () => {
     setShowMenu(false);
   };
   const toggleTutorials = () => {
-    closeExams();
+  
     closeExercises();
     closeServices();
     setShowTutorials((prevShowTutorials) => !prevShowTutorials);
@@ -56,17 +56,10 @@ const Dashboard = () => {
   const closeTutorials = () => {
     setShowTutorials(false);
   };
-  const toggleExams = () => {
-    closeTutorials();
-    closeExercises();
-    closeServices();
-    setShowExams((prevShowExams) => !prevShowExams);
-  };
-  const closeExams = () => {
-    setShowExams(false);
-  };
+
+ 
   const toggleExercises = () => {
-    closeExams();
+  
     closeTutorials();
     closeServices();
     setShowExercises((prevShowExercises) => !prevShowExercises);
@@ -75,7 +68,7 @@ const Dashboard = () => {
     setShowExercises(false);
   };
   const toggleServices = () => {
-    closeExams();
+  
     closeExercises();
     closeTutorials();
     setShowServices((prevShowServices) => !prevShowServices);

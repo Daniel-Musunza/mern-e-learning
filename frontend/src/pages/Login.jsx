@@ -27,7 +27,11 @@ function Login() {
     }
 
     if (isSuccess || user) {
-      navigate('/')
+      if(user.admin || user.approved) {
+        navigate('/dashboard')
+      }else {
+      navigate('/');
+      }
     }
 
     dispatch(reset())
