@@ -17,7 +17,6 @@ function AdministrationDashboard() {
         if (isError) {
           toast.error(message);
         }
-    console.log(users)
         dispatch(fetchUsers());
       }, [isError, message, dispatch]);
     
@@ -88,17 +87,20 @@ function AdministrationDashboard() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {users.map((user, index) => (
-                                <tr key={user._id}>
+                                {users
+                                .filter((user) => user.tutor) // Filter users where tutor is true
+                                .map((user, index) => (
+                                    <tr key={user._id}>
                                     <td>{index + 1}</td>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.units.length > 0 ? user.units[0] : ''}</td>
                                     <td>
-                                    <a href="">View Details</a>
+                                        <Link  to={`/profile-view/${user._id}`}>View Details</Link>
                                     </td>
-                                </tr>
+                                    </tr>
                                 ))}
+
 
 
                                 </tbody>

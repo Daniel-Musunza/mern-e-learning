@@ -5,6 +5,7 @@ import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import ProfileView from './pages/ProfileView'
 import TutorialNotes from './pages/TutorialNotes'
 import Questions from './pages/Questions'
 import AdministartionDashboard from './administration/AdministrationDashboard'
@@ -29,6 +30,7 @@ function App() {
             <Route path='/tutors' element={<Tutors />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path='/profile-view/:id' element={<ProfileView />} />
             <Route path='/tutorial-notes/:id' element={<TutorialNotes />} />
             <Route path='/questions/:id' element={<Questions />} />
           </Routes>

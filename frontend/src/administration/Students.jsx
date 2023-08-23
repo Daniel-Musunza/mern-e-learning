@@ -1,8 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import SideBar from './SideBar';
-import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom'
+import Spinner from '../components/Spinner';
+import { fetchUsers} from '../features/auth/authSlice';
+import { useSelector, useDispatch } from 'react-redux';
 function Students() {
+    const dispatch = useDispatch();
+    const { isLoading, isError, message } = useSelector(
+        (state) => state.auth
+      );
+    
+    const { users } = useSelector((state) => state.users);
 
+    useEffect(() => {
+        if (isError) {
+          toast.error(message);
+        }
+        dispatch(fetchUsers());
+      }, [isError, message, dispatch]);
+    
+      if (isLoading) {
+        return <Spinner />;
+      }
   return (
     <div>
       <SideBar />
@@ -21,35 +41,30 @@ function Students() {
                             <table width="100%">
                                 <thead>
                                     <tr>
-                                        <td>Teacher NO:</td>
+                                        <td>NO:</td>
                                         <td>Full name</td>
-                                        <td>Subject</td>
-                                        <td>Resume</td>
                                         <td>Email</td>
-                                        <td>Approve</td>
+                                        <td>Course</td>
+                                        <td></td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>John Doe</td>
-                                        <td>Maths</td>
-                                        <td>file</td>
-                                        <td>JohnDoe@gmail.com</td>
-                                        <td>
-                                            <a href="">View Details</a>
-                                        </td>
+                                {users
+                                .filter((user) => !user.tutor) // Filter users where tutor is true
+                                .map((user, index) => (
+                                    <tr key={user._id}>
+                                    <td>{index + 1}</td>
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.course_name}</td>
+                                    <td>
+                                        <Link  to={`/profile-view/${user._id}`}>View Details</Link>
+                                    </td>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>James Doe</td>
-                                        <td>Biology</td>
-                                        <td>file</td>
-                                        <td>Jamesdoe@gmail.com</td>
-                                        <td>
-                                            <a href="">View Details</a>
-                                        </td>
-                                    </tr>
+                                ))}
+
+
+
                                 </tbody>
                             </table>
                         </div>

@@ -179,10 +179,10 @@ const Dashboard = () => {
             <div id="loginactioncontainer" class="w3-right"
               style={{paddingTop:'3px',paddingBottom:'8px', paddingLeft:'1px', marginRight:'30px',width: '25px'}}>
               
-              <a id="w3loginbtn" title="Your Username" style={{paddingLeft:'3px'}}
+              <Link id="w3loginbtn" title="Your Username" style={{paddingLeft:'3px'}}
                 class="w3-bar-item w3-btn bar-item-hover w3-right ga-top ga-top-login"
-                href=""
-                target="_self">{user && user.name}</a>
+                to={`/profile-view/${user._id}`}
+                target="_self">{user && user.name}</Link>
             </div>
             ) : (
               <a id="signupbtn_topnav" class="w3-bar-item w3-button w3-right ws-green ws-hover-green ga-top ga-top-signup"

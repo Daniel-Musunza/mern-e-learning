@@ -88,7 +88,8 @@ function Header() {
             <></>
           )
         }
-      
+       {user ? (
+        <> 
         {user.tutor ? ( 
           <div>
             <div className="w3-bar-item w3-button w3-hide-small barex w3-padding-16 ga-top ga-top-cert-and-course ws-hide-750" id="navbtn_certified" title="Your Course" style={{fontWeight: '500px', color: '#0077b6;'}}>
@@ -125,6 +126,11 @@ function Header() {
             </>
           )
           }
+        </>
+          ): (
+            <></>
+          )
+        }
               {/* menu */}
         <div className='menu-bar'>
           <a onClick={toggleMenu} className="w3-bar-item w3-button bar-item-hover w3-padding-16 ga-top ga-top-menu"
@@ -176,10 +182,10 @@ function Header() {
             <div id="loginactioncontainer" class="w3-right"
               style={{paddingTop:'3px',paddingBottom:'8px', paddingLeft:'1px', marginRight:'30px',width: '25px'}}>
               
-              <a id="w3loginbtn" title="Your Username" style={{paddingLeft:'3px'}}
+              <Link id="w3loginbtn" title="Your Username" style={{paddingLeft:'3px'}}
                 class="w3-bar-item w3-btn bar-item-hover w3-right ga-top ga-top-login"
-                href=""
-                target="_self">{user && user.name}</a>
+                to={`/profile-view/${user._id}`}
+                target="_self">{user && user.name}</Link>
             </div>
             ) : (
               <a id="signupbtn_topnav" class="w3-bar-item w3-button w3-right ws-green ws-hover-green ga-top ga-top-signup"
@@ -200,7 +206,8 @@ function Header() {
           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
         </svg>
       </div>
-      
+      {user ? (
+        <> 
       {user.tutor ? ( 
         <div  className="w3-container" onClick={closeMenu}>
         <Link className="w3-button w3-block ga-top ga-top-menu-tut-and-ref" style={{ fontSize: '22px' }} to="/">
@@ -444,6 +451,11 @@ function Header() {
           </a>
         </div>
       )}
+       </>
+          ): (
+            <></>
+          )
+        }
       <div className="w3-container" style={{ marginTop: '36px' }}>
         <a className="w3-bar-item w3-button ga-fp w3-hover-white w3-round w3-large" target="_blank" href="" title="W3Schools on Facebook">
           <i className="fa fa-facebook-square"></i>
