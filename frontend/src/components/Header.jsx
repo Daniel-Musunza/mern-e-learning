@@ -90,7 +90,7 @@ function Header() {
         }
        {user ? (
         <> 
-        {user.tutor ? ( 
+        {user.approved ? ( 
           <div>
             <div className="w3-bar-item w3-button w3-hide-small barex w3-padding-16 ga-top ga-top-cert-and-course ws-hide-750" id="navbtn_certified" title="Your Course" style={{fontWeight: '500px', color: '#0077b6;'}}>
             <h3 style={{color: '#1c68c4'}}>Tutor Dashboard</h3> 
@@ -208,7 +208,7 @@ function Header() {
       </div>
       {user ? (
         <> 
-      {user.tutor ? ( 
+      {user.approved ? ( 
         <div  className="w3-container" onClick={closeMenu}>
         <Link className="w3-button w3-block ga-top ga-top-menu-tut-and-ref" style={{ fontSize: '22px' }} to="/">
             Home<i className='fa fa-caret-down w3-right'></i>

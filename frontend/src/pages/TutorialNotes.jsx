@@ -10,6 +10,7 @@ function TutorialNotes() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [notes, setNotes] = useState('');
+  const { user } = useSelector((state) => state.auth)
 
   // Fetch subject data when the component mounts
   useEffect(() => {
@@ -62,6 +63,9 @@ function TutorialNotes() {
         marginLeft: 0,
       }}
     >
+       {user ? (
+        <> 
+        {user.approved ? ( 
        <div
         style={{
           display: 'flex',
@@ -74,6 +78,7 @@ function TutorialNotes() {
           <button onClick={onSubmit} style={{marginTop: '30px', width: '100px'}}>Submit</button>
         </div>
       </div> 
+      ): (
       <div >
       {subject && (
         <div className='notes' 
@@ -81,6 +86,13 @@ function TutorialNotes() {
         ></div>
       )}
       </div>
+       )
+      }
+    </>
+      ): (
+        <></>
+      )
+    }
     </div>
   );
 }

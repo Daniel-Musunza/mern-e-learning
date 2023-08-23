@@ -9,6 +9,7 @@ import { getallsubjects} from '../features/subjects/allSubjectSlice';
 import { fetchCourses, createCourse } from '../features/courses/courseSlice';
 
 function AddCoursesAndSubjects() {
+  const { user } = useSelector((state) => state.auth)
   const dispatch = useDispatch();
   const { isLoading, isError, message } = useSelector(
     (state) => state.auth
@@ -53,7 +54,6 @@ function AddCoursesAndSubjects() {
       setSelectedCourseId(courseId);
       setSelectedCourseName(selectedCourse.course_name);
     }
-    console.log(selectedCourse);
   };
 
   const handleAddSubject = (e) => {
@@ -93,47 +93,60 @@ function AddCoursesAndSubjects() {
                 ))}
             </div>
           </div>
-          <div className="contain">
-            <h3>Add Course</h3>
-            <form className="add-subject" onSubmit={handleAddCourse}>
-              <input
-                type="text"
-                placeholder="Course Name"
-                value={course_name}
-                onChange={(e) => setCourseName(e.target.value)}
-              />
-              <button id="submit" type="submit">
-                Submit
-              </button>
-            </form>
-            <hr />
-            <h3>Add Subject</h3>
-            <form onSubmit={handleAddSubject}>
-              <label htmlFor="school-level">Select Course:</label>
-              <select
-                id="school-level"
-                value={selectedCourseId}
-                onChange={handleSelectCourse}
-              >
-                <option value="">Select a course</option>
+          
+            {user ? (
+              <>
+                {user.admin ? (
+                 <div className="contain">
+                    <h3>Add Course</h3>
+                    <form className="add-subject" onSubmit={handleAddCourse}>
+                      <input
+                        type="text"
+                        placeholder="Course Name"
+                        value={course_name}
+                        onChange={(e) => setCourseName(e.target.value)}
+                      />
+                      <button id="submit" type="submit">
+                        Submit
+                      </button>
+                    </form>
+                    <hr />
+                 
+                    <h3>Add Subject</h3>
+                    <form onSubmit={handleAddSubject}>
+                      <label htmlFor="school-level">Select Course:</label>
+                      <select
+                        id="school-level"
+                        value={selectedCourseId}
+                        onChange={handleSelectCourse}
+                      >
+                        <option value="">Select a course</option>
+                        {courses.map((course) => (
+                          <option key={course._id} value={course._id}>
+                            {course.course_name}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        type="text"
+                        placeholder="Subject Name"
+                        value={subjectName}
+                        onChange={(e) => setSubjectName(e.target.value)}
+                      />
+                      <button id="submit" type="submit">
+                        Submit
+                      </button>
+                    </form>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </>
+            ) : (
+              <></>
+            )}
+         
 
-                {courses.map((course) => (
-                  <option key={course._id} value={course._id}>
-                    {course.course_name}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="text"
-                placeholder="Subject Name"
-                value={subjectName}
-                onChange={(e) => setSubjectName(e.target.value)}
-              />
-              <button id="submit" type="submit">
-                Submit
-              </button>
-            </form>
-          </div>
           <div className="contain">
           <h3 style={{color: 'GrayText'}}>All Subjects</h3>
           <label htmlFor="school-level">Select Course:</label>

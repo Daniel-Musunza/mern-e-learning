@@ -22,6 +22,9 @@ const userSchema = mongoose.Schema(
     tutor: {
       type: Boolean,
     },
+    approved: {
+      type: Boolean,
+    },
     admin: {
       type: Boolean,
     },

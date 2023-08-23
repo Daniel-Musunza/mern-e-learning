@@ -50,7 +50,7 @@ function Students() {
                                 </thead>
                                 <tbody>
                                 {users
-                                .filter((user) => !user.tutor) // Filter users where tutor is true
+                                .filter((user) => !user.tutor&&!user.admin) // Filter users where tutor is true
                                 .map((user, index) => (
                                     <tr key={user._id}>
                                     <td>{index + 1}</td>

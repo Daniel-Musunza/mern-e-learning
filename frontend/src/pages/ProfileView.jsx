@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchUsers } from '../features/auth/authSlice';
+import { fetchUsers, updateUser } from '../features/auth/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import Spinner from '../components/Spinner';
@@ -23,7 +23,30 @@ function ProfileView() {
   if (isLoading) {
     return <Spinner />;
   }
-
+  const makeAdmin = (e) => {
+    e.preventDefault();
+    // Dispatch an action to update user's admin status
+    // You'll need to implement this action in your Redux store
+    const data = { 
+      id, 
+      admin: true
+    }
+    // console.log(data);
+    dispatch(updateUser(data));
+    alert("admin added successfully");
+  };
+  const approveTutor = (e) => {
+    e.preventDefault();
+    // Dispatch an action to update user's admin status
+    // You'll need to implement this action in your Redux store
+    const data = { 
+      id, 
+      approved: true
+    }
+    // console.log(data);
+    dispatch(updateUser(data));
+    alert("tutor Approved successfully");
+  };
   const renderTutorDetails = () => {
     return (
       < >
@@ -51,6 +74,23 @@ function ProfileView() {
             </a>
           )}
         </div>
+        <div className='form-group'>
+        {user ? (
+          <>
+            {!user.admin ? (
+              <button onClick={makeAdmin}>Make an Admin</button>
+            ) : !user.approved ? (
+              <button onClick={approveTutor}>Approve</button>
+            ) : (
+              <></>
+            )}
+          </>
+        ) : (
+          <></>
+        )}
+
+         
+        </div>
       </>
     );
   };
@@ -62,6 +102,17 @@ function ProfileView() {
         <p>Email: {user.email}</p>
 
         <h4>Course: {user.course_name}</h4>
+        {user ? (
+          <>
+            {!user.admin ? (
+              <button onClick={makeAdmin}>Make an Admin</button>
+            ) : (
+              <></>
+            )}
+          </>
+        ) : (
+          <></>
+        )}
       </div>
     );
   };
@@ -77,7 +128,7 @@ function ProfileView() {
       <section className='heading'>
         <h1>Profile View</h1>
       </section>
-
+      
       <section className='form' style={{ backgroundColor: '#282A35',color: '#ffff', padding: '20px', borderRadius: '10px'}}>
         <form>
         {user ? (

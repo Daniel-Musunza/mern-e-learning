@@ -6,6 +6,7 @@ import Spinner from '../components/Spinner';
 import { fetchUsers} from '../features/auth/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 function AdministrationDashboard() {
+    const { user } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
     const { isLoading, isError, message } = useSelector(
         (state) => state.auth
@@ -41,7 +42,9 @@ function AdministrationDashboard() {
                 </Link>
                 <Link to='/add-courses' className="card-single">
                     <div>
-                    <h3>Courses/Subjects</h3>
+                    <h3>
+                        Courses/Subjects
+                    </h3>
                         <span></span>
                     </div>
                     <div>
@@ -69,6 +72,9 @@ function AdministrationDashboard() {
             
             </div>
             <div className="recent-grid">
+            {user ? (
+                <> 
+                {user.admin ? ( 
                 <div className="card">
                     <div className="card-header">
                         <h2>New Tutors</h2>
@@ -88,7 +94,7 @@ function AdministrationDashboard() {
                                 </thead>
                                 <tbody>
                                 {users
-                                .filter((user) => user.tutor) // Filter users where tutor is true
+                                .filter((user) => user.tutor&&!user.approved) // Filter users where tutor is true
                                 .map((user, index) => (
                                     <tr key={user._id}>
                                     <td>{index + 1}</td>
@@ -108,6 +114,14 @@ function AdministrationDashboard() {
                         </div>
                     </div>
                 </div>
+                  ): (
+                <></>
+                )
+            }
+             </>
+            ): (
+              <></>
+            )}
             </div>
         </main>
 

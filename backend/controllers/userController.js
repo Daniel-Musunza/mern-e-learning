@@ -7,7 +7,7 @@ const User = require('../models/userModel')
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password ,resume, course_id, course_name, units, tutor, admin} = req.body
+  const { name, email, password ,resume, course_id, course_name, units, tutor, approved, admin} = req.body
 
   if (!name || !email || !password) {
     res.status(400)
@@ -35,6 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
     course_id,
     units,
     tutor,
+    approved,
     admin,
     password: hashedPassword,
   })
@@ -49,6 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
       course_id: user.course_id,
       units: user.units,
       tutor: user.tutor,
+      approved: user.approved,
       admin: user.admin,
       token: generateToken(user._id),
     })
@@ -77,6 +79,7 @@ const loginUser = asyncHandler(async (req, res) => {
       units: user.units,
       email: user.email,
       tutor: user.tutor,
+      approved: user.approved,
       admin: user.admin,
       token: generateToken(user._id),
     })
@@ -96,6 +99,31 @@ const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find()
   res.status(200).json(users)
 })
+//update User
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { admin, approved } = req.body;
+
+    // Find the user by ID
+    const user = await User.findById(id); // Make sure to use the correct model name (Subject)
+
+    if (!user) {
+      return res.status(404).json({ message: 'user not found' });
+    }
+
+    // Update the user properties
+    user.admin = admin;
+    user.approved = approved;
+    // Save the updated user
+    await user.save();
+
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -107,5 +135,6 @@ module.exports = {
   registerUser,
   loginUser,
   getMe,
-  getUsers
+  getUsers,
+  updateUser
 }
