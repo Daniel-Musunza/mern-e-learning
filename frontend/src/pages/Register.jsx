@@ -174,16 +174,16 @@ const onSubmit = (e) => {
             className='form-control'
             id='courseName'
             name='courseName'
-            value={courseName.id}  // Use courseName.id as the selected value
-            onChange={onChange}  // Use the onChange function here
+            value={courseName.id}
+            onChange={onChange}
           >
-            {/* Add options for different course names */}
             <option value=''>Select Course</option>
-            {courses.map((course) => (
-              <option key={course._id} value={course._id}>
-                {course.course_name}
-              </option>
-            ))}
+            {Array.isArray(courses) && // Check if courses is an array
+              courses.map((course) => (
+                <option key={course._id} value={course._id}>
+                  {course.course_name}
+                </option>
+              ))}
           </select>
 
 
