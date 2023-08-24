@@ -104,7 +104,11 @@ function Header() {
         </>
           ): (
             <>
-              <a  onClick={toggleTutorials} className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-tut-and-ref"
+           
+            </>
+          )
+        }
+           <a  onClick={toggleTutorials} className="w3-bar-item w3-button w3-hide-small barex bar-item-hover w3-padding-16 ga-top ga-top-tut-and-ref"
                 id="navbtn_tutorials"
                 title="Tutorials and References"
               >
@@ -127,9 +131,6 @@ function Header() {
                       <path
                         d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5V7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zM1 4v2h6V4H1zm8 0v2h6V4H9zm5 3H9v8h4.5a.5.5 0 0 0 .5-.5V7zm-7 8V7H2v7.5a.5.5 0 0 0 .5.5H7z" />
               </svg> Live Classes</a>
-            </>
-          )
-        }
               {/* menu */}
         <div className='menu-bar'>
           <a onClick={toggleMenu} className="w3-bar-item w3-button bar-item-hover w3-padding-16 ga-top ga-top-menu"
@@ -237,7 +238,10 @@ function Header() {
       )}
        </>
           ): (
-            <div className="w3-container">
+           <></>
+          )
+        }
+         <div className="w3-container">
               <a onClick={toggleTutorials} className="w3-button w3-block ga-top ga-top-menu-tut-and-ref" style={{ fontSize: '22px' }} href="javascript:void(0);">
                 Tutorial Notes<i className='fa fa-caret-down w3-right'></i>
               </a>
@@ -441,8 +445,6 @@ function Header() {
                 </svg>
               </a>
             </div>
-          )
-        }
       <div className="w3-container" style={{ marginTop: '36px' }}>
         <a className="w3-bar-item w3-button ga-fp w3-hover-white w3-round w3-large" target="_blank" href="" title="W3Schools on Facebook">
           <i className="fa fa-facebook-square"></i>
@@ -552,7 +554,7 @@ function Header() {
                   <div className="w3-col l4 m6" key={subject._id}>
                     <h3 className="w3-margin-top">{subject.subject}</h3>
                     <h4 className="w3-margin-top">Topics</h4>
-                    <ol>
+                    <ol style={{marginBottom: 0}}>
                       {chapters
                         .filter((chapter) => chapter.subject_id === subject._id)
                         .map((chapter) => (
@@ -563,7 +565,7 @@ function Header() {
                             <Link className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" to={`/questions/${chapter._id}`}>
                               Questions
                             </Link>
-                            <br />
+                        
                           </li>
                         ))}
                     </ol>
@@ -576,7 +578,6 @@ function Header() {
               )}
              
           </div>
-          <br />
         </div>
       </nav>
        )}

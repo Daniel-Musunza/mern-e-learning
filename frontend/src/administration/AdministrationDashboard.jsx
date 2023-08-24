@@ -50,25 +50,37 @@ function AdministrationDashboard() {
                         <span><i className="fa fa-shopping-bag" aria-hidden="true"></i></span>
                     </div>
                 </Link>
-                <Link to='/add-chapters' className="card-single">
-                    <div>
-                        <h3>Chapters</h3>
-                        <span></span>
-                    </div>
-                    <div>
-                        <span><i className="fa-solid fa-sort"></i></span>
-                    </div>
-                </Link>
-                <Link to='/add-questions' className="card-single">
-                    <div>
-                        <h3>Questions & Answers</h3>
-                        <span></span>
-                    </div>
-                    <div>
-                        <span><i className="fa-solid fa-rotate"></i></span>
-                    </div>
-                </Link>
-            
+                {user ? (
+                <> 
+                {user.approved ? ( 
+                    <>
+                    <Link to='/add-chapters' className="card-single">
+                        <div>
+                            <h3>Chapters</h3>
+                            <span></span>
+                        </div>
+                        <div>
+                            <span><i className="fa-solid fa-sort"></i></span>
+                        </div>
+                    </Link>
+                    <Link to='/add-questions' className="card-single">
+                        <div>
+                            <h3>Questions & Answers</h3>
+                            <span></span>
+                        </div>
+                        <div>
+                            <span><i className="fa-solid fa-rotate"></i></span>
+                        </div>
+                    </Link>
+                    </>
+                ): (
+                    <></>
+                    )
+                }
+                </>
+                ): (
+                <></>
+                )}
             </div>
             <div className="recent-grid">
             {user ? (
