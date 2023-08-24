@@ -72,8 +72,8 @@ useEffect(() => {
 
       </section>
       <section className='section2'>
-        <h1> Our Chapter-Based Questions Area </h1>
-        <img src="" alt="Questions Image" />
+        <h2> Our Chapter-Based Questions Area </h2>
+        <img src="questions_screenshort.png" alt="Questions Image" />
       </section>
       <section className='section3'>
         
@@ -105,15 +105,7 @@ useEffect(() => {
                     )).slice(0,9)}
             </ul>
           </div>
-          <div className='part-of-part1'>
-            <h4>Popular Teachers</h4>
-            <ul>
-              <li>one</li>
-              <li>one</li>
-              <li>one</li>
-              <li>one</li>
-            </ul>
-          </div>
+         
         </div>
         <hr />
         <div className="part2">

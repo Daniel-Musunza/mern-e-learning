@@ -335,6 +335,20 @@ li{
 .section2{
   min-height: 200px;
   background-color:#212121;
+  color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.section2 img{
+  width: 80%;
+  height: auto;
+}
+.section2 h2{
+
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .section3{
   min-height: 200px;
@@ -369,6 +383,12 @@ li{
 .part2 p{
   margin-left: 100px;
   margin-right: 100px;
+}
+@media (min-width: 800px) {
+  .part1{
+    margin-left: 300px;
+    margin-right: 300px;
+  }
 }
 @media (max-width: 800px) {
   .section1{
