@@ -30,15 +30,28 @@ function AdministrationDashboard() {
        
          <main>
             <div className="cards">
-                <Link to='/students' className="card-single">
-                    <div>
-                        <h3>200</h3>
-                        <span>Students</span>
-                    </div>
-                    <div>
-                        <span><i className="fa fa-book"></i></span>
-                    </div>
-                </Link>
+                
+                    {user ? (
+                    <>
+                        {user.admin ? (
+                            <Link to='/students' className="card-single">
+                            <div>
+                                <h3>Students</h3>
+                            </div>
+                            <div>
+                        <span>
+                            <i>{users.filter(user => !user.admin && !user.tutor).length}</i>
+                        </span>
+                         </div>
+                         </Link>
+                        ) : (
+                        <></>
+                        )}
+                    </>
+                    ) : (
+                    <></>
+                    )}
+                   
                 <Link to='/add-courses' className="card-single">
                     <div>
                     <h3>
@@ -107,13 +120,13 @@ function AdministrationDashboard() {
                                 {users
                                 .filter((user) => user.tutor&&!user.approved) // Filter users where tutor is true
                                 .map((user, index) => (
-                                    <tr key={user._id}>
+                                    <tr key={user.id}>
                                     <td>{index + 1}</td>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
-                                    <td>{user.units.length > 0 ? user.units[0] : ''}</td>
+                                    <td>{user.units.length > 0 ? user.units : ''}</td>
                                     <td>
-                                        <Link  to={`/profile-view/${user._id}`}>View Details</Link>
+                                        <Link  to={`/profile-view/${user.id}`}>View Details</Link>
                                     </td>
                                     </tr>
                                 ))}

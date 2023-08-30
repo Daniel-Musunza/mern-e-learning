@@ -69,17 +69,19 @@ function Questions() {
     const updatedAnswerStyles = { ...answerStyles };
 
     filteredQuestions.forEach((question) => {
-      const selectedAnswer = selectedAnswers[question._id];
-      const correctAnswer = question.correctanswer;
+      const selectedAnswer = selectedAnswers[question.id];
+      const correctAnswer = question.correctAnswer;
 
       if (selectedAnswer) {
-        updatedAnswerStyles[question._id] = {
-          ...updatedAnswerStyles[question._id], // Preserve existing styles for other answers
+        updatedAnswerStyles[question.id] = {
+          ...updatedAnswerStyles[question.id], // Preserve existing styles for other answers
           [selectedAnswer]: {
             backgroundColor: selectedAnswer === correctAnswer ? 'rgb(17, 249, 17)' : 'red',
           },
         };
+        console.log("Selected:" + selectedAnswer + "correct:" + correctAnswer);
         if (selectedAnswer === correctAnswer) {
+        
           userScore++;
         } 
         userAttempted++;
@@ -94,8 +96,8 @@ function Questions() {
   
 
   // Filter questions based on the matching chapter_id
-  const filteredQuestions = questions.filter((question) => question.chapter_id === id);
-  const filteredChapter = chapters.find((chapter) => chapter._id === id);
+  const filteredQuestions = questions.filter((question) => question.chapter_id == id);
+  const filteredChapter = chapters.find((chapter) => chapter.id == id);
 
   return (
     <div
@@ -139,21 +141,24 @@ function Questions() {
           <span style={{ color: '#40c9ff' }}>{filteredChapter.chapter} </span>
           Questions
         </h3>
-        <ol className='ol' style={{ listStyle: 'decimal' }}>
-          {filteredQuestions.map((question) => (
-            <li key={question._id} style={{ listStyle: 'decimal' }}>
+        <ol className='ol' style={{ listStyle: 'none' }}>
+          {filteredQuestions.map((question, index) => (
+            <li key={question.id} > 
+              <div style={{ display: 'flex', flexDirection: 'row'}}>
+              <span style={{ paddingTop: '8px', paddingRight: '10px', fontSize: '20px' }}>{index + 1}. </span>
               <h4 className="acctop-link ga-top-drop ga-top-drop-ex-html" style={{ color: '#40c9ff' }}>
                 {question.question}
               </h4>
+              </div>
               <br />
               <ul className='ul'>
                 <li>
                   <div
                     className='acctop-link ga-top-drop ga-top-drop-ex-html answer '
-                    onClick={() => handleAnswerClick(question._id, question.answerA)}  
+                    onClick={() => handleAnswerClick(question.id, question.answerA)}  
                     style={{
-                        color: answerStyles[question._id]?.[question.answerA]?.color,
-                        backgroundColor: answerStyles[question._id]?.[question.answerA]?.backgroundColor,
+                        color: answerStyles[question.id]?.[question.answerA]?.color,
+                        backgroundColor: answerStyles[question.id]?.[question.answerA]?.backgroundColor,
                       }}
                   >
                     <span style={{ paddingRight: '10px', color: '#40c9ff' }}> A. </span>
@@ -164,10 +169,10 @@ function Questions() {
                 <li>
                   <div
                     className='acctop-link ga-top-drop ga-top-drop-ex-html answer '
-                    onClick={() => handleAnswerClick(question._id, question.answerB)}  
+                    onClick={() => handleAnswerClick(question.id, question.answerB)}  
                     style={{
-                        color: answerStyles[question._id]?.[question.answerB]?.color,
-                        backgroundColor: answerStyles[question._id]?.[question.answerB]?.backgroundColor,
+                        color: answerStyles[question.id]?.[question.answerB]?.color,
+                        backgroundColor: answerStyles[question.id]?.[question.answerB]?.backgroundColor,
                       }}
                   >
                     <span style={{ paddingRight: '10px', color: '#40c9ff' }}> B. </span>
@@ -178,10 +183,10 @@ function Questions() {
                 <li>
                   <div
                     className='acctop-link ga-top-drop ga-top-drop-ex-html answer '
-                    onClick={() => handleAnswerClick(question._id, question.answerC)}  
+                    onClick={() => handleAnswerClick(question.id, question.answerC)}  
                     style={{
-                        color: answerStyles[question._id]?.[question.answerC]?.color,
-                        backgroundColor: answerStyles[question._id]?.[question.answerC]?.backgroundColor,
+                        color: answerStyles[question.id]?.[question.answerC]?.color,
+                        backgroundColor: answerStyles[question.id]?.[question.answerC]?.backgroundColor,
                       }}
                   >
                     <span style={{ paddingRight: '10px', color: '#40c9ff' }}> C. </span>
@@ -192,9 +197,9 @@ function Questions() {
                 <li>
                   <div
                     className='acctop-link ga-top-drop ga-top-drop-ex-html answer '
-                    onClick={() => handleAnswerClick(question._id, question.answerD)}  style={{
-                        color: answerStyles[question._id]?.[question.answerD]?.color,
-                        backgroundColor: answerStyles[question._id]?.[question.answerD]?.backgroundColor,
+                    onClick={() => handleAnswerClick(question.id, question.answerD)}  style={{
+                        color: answerStyles[question.id]?.[question.answerD]?.color,
+                        backgroundColor: answerStyles[question.id]?.[question.answerD]?.backgroundColor,
                       }}
                   >
                     <span style={{ paddingRight: '10px', color: '#40c9ff' }}> D. </span>
@@ -203,8 +208,6 @@ function Questions() {
                   <br />
                 </li>
               </ul>
-
-
 
               <br />
             </li>

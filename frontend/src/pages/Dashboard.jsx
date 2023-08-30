@@ -46,7 +46,7 @@ useEffect(() => {
             {subjects.length > 0 ? (
                 <div>
                   {subjects.map((subject) => (
-                    <Link className="w3-bar-item w3-button ga-nav" to={`/tutorial-notes/${subject._id}`}  title="Tutorial" key={subject._id}>{subject.subject}</Link>
+                    <Link className="w3-bar-item w3-button ga-nav" to={`/tutorial-notes/${subject.id}`}  title="Tutorial" key={subject.id}>{subject.subject}</Link>
                   ))}
                 </div>
               ) : (
@@ -101,7 +101,7 @@ useEffect(() => {
             <h4>Popular Tutorials</h4>
             <ul>
             {allsubjects.map((subject) => (
-                <li>   <Link to={`/tutorial-notes/${subject._id}`}  title="Tutorial" key={subject._id}>{subject.subject}</Link> Tutorial</li>
+                <li>   <Link to={`/tutorial-notes/${subject.id}`}  title="Tutorial" key={subject.id}>{subject.subject}</Link> Tutorial</li>
                     )).slice(0,9)}
             </ul>
           </div>

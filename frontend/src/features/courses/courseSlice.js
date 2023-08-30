@@ -31,7 +31,7 @@ export const createCourse = createAsyncThunk(
   async (courseData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await courseService.createCourse(courseData,token);
+      return await courseService.createCourse(courseData, token);
     } catch (error) {
       const message =
         (error.response &&

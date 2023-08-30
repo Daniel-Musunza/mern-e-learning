@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import { fetchUsers, updateUser } from '../features/auth/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -9,9 +10,10 @@ import { FaSignInAlt } from 'react-icons/fa';
 function ProfileView() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { isLoading, isError, message } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.users);
-  const user = users.find((user) => user._id === id);
+  const user = users.find((user) => user.id == id);
 
   useEffect(() => {
     if (isError) {
@@ -33,6 +35,7 @@ function ProfileView() {
     }
     // console.log(data);
     dispatch(updateUser(data));
+    navigate('/dashboard');
     alert("admin added successfully");
   };
   const approveTutor = (e) => {
@@ -45,6 +48,7 @@ function ProfileView() {
     }
     // console.log(data);
     dispatch(updateUser(data));
+    navigate('/dashboard');
     alert("tutor Approved successfully");
   };
   const renderTutorDetails = () => {
@@ -57,9 +61,7 @@ function ProfileView() {
         <div className='form-group'>
           <h4>Subjects:</h4>
           <ul>
-            {user.units.map((unit, index) => (
-              <li key={index}>{unit}</li>
-            ))}
+            {user.units}
           </ul>
         </div>
         <div className='form-group'>
@@ -78,6 +80,7 @@ function ProfileView() {
         {user ? (
           <>
             {!user.admin ? (
+              
               <button onClick={makeAdmin}>Make an Admin</button>
             ) : !user.approved ? (
               <button onClick={approveTutor}>Approve</button>

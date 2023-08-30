@@ -1,32 +1,69 @@
-const asyncHandler = require('express-async-handler')
-
-const question = require('../models/questionModel')
+const asyncHandler = require('express-async-handler');
+const db = require('../config/db');
 
 const getquestions = asyncHandler(async (req, res) => {
-  const questions = await question.find()
-  res.status(200).json(questions)
-})
-
+  const query = 'SELECT * FROM questions';
+  const questions = await db.query(query);
+  res.status(200).json(questions);
+});
 
 const addquestion = asyncHandler(async (req, res) => {
-  if (!req.body.chapter_id||!req.body.question||!req.body.correctanswer||!req.body.answerA||!req.body.answerB) {
-    res.status(400)
-    throw new Error('Please Fill all the fields')
+  try {
+    const {
+      chapter_id,
+      question,
+      correctanswer,
+      answerA,
+      answerB,
+      answerC,
+      answerD,
+    } = req.body;
+
+    if (
+      !chapter_id ||
+      !question ||
+      !correctanswer ||
+      !answerA ||
+      !answerB
+    ) {
+      res.status(400);
+      throw new Error('Please Fill all the fields');
+    }
+
+    const insertQuestionQuery = `
+      INSERT INTO questions (chapter_id, question, correctanswer, answerA, answerB, answerC, answerD)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    const result = await db.query(insertQuestionQuery, [
+      chapter_id,
+      question,
+      correctanswer,
+      answerA,
+      answerB,
+      answerC,
+      answerD,
+    ]);
+
+    const newQuestion = {
+      id: result.insertId,
+      chapter_id,
+      question,
+      correctanswer,
+      answerA,
+      answerB,
+      answerC,
+      answerD,
+    };
+
+    res.status(200).json(newQuestion);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
   }
-
-  const newQuestion = await question.create({
-    question: req.body.question,
-    chapter_id: req.body.chapter_id,
-    correctanswer: req.body.correctanswer,
-    answerA: req.body.answerA,
-    answerB: req.body.answerB,
-    answerC: req.body.answerC,
-    answerD: req.body.answerD,
-  })
-
-  res.status(200).json(newQuestion)
 });
+
 module.exports = {
   getquestions,
-  addquestion
-}
+  addquestion,
+};

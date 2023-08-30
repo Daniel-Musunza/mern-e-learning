@@ -43,8 +43,8 @@ function Tutors() {
                                     <tr>
                                         <td>Teacher NO:</td>
                                         <td>Full name</td>
-                                        <td>Subject</td>
                                         <td>Email</td>
+                                        <td>Subjects</td>
                                         <td></td>
                                     </tr>
                                 </thead>
@@ -52,13 +52,13 @@ function Tutors() {
                                 {users
                                 .filter((user) => user.approved) // Filter users where tutor is true
                                 .map((user, index) => (
-                                    <tr key={user._id}>
+                                    <tr key={user.id}>
                                     <td>{index + 1}</td>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
-                                    <td>{user.units.length > 0 ? user.units[0] : ''}</td>
+                                    <td>{user.units}</td>
                                     <td>
-                                        <Link  to={`/profile-view/${user._id}`}>View Details</Link>
+                                        <Link  to={`/profile-view/${user.id}`}>View Details</Link>
                                     </td>
                                     </tr>
                                 ))}

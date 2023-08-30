@@ -13,9 +13,8 @@ const createCourse = async (courseData, token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-
+  
   const response = await axios.post(API_URL , courseData, config)
-
   return response.data
 }
 const courseService = {

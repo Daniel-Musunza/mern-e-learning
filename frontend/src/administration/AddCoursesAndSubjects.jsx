@@ -11,15 +11,14 @@ import { fetchCourses, createCourse } from '../features/courses/courseSlice';
 function AddCoursesAndSubjects() {
   const { user } = useSelector((state) => state.auth)
   const dispatch = useDispatch();
-  const { isLoading, isError, message } = useSelector(
-    (state) => state.auth
-  );
   const [showModal, setShowModal] = useState(false);
   const toggleModal = (e) => {
     e.preventDefault();
     setShowModal((prevShowModal) => !prevShowModal);
   };
-  const { courses } = useSelector((state) => state.courses);
+  const { courses, isLoading, isError, message } = useSelector(
+    (state) => state.courses
+  );
   const { allsubjects } = useSelector((state) => state.allsubjects);
   const [course_name, setCourseName] = useState('');
 
@@ -45,20 +44,21 @@ function AddCoursesAndSubjects() {
     if (course_name.trim() === '') {
       return;
     }
-
-    dispatch(createCourse({ course_name }), fetchCourses());
+    dispatch(createCourse({ course_name }));
+    dispatch(fetchCourses());
     setCourseName('');
     alert("Course Added Successfully !!");
   };
-
   const handleSelectCourse = (e) => {
     const courseId = e.target.value;
-    const selectedCourse = courses.find((course) => course._id === courseId);
+    const selectedCourse = courses.find((course) => course.id == courseId);
     if (selectedCourse) {
       setSelectedCourseId(courseId);
       setSelectedCourseName(selectedCourse.course_name);
     }
   };
+  
+  
 
   const handleAddSubject = (e) => {
     e.preventDefault();
@@ -74,6 +74,7 @@ function AddCoursesAndSubjects() {
         subject: subjectName,
       })
     );
+    dispatch(getallsubjects());
     setSelectedCourseId('');
     setSelectedCourseName('');
     setSubjectName('');
@@ -127,13 +128,13 @@ function AddCoursesAndSubjects() {
             <h3 style={{color: 'GrayText'}}>All Courses</h3>
             <div className='courses-list'>
             {courses.map((course) => (
-                  <h4 key={course._id}>
+                  <h4 key={course.id}>
                     {course.course_name}
                   </h4>
                 ))}
             </div>
           </div>
-          
+      
             {user ? (
               <>
                 {user.admin ? (
@@ -160,13 +161,16 @@ function AddCoursesAndSubjects() {
                         value={selectedCourseId}
                         onChange={handleSelectCourse}
                       >
-                        <option value="">Select a course</option>
+                        <option value="">
+                          {selectedCourseId ? `Selected course: ${selectedCourseName}` : 'Select a course'}
+                        </option>
                         {courses.map((course) => (
-                          <option key={course._id} value={course._id}>
+                          <option key={course.id} value={course.id}>
                             {course.course_name}
                           </option>
                         ))}
                       </select>
+
                       <input
                         type="text"
                         placeholder="Subject Name"
@@ -197,7 +201,7 @@ function AddCoursesAndSubjects() {
               >
                 <option value="">Select a course</option>
                 {courses.map((course) => (
-                  <option key={course._id} value={course._id}>
+                  <option key={course.id} value={course.id}>
                     {course.course_name}
                   </option>
                 ))}
@@ -207,15 +211,15 @@ function AddCoursesAndSubjects() {
                 <div className='subject-list'>
 
                     {allsubjects
-                      .filter((subject) => subject.course_id === selectedCourseId)
+                      .filter((subject) => subject.course_id == selectedCourseId)
                       .map((subject) => (
                         <>
-                        <h4 value={subject._id}>
+                        <h4 value={subject.id}>
                           {subject.subject}
                         </h4>
                          <Link
                          className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html"
-                         to={`/tutorial-notes/${subject._id}`} // Pass the subject's ID as a parameter in the link
+                         to={`/tutorial-notes/${subject.id}`} // Pass the subject's ID as a parameter in the link
                          title="Add Notes"
                        >Add Notes</Link>
                        </>
