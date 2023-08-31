@@ -81,7 +81,7 @@ function AddQuestions() {
 
     setQuestionName('');
     alert("Question Added Successfully ...")
-    toggleModal();
+    showModal = false;
   };
 
   return (

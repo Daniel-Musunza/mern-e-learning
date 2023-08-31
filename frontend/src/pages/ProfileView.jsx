@@ -6,14 +6,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import Spinner from '../components/Spinner';
 import { FaSignInAlt } from 'react-icons/fa';
+import PDFViewer from '../components/PDFViewer';
+
 
 function ProfileView() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate()
-  const { isLoading, isError, message } = useSelector((state) => state.auth);
+  const { user, isLoading, isError, message } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.users);
-  const user = users.find((user) => user.id == id);
+  const userprofile = users.find((user) => user.id == id);
 
   useEffect(() => {
     if (isError) {
@@ -55,34 +57,38 @@ function ProfileView() {
     return (
       < >
         <div className='form-group' >
-        <h3>Name: {user.name}</h3>
-        <p>Email: {user.email}</p>
+        <h3>Name: {userprofile.name}</h3>
+        <p>Email: {userprofile.email}</p>
         </div>
         <div className='form-group'>
           <h4>Subjects:</h4>
           <ul>
-            {user.units}
+            {userprofile.units}
           </ul>
         </div>
         <div className='form-group'>
-          <h4>Resume:</h4>
-          {user.resume && (
-            <a
-              href={`data:application/pdf;base64,${user.resume.data}`}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              View Resume (PDF)
-            </a>
-          )}
-        </div>
-        <div className='form-group'>
-        {user ? (
+        <h4>Resume:</h4>
+        {userprofile.resume && (
           <>
-            {!user.admin ? (
+          <a
+            href={`${userprofile.resume}`} // Update the path to your resume files
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            View Resume (PDF)
+          </a>
+          {/* <PDFViewer pdfUrl={userprofile.resume}/> */}
+          </>
+        )}
+      </div>
+
+        <div className='form-group'>
+        {userprofile ? (
+          <>
+            {!userprofile.admin&&user.admin ? (
               
               <button onClick={makeAdmin}>Make an Admin</button>
-            ) : !user.approved ? (
+            ) : !userprofile.approved&&user.admin ? (
               <button onClick={approveTutor}>Approve</button>
             ) : (
               <></>
@@ -101,13 +107,13 @@ function ProfileView() {
   const renderStudentDetails = () => {
     return (
       <div className='form-group'>
-        <h3>Name: {user.name}</h3>
-        <p>Email: {user.email}</p>
+        <h3>Name: {userprofile.name}</h3>
+        <p>Email: {userprofile.email}</p>
 
-        <h4>Course: {user.course_name}</h4>
-        {user ? (
+        <h4>Course: {userprofile.course_name}</h4>
+        {userprofile ? (
           <>
-            {!user.admin ? (
+            {!userprofile.admin&&user.admin ? (
               <button onClick={makeAdmin}>Make an Admin</button>
             ) : (
               <></>
@@ -134,9 +140,9 @@ function ProfileView() {
       
       <section className='form' style={{ backgroundColor: '#282A35',color: '#ffff', padding: '20px', borderRadius: '10px'}}>
         <form>
-        {user ? (
+        {userprofile ? (
           <> 
-          {user.tutor ? renderTutorDetails() : renderStudentDetails()}
+          {userprofile.tutor ? renderTutorDetails() : renderStudentDetails()}
           </>
           ): (
             <></>

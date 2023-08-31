@@ -16,7 +16,7 @@ function AddCoursesAndSubjects() {
     e.preventDefault();
     setShowModal((prevShowModal) => !prevShowModal);
   };
-  const { courses, isLoading, isError, message } = useSelector(
+  const { courses, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.courses
   );
   const { allsubjects } = useSelector((state) => state.allsubjects);
@@ -33,7 +33,11 @@ function AddCoursesAndSubjects() {
 
     dispatch(fetchCourses());
     dispatch(getallsubjects());
-  }, [isError, message, dispatch]);
+
+    if (isSuccess || user) {
+      
+    }
+  }, [user, isError, isSuccess, message, dispatch])
 
   if (isLoading) {
     return <Spinner />;
@@ -74,12 +78,13 @@ function AddCoursesAndSubjects() {
         subject: subjectName,
       })
     );
+    
     dispatch(getallsubjects());
     setSelectedCourseId('');
     setSelectedCourseName('');
     setSubjectName('');
     alert('Subject Added Successfully !!');
-    toggleModal();
+    showModal = false;
   };
   
   return (

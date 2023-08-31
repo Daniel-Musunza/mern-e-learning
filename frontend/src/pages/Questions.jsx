@@ -11,16 +11,19 @@ function Questions() {
   
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [answerStyles, setAnswerStyles] = useState({});
+  const questions = useSelector((state) => state.questions.questions);
+
+  const { chapters } = useSelector((state) => state.chapters);
 
   useEffect(() => {
     dispatch(getquestions());
     dispatch(getchapters());
 
+    if(!questions){
+        window.location.href = '/';
+    }
+    
     }, [dispatch]);
-
-  const questions = useSelector((state) => state.questions.questions);
-
-  const { chapters } = useSelector((state) => state.chapters);
 
   const [score, setScore] = useState(0);
   const [attempted, setAttempted] = useState(0);

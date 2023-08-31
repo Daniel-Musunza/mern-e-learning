@@ -352,7 +352,25 @@ li{
 }
 .section3{
   min-height: 200px;
-  background-color: #e6e6e6;
+  background-color: #383737;
+  color: #fff;
+}
+.section3-title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.section3-title p{
+  text-align: center;
+}
+.section3-services{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.section3-services .servic{
+  width: 30%;
 }
 .section4{
   min-height: 150px;
@@ -415,5 +433,8 @@ li{
     margin-left: 0;
     margin-right: 0;
     margin-bottom: 10px;
+  }
+  .section3-services .servic{
+    width: 90%;
   }
 }

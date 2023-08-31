@@ -365,7 +365,7 @@ function Header() {
 
                     <div className="w3-col m4 s12">
                       <a
-                        href="tutorials/index.html"
+                        href="/"
                         className="serviceslink ga-top-drop ga-top-drop-services-tut"
                         title="Tutorials"
                       >
@@ -623,7 +623,7 @@ function Header() {
             <div className='servics'>
               <div className="w3-col m4 servic s12">
                 <a
-                  href="tutorials/index.html"
+                  href="/"
                   className="serviceslink ga-top-drop ga-top-drop-services-tut"
                   title="Tutorials"
                 >
@@ -681,7 +681,7 @@ function Header() {
               </div>
             </div>
           </div>
-          </div>
+        </div>
           <br />
        
       </nav>

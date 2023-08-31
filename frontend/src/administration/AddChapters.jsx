@@ -59,7 +59,7 @@ function AddChapters() {
     dispatch(addchapter({ subject_id: selectedSubjectId, chapter: chapterName }));
     setChapterName('');
     alert("Chapter Added Successfully ...")
-    toggleModal();
+    showModal = false;
   };
  
   return (
