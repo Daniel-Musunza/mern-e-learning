@@ -63,7 +63,20 @@ const addquestion = asyncHandler(async (req, res) => {
   }
 });
 
+const deleteQuestion = async(req, res) => {
+  const { id} = req.params;
+  const query = 'DELETE FROM  questions WHERE id = ?';
+  
+  try {
+    const result = await query(query, [id]);
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+}
 module.exports = {
   getquestions,
   addquestion,
+  deleteQuestion
 };

@@ -62,7 +62,7 @@ const getallsubjects = asyncHandler(async (req, res) => {
   const subjects = await db.query(query);
 
   res.status(200).json(subjects);
-});
+})
 
 module.exports = {
   getsubjects,

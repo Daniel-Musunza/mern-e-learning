@@ -34,7 +34,22 @@ const addchapter = async (req, res) => {
   }
 };
 
+const deletechapter = async (req, res) => {
+  const { subject_id } = req.params;
+
+  const query = 'DELETE FROM chapters WHERE subject_id = ?';
+  try{
+      const result = await db.query(query, [subject_id]);
+      res.status(200).json(result);
+  } catch(error) {
+    console.log("Error while deleting chapters",error);
+    res.status(500).json ({message: error.message});
+  }
+ 
+}
+
 module.exports = {
   getchapters,
   addchapter,
+  deletechapter
 };
