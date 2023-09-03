@@ -64,9 +64,22 @@ const getallsubjects = asyncHandler(async (req, res) => {
   res.status(200).json(subjects);
 });
 
+const deleteSubjects = async(req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM subjects WHERE id = ?';
+  try{
+    const result = await db.query(query, [id]);
+    res.status(200).json(result);
+  } catch(error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+}
+
 module.exports = {
   getsubjects,
   addNotes,
   getallsubjects,
   setSubject,
+  deleteSubjects,
 };

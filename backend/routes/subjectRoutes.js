@@ -4,7 +4,8 @@ const {
   getsubjects,
   addNotes,
   setSubject,
-  getallsubjects
+  getallsubjects,
+  deleteSubjects
 } = require('../controllers/subjectController');
 const { protect } = require('../middleware/authMiddleware');
 
@@ -14,7 +15,7 @@ router
   .route('/:id')
   .put(protect, addNotes);
 // Remove the protect middleware from this route to allow unauthenticated access
-router.route('/allsubjects').get(getallsubjects);
+router.route('/allsubjects').get(getallsubjects).delete(protect, deleteSubjects );
 
 module.exports = router;
 
