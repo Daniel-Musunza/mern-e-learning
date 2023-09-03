@@ -17,3 +17,5 @@ router
 router.route('/allsubjects').get(getallsubjects);
 
 module.exports = router;
+
+
