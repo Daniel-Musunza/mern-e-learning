@@ -81,7 +81,7 @@ function AddQuestions() {
 
     setQuestionName('');
     alert("Question Added Successfully ...")
-    toggleModal();
+    showModal = false;
   };
 
   return (
@@ -135,7 +135,7 @@ function AddQuestions() {
               >
                 <option value="">Select a course</option>
                 {courses.map((course) => (
-                  <option key={course._id} value={course._id}>
+                  <option key={course.id} value={course.id}>
                     {course.course_name}
                   </option>
                 ))}
@@ -151,9 +151,9 @@ function AddQuestions() {
                   >
                     <option value="">Select a subject</option>
                     {allsubjects
-                      .filter((subject) => subject.course_id === selectedCourseId)
+                      .filter((subject) => subject.course_id == selectedCourseId)
                       .map((subject) => (
-                        <option key={subject._id} value={subject._id}>
+                        <option key={subject.id} value={subject.id}>
                           {subject.subject}
                         </option>
                       ))}
@@ -170,9 +170,9 @@ function AddQuestions() {
                   >
                     <option value="">Select a chapter</option>
                     {chapters
-                      .filter((chapter) => chapter.subject_id === selectedSubjectId)
+                      .filter((chapter) => chapter.subject_id == selectedSubjectId)
                       .map((chapter) => (
-                        <option key={chapter._id} value={chapter._id}>
+                        <option key={chapter.id} value={chapter.id}>
                           {chapter.chapter}
                         </option>
                       ))}

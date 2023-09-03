@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken')
-const asyncHandler = require('express-async-handler')
-const User = require('../models/userModel')
+const jwt = require('jsonwebtoken');
+const asyncHandler = require('express-async-handler');
+const db = require('../config/db');
 
 const protect = asyncHandler(async (req, res, next) => {
-  let token
+  let token;
 
   if (
     req.headers.authorization &&
@@ -11,26 +11,34 @@ const protect = asyncHandler(async (req, res, next) => {
   ) {
     try {
       // Get token from header
-      token = req.headers.authorization.split(' ')[1]
-
+      token = req.headers.authorization.split(' ')[1];
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // Get user from the token
-      req.user = await User.findById(decoded.id).select('-password')
+      // Get user from the token
+      const getUserQuery = 'SELECT * FROM users WHERE id = ?';
+      const users = await db.query(getUserQuery, [decoded.id]);
 
-      next()
+
+      if (users.length === 1) {
+        req.user = users[0];
+        next();
+      } else {
+        res.status(401);
+        throw new Error('Not authorized');
+      }
     } catch (error) {
-      console.log(error)
-      res.status(401)
-      throw new Error('Not authorized')
+      console.log(error);
+      res.status(401);
+      throw new Error('Not authorized');
     }
   }
 
   if (!token) {
-    res.status(401)
-    throw new Error('Not authorized, no token')
+    res.status(401);
+    throw new Error('Not authorized, no token');
   }
-})
+});
 
-module.exports = { protect }
+module.exports = { protect };

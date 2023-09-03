@@ -55,12 +55,13 @@ function Register() {
     if (name === 'userType') {
       setUserType(value);
     } else if (name === 'courseName') {
-      const selectedCourse = courses.find(course => course._id === value);
+      const selectedCourse = courses.find(course => course.id == value);
       if (selectedCourse) {
         setCourseName({ id: value, name: selectedCourse.course_name });
       } else {
         setCourseName({ id: '', name: '' });
       }
+
     } else {
       setFormData((prevState) => ({
         ...prevState,
@@ -110,6 +111,7 @@ const onSubmit = (e) => {
       }
 // console.log(userData);
       dispatch(register(userData));
+      navigate('/');
     } else if (userType === 'student') {
       const userData = {
         name,
@@ -120,21 +122,20 @@ const onSubmit = (e) => {
          // Add courseName to the userData
       };
 
-      if (userData.course === '') {
+      if (userData.course_name === '') {
         toast.error('Please select a course');
       }
 
       // If there are errors, don't proceed with the registration
-      if (userData.course === '') {
+      if (userData.course_name === '') {
         return;
       }
 
-      // console.log(userData)
       dispatch(register(userData));
+      navigate('/');
     }
   }
 };
-
 
 
   if (isLoading) {
@@ -180,7 +181,7 @@ const onSubmit = (e) => {
             <option value=''>Select Course</option>
             {Array.isArray(courses) && // Check if courses is an array
               courses.map((course) => (
-                <option key={course._id} value={course._id}>
+                <option key={course.id} value={course.id}>
                   {course.course_name}
                 </option>
               ))}

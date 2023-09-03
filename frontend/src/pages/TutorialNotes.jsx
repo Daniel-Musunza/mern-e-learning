@@ -21,7 +21,8 @@ function TutorialNotes() {
   const allsubjects = useSelector((state) => state.allsubjects.allsubjects);
 
   // Find the subject with the specified id
-  const subject = allsubjects.find((subject) => subject._id === id);
+  const subject = allsubjects.find((subject) => subject.id == id);
+
 
   useEffect(() => {
     // Set the notes from the subject in the state when the subject is found

@@ -7,6 +7,7 @@ import { getallsubjects} from '../features/subjects/allSubjectSlice';
 import { addchapter,  reset } from '../features/chapters/chapterSlice';
 import { fetchCourses} from '../features/courses/courseSlice';
 
+
 function AddChapters() {
   const dispatch = useDispatch();
   const { chapters, isLoading, isError, message} = useSelector((state) => state.chapters);
@@ -58,7 +59,7 @@ function AddChapters() {
     dispatch(addchapter({ subject_id: selectedSubjectId, chapter: chapterName }));
     setChapterName('');
     alert("Chapter Added Successfully ...")
-    toggleModal();
+    showModal = false;
   };
  
   return (
@@ -112,7 +113,7 @@ function AddChapters() {
               >
                 <option value="">Select a course</option>
                 {courses.map((course) => (
-                  <option key={course._id} value={course._id}>
+                  <option key={course.id} value={course.id}>
                     {course.course_name}
                   </option>
                 ))}
@@ -128,9 +129,9 @@ function AddChapters() {
                   >
                     <option value="">Select a subject</option>
                     {allsubjects
-                      .filter((subject) => subject.course_id === selectedCourseId)
+                      .filter((subject) => subject.course_id == selectedCourseId)
                       .map((subject) => (
-                        <option key={subject._id} value={subject._id}>
+                        <option key={subject.id} value={subject.id}>
                           {subject.subject}
                         </option>
                       ))}

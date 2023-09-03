@@ -121,8 +121,9 @@ td i {
     margin: 20px auto;
     padding: 20px;
     max-width: 600px;
+    min-width: 400px;
     height: 600px;
-    overflow-y: hidden;
+    overflow-y: scroll;
 }
 .courses-list, .subject-list {
     height: 600px;

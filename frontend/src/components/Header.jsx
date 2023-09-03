@@ -7,7 +7,6 @@ import { getchapters } from '../features/chapters/chapterSlice';
 
 function Header() {
   const [showTutorials, setShowTutorials] = useState(false);
-  const [showExams, setShowExams] = useState(false);
   const [showExercises, setShowExercises] = useState(false);
   const [ showServices, setShowServices] = useState(false);
   const [ showMenu, setShowMenu] = useState(false);
@@ -77,7 +76,7 @@ function Header() {
   return (
     <>
     <div id="pagetop" className="w3-bar notranslate w3-white">
-        <a href="index.html" className="w3-bar-item w3-button w3-hover-none w3-left ga-top ga-top-w3home" title="Home" style={{ width: "75px" }}>
+        <a href="/" className="w3-bar-item w3-button w3-hover-none w3-left ga-top ga-top-w3home" title="Home" style={{ width: "75px" }}>
           <img src="favicon.ico" alt="" width="50px" />
         </a>
         {user ? ( 
@@ -184,7 +183,7 @@ function Header() {
               
               <Link id="w3loginbtn" title="Your Username" style={{paddingLeft:'3px'}}
                 class="w3-bar-item w3-btn bar-item-hover w3-right ga-top ga-top-login"
-                to={`/profile-view/${user._id}`}
+                to={`/profile-view/${user.id}`}
                 target="_self">{user && user.name}</Link>
             </div>
             ) : (
@@ -271,7 +270,7 @@ function Header() {
                               </div>  
                               <Link
                                 className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html"
-                                to={`/tutorial-notes/${subject._id}`} // Pass the subject's ID as a parameter in the link
+                                to={`/tutorial-notes/${subject.id}`} // Pass the subject's ID as a parameter in the link
                                 title="Read Notes"
                               >Tutorial</Link>
                               
@@ -307,18 +306,18 @@ function Header() {
                   {subjects.length > 0 ? (
                       <div>
                       {subjects.map((subject) => (
-                        <div className="w3-col l4 m6" key={subject._id}>
+                        <div className="w3-col l4 m6" key={subject.id}>
                           <h3 className="w3-margin-top">{subject.subject}</h3>
                           <h4 className="w3-margin-top">Topics</h4>
                           <ol>
                             {chapters
-                              .filter((chapter) => chapter.subject_id === subject._id)
+                              .filter((chapter) => chapter.subject_id === subject.id)
                               .map((chapter) => (
-                                <li key={chapter._id}>
+                                <li key={chapter.id}>
                                   <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html">
                                     {chapter.chapter}
                                   </a>
-                                  <Link className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" to={`/questions/${chapter._id}`}>
+                                  <Link className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" to={`/questions/${chapter.id}`}>
                                     Questions
                                   </Link>
                                   <br />
@@ -366,7 +365,7 @@ function Header() {
 
                     <div className="w3-col m4 s12">
                       <a
-                        href="tutorials/index.html"
+                        href="/"
                         className="serviceslink ga-top-drop ga-top-drop-services-tut"
                         title="Tutorials"
                       >
@@ -500,7 +499,7 @@ function Header() {
                         </div>  
                         <Link
                           className="ws-btn acclink-text ga-top-drop ga-top-drop-tut-html"
-                          to={`/tutorial-notes/${subject._id}`} // Pass the subject's ID as a parameter in the link
+                          to={`/tutorial-notes/${subject.id}`} // Pass the subject's ID as a parameter in the link
                           title="Read Notes"
                         >Tutorial</Link>
                         
@@ -551,18 +550,18 @@ function Header() {
                 <div>
                   
                   {subjects.map((subject) => (
-                  <div className="w3-col l4 m6" key={subject._id}>
+                  <div className="w3-col l4 m6" key={subject.id}>
                     <h3 className="w3-margin-top">{subject.subject}</h3>
                     <h4 className="w3-margin-top">Topics</h4>
                     <ol style={{marginBottom: 0}}>
                       {chapters
-                        .filter((chapter) => chapter.subject_id === subject._id)
+                        .filter((chapter) => chapter.subject_id == subject.id)
                         .map((chapter) => (
-                          <li key={chapter._id}>
+                          <li key={chapter.id}>
                             <a className="w3-bar-item w3-button acctop-link ga-top-drop ga-top-drop-ex-html">
                               {chapter.chapter}
                             </a>
-                            <Link className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" to={`/questions/${chapter._id}`}>
+                            <Link className="ws-btn acclink-text ga-top-drop ga-top-drop-ex-html" to={`/questions/${chapter.id}`}>
                               Questions
                             </Link>
                         
@@ -624,7 +623,7 @@ function Header() {
             <div className='servics'>
               <div className="w3-col m4 servic s12">
                 <a
-                  href="tutorials/index.html"
+                  href="/"
                   className="serviceslink ga-top-drop ga-top-drop-services-tut"
                   title="Tutorials"
                 >
@@ -682,7 +681,7 @@ function Header() {
               </div>
             </div>
           </div>
-          </div>
+        </div>
           <br />
        
       </nav>

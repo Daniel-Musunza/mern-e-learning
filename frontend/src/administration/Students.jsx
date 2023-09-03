@@ -7,7 +7,7 @@ import { fetchUsers} from '../features/auth/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 function Students() {
     const dispatch = useDispatch();
-    const { isLoading, isError, message } = useSelector(
+    const { user, isLoading, isError, message } = useSelector(
         (state) => state.auth
       );
     
@@ -48,24 +48,53 @@ function Students() {
                                         <td></td>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                {users
-                                .filter((user) => !user.tutor&&!user.admin) // Filter users where tutor is true
+                                
+                                
+                    {user ? (
+                    <>
+                        {user.admin ? (
+                            <tbody>
+                        {users
+                            .filter((user) => !user.tutor&&!user.admin) // Filter users where tutor is true
+                            .map((user, index) => (
+                                <tr key={user.id}>
+                                <td>{index + 1}</td>
+                                <td>{user.name}</td>
+                                <td>{user.email}</td>
+                                <td>{user.course_name}</td>
+                                <td>
+                                    <Link  to={`/profile-view/${user.id}`}>View Details</Link>
+                                </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        ) : user.approved ? (
+                            <tbody>
+                            {users
+                                .filter((user) => !user.tutor&&!user.admin&&!user.approved &&
+                                user.units.some(subject => user.units.includes(subject))) // Filter users where tutor is true
                                 .map((user, index) => (
-                                    <tr key={user._id}>
+                                    <tr key={user.id}>
                                     <td>{index + 1}</td>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.course_name}</td>
                                     <td>
-                                        <Link  to={`/profile-view/${user._id}`}>View Details</Link>
+                                        <Link  to={`/profile-view/${user.id}`}>View Details</Link>
                                     </td>
                                     </tr>
                                 ))}
-
-
-
                                 </tbody>
+                        ) : (
+                        <></>
+                        )}
+                    </>
+                    ) : (
+                    <></>
+                    )}
+
+
+                               
                             </table>
                         </div>
                     </div>
